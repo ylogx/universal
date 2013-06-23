@@ -19,7 +19,7 @@
 #  
 #  
 
-##this script installs universal compilation tool for different programming languages
+#This script installs universal compilation tool for different programming languages
 #clear
 echo    #newline
 helpInstall(){ 
@@ -52,17 +52,18 @@ filename="chaudhary.sh"
 file="/usr/local/bin/chaudhary.sh"
 current_directory=`pwd`
 if [ ! -f "$file" ] ; then
-    echo " * * * copying $file * * *"
+    echo " * * * Copying Files * * *"
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
     #echo "   * * * Done * * * "
 elif [ "$file" -ot "$current_directory/$filename" ]; then
-    echo "Older"
+    echo "Older Version will be updated"
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
 else  
     helpInstall
 fi
-echo "Create Shortcuts? <y/n>"
-read shortcut
+#echo "Create Shortcuts? <y/n>"
+#read shortcut
+shortcut="y"
 if [ "$shortcut" == "y" ]; then
 #    if [ ! -f ~/.bash_aliases ]; then
 #        touch ~/.bash_aliases
