@@ -59,7 +59,7 @@ echo    #newline
 if test "$1" == "help"
 then
     helpFun
-    exit 1
+    exit 0
 fi
 nameLen=${#1}
 compiled=true
