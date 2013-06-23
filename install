@@ -1,0 +1,43 @@
+##this script installs universal compilation tool for different programming languages
+#clear
+help(){ 
+    #Show Usage & Help
+    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    echo "###################################################################"
+    echo "# - - - $0 Help - - -" 
+    echo "#"    #newline
+    echo "# USAGE:  Just type \"sudo ./install\"" 
+    echo "#         This will install $filename in it's proper place "
+    echo "# Warning: Please don't forget that installation requires \"sudo\""
+    echo "###################################################################"
+    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    echo    #newline
+}
+echo    #newline
+echo " * * * Installing tool * * *"
+installPath="/usr/local/bin"
+filename="chaudhary.sh"
+file="/usr/local/bin/chaudhary.sh"
+current_directory=`pwd`
+if [ ! -f "$file" ] ; then
+    echo " * * * copying $file * * *"
+    sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
+    #echo "   * * * Done * * * "
+elif [ "$file" -ot "$current_directory/$filename" ]; then
+    echo "Older"
+    sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
+else  
+    help
+fi
+echo "Create Shortcuts? <y/n>"
+read shortcut
+if [ "$shortcut" == "y" ]; then
+    if [ ! -f ~/.bash_aliases ]; then
+        touch ~/.bash_aliases
+    fi
+    echo "Appending in ~/.bash_aliases"
+    echo "alias c='/usr/local/bin/chaudhary.sh'" >> ~/.bash_aliases
+    echo "Creating symbolic link"
+    sudo cp -s "$file" "/usr/bin/$filename"
+fi
+
