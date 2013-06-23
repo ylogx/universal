@@ -1,18 +1,29 @@
 ##this script installs universal compilation tool for different programming languages
 #clear
-help(){ 
+echo    #newline
+helpInstall(){ 
     #Show Usage & Help
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
-    echo "###################################################################"
-    echo "# - - - $0 Help - - -" 
-    echo "#"    #newline
-    echo "# USAGE:  Just type \"sudo ./install\"" 
-    echo "#         This will install $filename in it's proper place "
-    echo "# Warning: Please don't forget that installation requires \"sudo\""
-    echo "###################################################################"
+    echo "  ###################################################################"
+    echo "  #      + + + Universal Compiler Installation Help + + +           #"
+    echo "  #                                                                 #"    #newline
+    echo "  # USAGE:  Just type this command to execute installation process: #" 
+    echo "  #   './install'                                                   #"
+    echo "  #         This'll install Universal Compiler in it's proper place #"
+    echo "  # Warning: Please don't forget that installation requires 'sudo'  #"
+    echo "  #          permissions. Provide password when asked or run as su. #"
+    echo "  # Note if install file does not have execution permission you     #"
+    echo "  #          should execute this command first                      #"  
+    echo "  #   'sudo chmod 777 install chaudhary.sh'                         #" 
+    echo "  ###################################################################"
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo    #newline
 }
+if test "$1" == "help"
+then
+    helpInstall
+    exit 0
+fi
 echo    #newline
 echo " * * * Installing tool * * *"
 installPath="/usr/local/bin"
@@ -27,17 +38,19 @@ elif [ "$file" -ot "$current_directory/$filename" ]; then
     echo "Older"
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
 else  
-    help
+    helpInstall
 fi
 echo "Create Shortcuts? <y/n>"
 read shortcut
 if [ "$shortcut" == "y" ]; then
-    if [ ! -f ~/.bash_aliases ]; then
-        touch ~/.bash_aliases
-    fi
-    echo "Appending in ~/.bash_aliases"
-    echo "alias c='/usr/local/bin/chaudhary.sh'" >> ~/.bash_aliases
-    echo "Creating symbolic link"
+#    if [ ! -f ~/.bash_aliases ]; then
+#        touch ~/.bash_aliases
+#    fi
+#    echo "Appending in ~/.bash_aliases"
+#    echo "alias c='/usr/local/bin/chaudhary.sh'" >> ~/.bash_aliases
+    echo "Creating symbolic links"
     sudo cp -s "$file" "/usr/bin/$filename"
+    sudo cp -s "$file" "/usr/local/bin/c"
+    sudo cp -s "$file" "$installPath/universal"
 fi
 
