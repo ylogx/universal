@@ -13,7 +13,7 @@ Note if install file does not have execution permission you should execute this 
       sudo chmod 777 install chaudhary.sh  
 Say yes when it ask for symbolic links by typing single alphabet y followed by Enter  
 
-After completing installation you can type command name 'c help' OR 'chaudhary.sh help' and just hit enter to get usage instruction and help
+After completing installation you can type command name 'c help' OR 'universal help' OR 'chaudhary.sh help' and just hit enter to get usage instruction and help
   
 To get latest version of Universal Compiler   
   [Update](https://github.com/ishubhamch/universal/archive/master.zip)  
