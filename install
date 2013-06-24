@@ -60,8 +60,14 @@ then
 fi
 if test "$1" == "uninstall"
 then
-    sudo rm "/usr/bin/$filename" "/usr/local/bin/c" "$installPath/universal"
-    exit 0
+    echo "About to uninstall Universal Compiler Tool"
+    echo "Are you sure ? <Y/N>"
+    read sure
+    if test sure == 'Y'
+    then
+        sudo rm "/usr/bin/$filename" "/usr/local/bin/c" "$installPath/universal"
+        exit 0
+    fi
 fi
 echo "You can get help or uninstall using : "
 echo "./install help"
