@@ -55,6 +55,8 @@ function helpFun {
     echo "    #                                                     #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
     echo "    #                                                     #"
+    echo "    # Update Version: See README.md to get download link  #"
+    echo "    #                                                     #"
     echo "    #######################################################"
     echo "    # Program: Universal Compiler - Reducing headaches    #"
     echo "    # Author : Shubham Chaudhary                          #"
