@@ -21,21 +21,34 @@
 
 #This script installs universal compilation tool for different programming languages
 #clear
+installPath="/usr/local/bin"
+filename="chaudhary.sh"
+file="/usr/local/bin/chaudhary.sh"
+current_directory=`pwd`
 echo    #newline
 helpInstall(){ 
     #Show Usage & Help
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "  ###################################################################"
-    echo "  #      + + + Universal Compiler Installation Help + + +           #"
-    echo "  #                                                                 #"    #newline
+    echo "  #      + + + Universal Compiler Installation Help + + +       (c) #"
+    echo "  #                                                                 #"
     echo "  # USAGE:  Just type this command to execute installation process: #" 
-    echo "  #   './install'                                                   #"
+    echo "  #   \`./install\`                                                   #"
     echo "  #         This'll install Universal Compiler in it's proper place #"
+    echo "  #                                                                 #"
     echo "  # Warning: Please don't forget that installation requires 'sudo'  #"
     echo "  #          permissions. Provide password when asked or run as su. #"
-    echo "  # Note if install file does not have execution permission you     #"
+    echo "  #                                                                 #"
+    echo "  # Note   : If install file does not have execution permission you #"
     echo "  #          should execute this command first                      #"  
-    echo "  #   'sudo chmod 777 install chaudhary.sh'                         #" 
+    echo "  #   \`sudo chmod 777 install chaudhary.sh\`                         #"
+    echo "  #                                                                 #"
+    echo "  # To Uninstall previous installations type:                       #"
+    echo "  #   \`./install uninstall\`                                         #"
+    echo "  #                                                                 #"
+    echo "  ###################################################################"
+    echo "  # Program: Universal Compiler - Programming made easy             #"
+    echo "  # Author : Shubham Chaudhary                                      #"
     echo "  ###################################################################"
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo    #newline
@@ -45,12 +58,24 @@ then
     helpInstall
     exit 0
 fi
+if test "$1" == "uninstall"
+then
+    sudo rm "/usr/bin/$filename" "/usr/local/bin/c" "$installPath/universal"
+fi
+echo "You can get help or uninstall using : "
+echo "./install help"
+echo "./install uninstall"
 echo    #newline
-echo " * * * Installing tool * * *"
-installPath="/usr/local/bin"
-filename="chaudhary.sh"
-file="/usr/local/bin/chaudhary.sh"
-current_directory=`pwd`
+
+#echo "To continue installation hit Enter"
+#read
+
+echo    #newline
+echo " * * * Installing Universal Compilation Tool * * *"
+echo "  ############################################################"
+echo "  # Tool Name :  Universal Compiler - Programming made easy  #"
+echo "  # Author    :  Shubham Chaudhary                           #"
+echo "  ############################################################"
 if [ ! -f "$file" ] ; then
     echo " * * * Copying Files * * *"
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
@@ -75,4 +100,4 @@ if [ "$shortcut" == "y" ]; then
     sudo cp -s "$file" "/usr/local/bin/c"
     sudo cp -s "$file" "$installPath/universal"
 fi
-
+rm -f chaudhary.sh install README.md
