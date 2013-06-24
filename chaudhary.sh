@@ -44,7 +44,7 @@ function helpFun {
     echo "    #                                                     #"
     echo "    # Aliases: 'universal' and 'chaudhary.sh' and 'c'     #"
     echo "    # That means you may also use:                        #"
-    echo "    #         \`universal help\` \`c help\`               #"
+    echo "    #         \`universal help\` \`c help\`                   #"
     echo "    #                                                     #"
     echo "    # USAGE:  chaudhary.sh <filename>                     #"
     echo "    #         chaudhary.sh <filename> <test option>       #" 
