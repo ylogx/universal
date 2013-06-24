@@ -81,7 +81,7 @@ compiled=true
 
 if test "${1:nameLen-2}" == '.c' ;  then
 #if [["${1:nameLen-2}"=="*.c"]] ; then
-    if test `command -v gcc >/dev/null 2>&1` ;
+    if test -n `command -v gcc >/dev/null 2>&1` ;
     then
         echo >&2 "Hey I require gcc but it's not installed.";
         echo "Copy/Paste ===> sudo apt-get install gcc"; 
