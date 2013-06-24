@@ -69,6 +69,14 @@ compiled=true
 
 if test "${1:nameLen-2}" == '.c' ;  then
 #if [["${1:nameLen-2}"=="*.c"]] ; then
+    if test `command -v gcc >/dev/null 2>&1` ;
+    then
+        echo >&2 "Hey I require gcc but it's not installed.";
+        echo "Copy/Paste ===> sudo apt-get install gcc"; 
+        echo "Aborting :("; 
+        echo;
+        exit 1
+    fi
     filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
     echo " = = = = = = GCC: Compiling $filename .c file = = = = = ="
     echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"
@@ -81,6 +89,8 @@ if test "${1:nameLen-2}" == '.c' ;  then
 
 elif test "${1:nameLen-4}" == '.cpp' ; then #first arg: crop till nameLen-4
 #elif [["${1:nameLen-4}"=="*.cpp"]] ; then
+    command -v gcc432 >/dev/null 2>&1 || { echo >&2 "Hey I require g++ but it's not installed.";
+                                             echo "Copy/Paste ===> sudo apt-get install g++"; echo "Aborting :("; echo; exit 1; }
     filename=${1:0:nameLen-4}     #striping last 2 char i.e. '.c' i.e keep from 0 till nameLen -4
     echo " - - - - - - G++: Compiling $filename .cpp file - - - - - -"
     echo "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
@@ -91,6 +101,14 @@ elif test "${1:nameLen-4}" == '.cpp' ; then #first arg: crop till nameLen-4
 ################ PYTHON #################################
 
 elif test "${1:nameLen-3}" == '.py' ; then
+    command -v gcc432 >/dev/null 2>&1 || { echo >&2 "Hey I require python but it's not installed.";
+                                             echo "Copy/Paste ===> sudo apt-get install python"; echo "Aborting :("; echo; exit 1; }
+    if test -n `command -v g++ >/dev/null 2>&1` ;
+    then
+        echo >&2 "I require g++ but it's not installed. Aborting."
+        echo >&2 "Copy/Paste ===> 'sudo apt-get install g++'"
+        exit 1
+    fi
     filename=${1:0:nameLen-3}
     echo " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^"
     echo "python $1"
@@ -101,6 +119,12 @@ elif test "${1:nameLen-3}" == '.py' ; then
 
 elif test "${1:nameLen-5}" == '.java'
 then
+#    command -v javac >/dev/null 2>&1 || { echo >&2 "Hey I require javac but it's not installed.";
+#                                             echo "Copy/Paste ===> sudo apt-get install javac"; echo "Aborting :("; echo; exit 1; }
+#    command -v java >/dev/null 2>&1 || { echo >&2 "Hey I require java but it's not installed.";
+#                                             echo "Copy/Paste ===> sudo apt-get install java"; echo "Aborting :("; echo; exit 1; }
+    command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1 || { echo >&2 "Hey I require both java and javac but it's not installed.";
+                                             echo "Copy/Paste ===> sudo apt-get install java javac"; echo "Aborting :("; echo; exit 1; }
     filename=${1:0:nameLen-5}   #stripping '.java'
     echo " + + + + + + JAVA: Compiling $filename .java file + + + + + "
     echo    #newline
@@ -156,5 +180,5 @@ if test $compiled == true ; then
     fi
     echo    #newline
 else    #Show Usage & Help
-    helpFun
+    usage
 fi
