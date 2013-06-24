@@ -57,7 +57,8 @@ function helpFun {
     echo "    #                                                     #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
     echo "    #                                                     #"
-    echo "    # Update Version: See README.md to get download link  #"
+    echo "    # Update Version: \`chaudhary.sh download\`             #"
+    echo "    #              Or see README.md to get download link  #"
     echo "    #                                                     #"
     echo "    #######################################################"
     echo "    # Program: Universal Compiler - Reducing headaches    #"
@@ -100,6 +101,11 @@ echo    #newline
 if test "$1" == "help"
 then
     helpFun
+    exit 0
+elif test "$1" == "download"
+then
+    wget -c ./ https://github.com/ishubhamch/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
+    echo "Extract master.zip files and follow further instructions available in README.md"
     exit 0
 fi
 ##### Variables ####
