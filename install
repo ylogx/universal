@@ -61,6 +61,7 @@ fi
 if test "$1" == "uninstall"
 then
     sudo rm "/usr/bin/$filename" "/usr/local/bin/c" "$installPath/universal"
+    exit 0
 fi
 echo "You can get help or uninstall using : "
 echo "./install help"
@@ -81,10 +82,10 @@ if [ ! -f "$file" ] ; then
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
     #echo "   * * * Done * * * "
 elif [ "$file" -ot "$current_directory/$filename" ]; then
-    echo "Older Version will be updated"
+    echo "Older Version found and will be updated now"
     sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
-else  
-    helpInstall
+#else  
+#    helpInstall
 fi
 #echo "Create Shortcuts? <y/n>"
 #read shortcut
