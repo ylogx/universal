@@ -24,11 +24,12 @@ function usage {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        - - - Universal Compiler Usage - - -         #" 
-    echo "    #                                                     #"    #newline
+    echo "    #        - - - Universal Compiler Usage - - -     (c) #" 
+    echo "    #                                                     #"
     echo "    # USAGE:  chaudhary.sh <filename> <test option>       #" 
-    echo "    # For Full Help:  'chaudhary.sh help'                 #"
-    echo "    #                                                     #"    #newline
+    echo "    # For Full Help:  \`chaudhary.sh help\`                 #"
+    echo "    #                                                     #"
+    echo "    #######################################################"
     echo "    # Program: Universal Compiler - Programming made easy #"
     echo "    # Author : Shubham Chaudhary                          #"
     echo "    #######################################################"
@@ -39,15 +40,22 @@ function helpFun {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        + + + Universal Compiler Help + + +          #" 
-    echo "    #                                                     #"    #newline
-    echo "    # USAGE:  chaudhary.sh <filename> <test option>       #" 
+    echo "    #        + + + Universal Compiler Help + + +      (c) #" 
+    echo "    #                                                     #"
+    echo "    # Aliases: 'universal' and 'chaudhary.sh' and 'c'     #"
+    echo "    # That means you may also use:                        #"
+    echo "    #         \`universal help\` \`c help\`               #"
+    echo "    #                                                     #"
+    echo "    # USAGE:  chaudhary.sh <filename>                     #"
+    echo "    #         chaudhary.sh <filename> <test option>       #" 
     echo "    # e.g      'chaudhary.sh hello.cpp'                   #"
     echo "    #          'chaudhary.sh HelloWorld.java'             #"
-    echo "    # Test option: t, t1, t2, t3                          #"
-    echo "    # For Help:  'chaudhary.sh help'                      #"
+    echo "    # Automated Testing options: t, t1, t2, t3            #"
+    echo "    # For Full Help:  'chaudhary.sh help'                 #"
+    echo "    #                                                     #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
-    echo "    #                                                     #"    #newline
+    echo "    #                                                     #"
+    echo "    #######################################################"
     echo "    # Program: Universal Compiler - Reducing headaches    #"
     echo "    # Author : Shubham Chaudhary                          #"
     echo "    #######################################################"
@@ -64,6 +72,8 @@ fi
 nameLen=${#1}
 compiled=true
 #echo " * * * Compiling $filename * * *"
+
+################# Testing different files ######################
 
 ##########     C      ##################
 
@@ -146,7 +156,8 @@ else
     echo    #newline
     echo "NOTICE: Unknown File format \"$1\""
     compiled=false
-fi  #end of filetype if
+fi
+############# end of filetype if #####################
 
 if [ $? -ne 0 ]    #previous command gcc g++ javac python
 then
@@ -155,6 +166,8 @@ then
     echo "For Copy/Paste ===> gedit $1"
     compiled=false
 fi
+
+############ Do automated testing by taking inputs from $filename.test file ##################
 
 if test $compiled == true ; then
     echo    #newline
