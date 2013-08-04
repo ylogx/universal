@@ -70,26 +70,26 @@ function helpFun {
 ############ Do automated testing by taking inputs from $filename.test file for C & C++ ##################
 function memoryTest {
     if test $compiled == true ; then
-        #echo    #newline
-        if test -f $filename.test && test "$2" == "t" ; then
+        echo #newline
+        if test -f $filename.test; then
             echo " * * * Valgrind Test: $filename.test found * * *"
-            time cat $filename.test | valgrind ./$filename.out
-        elif test -f $filename.test && test "$2" == "t1" ; then
-            echo " * * * Valgrind Test: $filename.test found * * *"
-            time cat $filename.test | valgrind --leak-check=full ./$filename.out
-        elif test -f $filename.test && test "$2" == "t2" ; then
-            echo " * * * Valgrind Test: $filename.test found * * *"
-            time cat $filename.test | valgrind --leak-check=full -v ./$filename.out
-        elif test -f $filename.test && test "$2" == "t3" ; then
-            echo " * * * Valgrind Test: $filename.test found * * *"
-            time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out
-        #else    #No test arguments
-            #echo    #newline
-            #echo "= = = For Copy/Paste = = = "
-            #echo "time cat $filename.test | valgrind ./$filename.out                                                                 #[ t  ]"
-            #echo "time cat $filename.test | valgrind --leak-check=full ./$filename.out                                               #[ t1 ]"
-            #echo "time cat $filename.test | valgrind --leak-check=full -v ./$filename.out                                            #[ t2 ]"
-            #echo "time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out   #[ t3 ]"
+            if test "$2" == "t" ; then
+                time cat $filename.test | valgrind ./$filename.out
+            elif  test "$2" == "t1" ; then
+                echo "in t1"
+                time cat $filename.test | valgrind --leak-check=full ./$filename.out
+            elif test "$2" == "t2" ; then
+                time cat $filename.test | valgrind --leak-check=full -v ./$filename.out
+            elif test "$2" == "t3" ; then
+                time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out
+            else    #No test arguments
+                #echo    #newline
+                echo "= = = For Copy/Paste = = = "
+                echo "time cat $filename.test | valgrind ./$filename.out                                                                 #[ t  ]"
+                #echo "time cat $filename.test | valgrind --leak-check=full ./$filename.out                                               #[ t1 ]"
+                #echo "time cat $filename.test | valgrind --leak-check=full -v ./$filename.out                                            #[ t2 ]"
+                #echo "time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out   #[ t3 ]"
+            fi
         fi
         echo    #newline
     fi
@@ -134,7 +134,7 @@ function main {
         echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"
         echo "Error(if any):"   #newline
         command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
-        memoryTest
+        memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
         #echo ".c file found"
@@ -150,7 +150,7 @@ function main {
         echo "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
         echo "Error(if any):"   #newline
         command g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false
-        memoryTest
+        memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
         #echo ".cpp file found"
     
@@ -196,7 +196,7 @@ function main {
     then
         echo    #newline
         echo "Ouch, The process of compilation failed."
-        echo "For Copy/Paste ===> gedit $1"
+        echo "For Copy/Paste ===> vi $1"
         compiled=false
     fi
 } #end of main function
@@ -204,4 +204,4 @@ function main {
 #else    #Show Usage & Help
     #usage
 #fi
-main $1
+main $1 $2 $3
