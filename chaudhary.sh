@@ -75,21 +75,27 @@ function memoryTest {
             echo " * * * Valgrind Test: $filename.test found * * *"
             if test "$2" == "t" ; then
                 time cat $filename.test | valgrind ./$filename.out
+                code=$?
             elif  test "$2" == "t1" ; then
-                echo "in t1"
                 time cat $filename.test | valgrind --leak-check=full ./$filename.out
+                code=$?
             elif test "$2" == "t2" ; then
                 time cat $filename.test | valgrind --leak-check=full -v ./$filename.out
+                code=$?
             elif test "$2" == "t3" ; then
                 time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out
+                code=$?
             else    #No test arguments
                 #echo    #newline
                 echo "= = = For Copy/Paste = = = "
-                echo "time cat $filename.test | valgrind ./$filename.out                                                                 #[ t  ]"
+                echo "time cat $filename.test | valgrind ./$filename.out"                                                                 #[ t  ]"
                 #echo "time cat $filename.test | valgrind --leak-check=full ./$filename.out                                               #[ t1 ]"
                 #echo "time cat $filename.test | valgrind --leak-check=full -v ./$filename.out                                            #[ t2 ]"
                 #echo "time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out   #[ t3 ]"
+                code="Not performed"
             fi
+            echo #newline
+            echo "The test exited with exit code: $code"
         fi
         echo    #newline
     fi
@@ -131,9 +137,10 @@ function main {
         fi
         filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
         echo " = = = = = = GCC: Compiling $filename .c file = = = = = ="
-        echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"
+        echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"    #-g to make gdb compaitable
         echo "Error(if any):"   #newline
         command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
+        echo "gcc exited with $?"
         memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
