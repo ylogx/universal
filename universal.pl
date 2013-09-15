@@ -26,7 +26,7 @@ use warnings;
 ##this script compiles .c & .cpp files
 sub usage {
     print "\n"; #newline
-    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
     print "    #        - - - Universal Compiler Usage - - -     (c) #\n"; 
     print "    #                                                     #\n";
@@ -39,12 +39,12 @@ sub usage {
     print "    # Program: Universal Compiler - Programming made easy #\n";
     print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
-    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "\n";  #newline
 }
 sub helpFun {
     print "\n"; #newline
-    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
     print "    #        + + + Universal Compiler Help + + +      (c) #\n"; 
     print "    #                                                     #\n";
@@ -68,7 +68,7 @@ sub helpFun {
     print "    # Program: Universal Compiler - Reducing headaches    #\n";
     print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
-    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "\n";   #newline
 }
 #print "Called print: \n";
@@ -95,7 +95,7 @@ sub memoryTest {
             } elsif  ( $ARGV[2] eq 't3' ) {
                 $code = `time cat $testname | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$outname`;
             } else {    #No test arguments
-                #echo    #newline
+                #print    #newline
                 print "= = = For Copy/Paste = = = ";
                 print "time cat $testname | valgrind ./$outname";                                                                 #[ t  ]";
                 #print "time cat $filename.test | valgrind --leak-check=full ./$filename.out                                               #[ t1 ]";
@@ -119,7 +119,7 @@ if (not defined $ARGV[0] ) {
         helpFun();
         exit 0;
     } elsif ($ARGV[0] eq "download") {
-        my $return = `wget -c ./ https://github.com/ishubhamch/universal/archive/master.zip`; # || echo "Download Failed, Check your connection and try again"
+        my $return = `wget -c ./ https://github.com/ishubhamch/universal/archive/master.zip`; # || print "Download Failed, Check your connection and try again"
         print "Extract master.zip files and follow further instructions available in README.md";
         exit 0;
     }
@@ -130,93 +130,91 @@ if (not defined $ARGV[0] ) {
 # 
 # ######################## MAIN #################################
 # 
-# function main {
-#     ################# Testing different files ######################
-#     ##########     C      ##################
-#     if test "${1:nameLen-2}" == '.c' ;  then
-#     #if [["${1:nameLen-2}"=="*.c"]] ; then
-#     #    command -v gcc >/dev/null 2>&1 || { echo >&2 "Hey I require gcc but it's not installed.";
-#     #                                             echo "Copy/Paste ===> sudo apt-get install gcc"; echo "Aborting :("; echo; exit 1; }
-#         if -n command -v gcc >/dev/null 2>&1    #because in bash 0 is success
-#         then
-#             echo >&2 "Hey I require gcc but it's not installed.";
-#             echo "Copy/Paste ===> sudo apt-get install gcc"; 
-#             echo "Aborting :("; 
-#             echo;
-#             exit 1
-#         fi
-#         filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
-#         echo " = = = = = = GCC: Compiling $filename .c file = = = = = ="
-#         echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"    #-g to make gdb compaitable
-#         echo "Error(if any):"   #newline
-#         command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
-#         echo "gcc exited with $?"
-#         memoryTest $1 $2 $3
-#         $compiled && echo "For Copy/Paste ===> ./$filename.out"
-#         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
-#         #echo ".c file found"
-#     
-#     ################### C++ #######################
-#     
-#     elsif test "${1:nameLen-4}" == '.cpp' ; then #first arg: crop till nameLen-4
-#     #elsif [["${1:nameLen-4}"=="*.cpp"]] ; then
-#         command -v g++ >/dev/null 2>&1 || { echo >&2 "Hey I require g++ but it's not installed.";
-#                                                  echo "Copy/Paste ===> sudo apt-get install g++"; echo "Aborting :("; echo; exit 1; }
-#         filename=${1:0:nameLen-4}     #striping last 2 char i.e. '.c' i.e keep from 0 till nameLen -4
-#         echo " - - - - - - G++: Compiling $filename .cpp file - - - - - -"
-#         echo "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
-#         echo "Error(if any):"   #newline
-#         command g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false
-#         memoryTest $1 $2 $3
-#         $compiled && echo "For Copy/Paste ===> ./$filename.out"
-#         #echo ".cpp file found"
-#     
-#     ################ PYTHON #################################
-#     
-#     elsif test "${1:nameLen-3}" == '.py' ; then
-#         command -v python >/dev/null 2>&1 || { echo >&2 "Hey I require python but it's not installed.";
-#                                                  echo "Copy/Paste ===> sudo apt-get install python"; echo "Aborting :("; echo; exit 1; }
-#         filename=${1:0:nameLen-3}
-#         echo " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^"
-#         echo "python $1"
-#         echo    #newline
-#         command python $1 || compiled=false
-#     
-#     ############### JAVA #########################
-#     
-#     elsif test "${1:nameLen-5}" == '.java'
-#     then
-#         command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1 || { echo >&2 "Hey I require both java and javac but it's not installed.";
-#                                                  echo "Copy/Paste ===> sudo apt-get install java javac"; echo "Aborting :("; echo; exit 1; }
-#         filename=${1:0:nameLen-5}   #stripping '.java'
-#         echo " + + + + + + JAVA: Compiling $filename .java file + + + + + "
-#         echo    #newline
-#         echo "Performing 'javac $1'"
-#         command javac $1 || compiled=false
-#         if [ $? -ne 0 ] ; then
-#             compiled=false
-#         else
-#             echo    #newline
-#             echo " + + + + + + \`java $filename\` OUTPUT follows: "
-#             command java $filename || compiled=false
-#         fi
-#     ############## Unknow file format ################
-#     else 
-#         echo    #newline
-#         echo "NOTICE: Unknown File format \"$1\""
-#         usage
-#         compiled=false
-#     fi
-#     ############# end of filetype if #####################
-#     #if [ $? -ne 0 ]    #previous command gcc g++ javac python
-#     if test $compiled == false
-#     then
-#         echo    #newline
-#         echo "Ouch, The process of compilation failed."
-#         echo "For Copy/Paste ===> vi $1"
-#         compiled=false
-#     fi
-# } #end of main function
+sub main {
+    ################# Testing different files ######################
+    ##########     C      ##################
+    if test "${1:nameLen-2}" == '.c' ;  then
+    #if [["${1:nameLen-2}"=="*.c"]] ; then
+    #    command -v gcc >/dev/null 2>&1 || { print >&2 "Hey I require gcc but it's not installed.";
+    #                                             print "Copy/Paste ===> sudo apt-get install gcc"; print "Aborting :("; print; exit 1; }
+        if (not $out = `command -v gcc >/dev/null 2>&1`)    #because in bash 0 is success
+        {
+            print "Hey I require gcc but it's not installed.\n";
+            print "Copy/Paste ===> sudo apt-get install gcc\n"; 
+            die("Aborting :(\n"); 
+        }
+        filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
+        print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
+        print "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1\n";    #-g to make gdb compaitable
+        print "Error(if any):\n";   #newline
+        command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
+        print "gcc exited with $?"
+        memoryTest $1 $2 $3
+        $compiled && print "For Copy/Paste ===> ./$filename.out"
+        #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
+        #print ".c file found"
+    
+    ################### C++ #######################
+    
+    elsif test "${1:nameLen-4}" == '.cpp' ; then #first arg: crop till nameLen-4
+    #elsif [["${1:nameLen-4}"=="*.cpp"]] ; then
+        command -v g++ >/dev/null 2>&1 || { print >&2 "Hey I require g++ but it's not installed.";
+                                                 print "Copy/Paste ===> sudo apt-get install g++"; print "Aborting :("; print; exit 1; }
+        filename=${1:0:nameLen-4}     #striping last 2 char i.e. '.c' i.e keep from 0 till nameLen -4
+        print " - - - - - - G++: Compiling $filename .cpp file - - - - - -"
+        print "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
+        print "Error(if any):"   #newline
+        command g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false
+        memoryTest $1 $2 $3
+        $compiled && print "For Copy/Paste ===> ./$filename.out"
+        #print ".cpp file found"
+    
+    ################ PYTHON #################################
+    
+    elsif test "${1:nameLen-3}" == '.py' ; then
+        command -v python >/dev/null 2>&1 || { print >&2 "Hey I require python but it's not installed.";
+                                                 print "Copy/Paste ===> sudo apt-get install python"; print "Aborting :("; print; exit 1; }
+        filename=${1:0:nameLen-3}
+        print " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^"
+        print "python $1"
+        print    #newline
+        command python $1 || compiled=false
+    
+    ############### JAVA #########################
+    
+    elsif test "${1:nameLen-5}" == '.java'
+    then
+        command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1 || { print >&2 "Hey I require both java and javac but it's not installed.";
+                                                 print "Copy/Paste ===> sudo apt-get install java javac"; print "Aborting :("; print; exit 1; }
+        filename=${1:0:nameLen-5}   #stripping '.java'
+        print " + + + + + + JAVA: Compiling $filename .java file + + + + + "
+        print    #newline
+        print "Performing 'javac $1'"
+        command javac $1 || compiled=false
+        if [ $? -ne 0 ] ; then
+            compiled=false
+        else
+            print    #newline
+            print " + + + + + + \`java $filename\` OUTPUT follows: "
+            command java $filename || compiled=false
+        fi
+    ############## Unknow file format ################
+    else 
+        print    #newline
+        print "NOTICE: Unknown File format \"$1\""
+        usage
+        compiled=false
+    fi
+    ############# end of filetype if #####################
+    #if [ $? -ne 0 ]    #previous command gcc g++ javac python
+    if test $compiled == false
+    then
+        print    #newline
+        print "Ouch, The process of compilation failed."
+        print "For Copy/Paste ===> vi $1"
+        compiled=false
+    fi
+} #end of main function
 # #if test $compiled == true ; then
 # #else    #Show Usage & Help
 #     #usage
