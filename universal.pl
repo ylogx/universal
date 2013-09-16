@@ -147,10 +147,12 @@ sub main {
         print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
         print "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1\n";    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
-        command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
-        print "gcc exited with $?"
-        memoryTest $1 $2 $3
-        $compiled && print "For Copy/Paste ===> ./$filename.out"
+        $result = `gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1`;
+        print "gcc exited with $result";
+        memoryTest($filename,$result);
+        if(not $result){ 
+            print "For Copy/Paste ===> ./$filename.out";
+        }
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
         #print ".c file found"
     
