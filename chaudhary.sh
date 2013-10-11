@@ -137,9 +137,9 @@ function main {
         fi
         filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
         echo " = = = = = = GCC: Compiling $filename .c file = = = = = ="
-        echo "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1"    #-g to make gdb compaitable
+        echo "gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm"    #-g to make gdb compaitable
         echo "Error(if any):"   #newline
-        command gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false;
+        command gcc -g -O2 -std=gnu99 -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm || compiled=false;
         echo "gcc exited with $?"
         memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
@@ -154,9 +154,9 @@ function main {
                                                  echo "Copy/Paste ===> sudo apt-get install g++"; echo "Aborting :("; echo; exit 1; }
         filename=${1:0:nameLen-4}     #striping last 2 char i.e. '.c' i.e keep from 0 till nameLen -4
         echo " - - - - - - G++: Compiling $filename .cpp file - - - - - -"
-        echo "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
+        echo "g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1" 
         echo "Error(if any):"   #newline
-        command g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false
+        command g++ -g -O2 -std=gnu++0x -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1 || compiled=false
         memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
         #echo ".cpp file found"
