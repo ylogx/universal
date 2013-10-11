@@ -110,7 +110,7 @@ then
     exit 0
 elif test "$1" == "download"
 then
-    wget -c ./ https://github.com/ishubhamch/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
+    wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
     echo "Extract master.zip files and follow further instructions available in README.md"
     exit 0
 fi
