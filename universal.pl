@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #  chaudhary.pl
 #
-#  Copyright (c) 2011-2013 Shubham Chaudhary <shubhamchaudhary92@gmail.com>
+#  Copyright (c) 2011-2013 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ if (not defined $ARGV[0] ) {
         helpFun();
         exit 0;
     } elsif ($ARGV[0] eq "download") {
-        my $return = `wget -c ./ https://github.com/ishubhamch/universal/archive/master.zip`; # || print "Download Failed, Check your connection and try again"
+        my $return = `wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip`; # || print "Download Failed, Check your connection and try again"
         print "Extract master.zip files and follow further instructions available in README.md";
         exit 0;
     }
