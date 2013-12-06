@@ -18,3 +18,9 @@ After completing installation you can type command name 'c help' OR 'universal h
   
 To get latest version of Universal Compiler   
   [Update](https://github.com/shubhamchaudhary/universal/archive/master.zip)  
+
+Find us on LaunchPad
+  [LaunchPad UniversalCompiler](https://launchpad.net/universalcompiler)  
+
+
+  
