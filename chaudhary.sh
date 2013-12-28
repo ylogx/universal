@@ -137,9 +137,9 @@ function main {
         fi
         filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
         echo " = = = = = = GCC: Compiling $filename .c file = = = = = ="
-        echo "gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm"    #-g to make gdb compaitable
+        echo "gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm -lrt"    #-g to make gdb compaitable
         echo "Error(if any):"   #newline
-        command gcc -g -O2 -std=gnu99 -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm || compiled=false;
+        command gcc -g -O2 -std=gnu99 -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $1 -lm -lrt || compiled=false;
         echo "gcc exited with $?"
         memoryTest $1 $2 $3
         $compiled && echo "For Copy/Paste ===> ./$filename.out"
