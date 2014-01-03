@@ -57,7 +57,7 @@ function helpFun {
     echo "    #                                                     #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
     echo "    #                                                     #"
-    echo "    # Update Version: \`chaudhary.sh download\`             #"
+    echo "    # Update Version: \`chaudhary.sh update\`               #"
     echo "    #              Or see README.md to get download link  #"
     echo "    #                                                     #"
     echo "    #######################################################"
@@ -113,6 +113,14 @@ then
     wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
     echo "Extract master.zip files and follow further instructions available in README.md"
     exit 0
+elif test "$1" == "update"
+then
+    wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
+    unzip master.zip ;		# create a folder universal- master in the current folder 
+    cd universal-master/
+    ./install
+    cd ../
+    rm -rf ./universal-master master.zip
 fi
 ##### Variables ####
 nameLen=${#1}
