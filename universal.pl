@@ -122,7 +122,17 @@ if (not defined $ARGV[0] ) {
         my $return = `wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip`; # || print "Download Failed, Check your connection and try again"
         print "Extract master.zip files and follow further instructions available in README.md";
         exit 0;
+    } elsif ($ARGV[0] eq "problem") {
+        +elif test "$1" == "problem"
+        +then
+        print "Thanks in advance for taking the time out"
+        print "Click on the green New Issue button on right side"
+        print "Opening the browser: "
+        my $return = `xdg-open "https://github.com/shubhamchaudhary/juk/issues"`;
+        #my $return = `xdg-open "https://github.com/shubhamchaudhary/juk/issues/new"`;
+        exit 0;
     }
+
 }
 ##### Variables ####
 #nameLen=${#1}

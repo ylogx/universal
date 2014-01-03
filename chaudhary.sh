@@ -121,6 +121,14 @@ then
     ./install
     cd ../
     rm -rf ./universal-master master.zip
+elif test "$1" == "problem"
+then
+    echo "Thanks in advance for taking the time out"
+    echo "Click on the green New Issue button on right side"
+    echo "Opening the browser: "
+    xdg-open "https://github.com/shubhamchaudhary/juk/issues"
+    #xdg-open "https://github.com/shubhamchaudhary/juk/issues/new"
+    exit 0
 fi
 ##### Variables ####
 nameLen=${#1}
