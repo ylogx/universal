@@ -115,7 +115,17 @@ then
     exit 0
 elif test "$1" == "update"
 then
-    wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip # || echo "Download Failed, Check your connection and try again"
+    #if -n command -v wget >/dev/null 2>&1    #because in bash 0 is success
+    #then
+    #    echo "wget not found. Use \nsudo apt-get install wget"
+    #    exit 1;
+    #fi
+    echo "It'll be best if you perform this in an empty folder as your current directory"
+    command -v wget >/dev/null 2>&1 || { echo >&2 "Hey I need wget but it's not installed.";
+                                               echo "Copy/Paste ===> sudo apt-get install wget unzip"; echo "Aborting :("; echo; exit 1; }
+    command -v unzip >/dev/null 2>&1 || { echo >&2 "Hey I require zip tools but they are not installed.";
+                                               echo "Copy/Paste ===> sudo apt-get install unzip"; echo "Aborting :("; echo; exit 1; }
+    wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip || echo "Download Failed, Check your internet connection and try again";
     unzip master.zip ;		# create a folder universal- master in the current folder 
     cd universal-master/
     ./install
