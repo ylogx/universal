@@ -1,0 +1,22 @@
+.*
+*~
+build
+release-build
+Doxyfile
+*.patch
+*.rej
+*.orig
+*.c
+*.cpp
+
+# CMake
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+Debug
+
+#QtCreator
+qtcreator-build
+
+#ctags
+tags
+types_c.taghl
