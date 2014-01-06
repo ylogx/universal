@@ -107,4 +107,9 @@ if [ "$shortcut" == "y" ]; then
     sudo cp -s "$file" "/usr/local/bin/c"
     sudo cp -s "$file" "$installPath/universal"
 fi
-rm -f chaudhary.sh install README.md
+del="y"
+echo "Delete files? <y/n>"
+read del
+if [ "$del" == "y" ]; then
+    rm -f universal.pl chaudhary.sh install README.md
+fi
