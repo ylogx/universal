@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-#  chaudhary.pl
+#  universal.pl
 #
 #  Copyright (c) 2011-2013 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
 #
@@ -30,10 +30,10 @@ sub usage {
     print "    #######################################################\n";
     print "    #        - - - Universal Compiler Usage - - -     (c) #\n"; 
     print "    #                                                     #\n";
-    print "    # USAGE:  chaudhary.sh <filename> <test option>       #\n"; 
+    print "    # USAGE:  universal.sh <filename> <test option>       #\n"; 
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
-    print "    # For Full Help:  \`chaudhary.sh help\`                 #\n";
+    print "    # For Full Help:  \`universal.sh help\`                 #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";
     print "    # Program: Universal Compiler - Programming made easy #\n";
@@ -48,20 +48,20 @@ sub helpFun {
     print "    #######################################################\n";
     print "    #        + + + Universal Compiler Help + + +      (c) #\n"; 
     print "    #                                                     #\n";
-    print "    # Aliases: 'universal' and 'chaudhary.sh' and 'c'     #\n";
+    print "    # Aliases: 'universal' and 'universal.sh' and 'c'     #\n";
     print "    # That means you may also use:                        #\n";
     print "    #         \`universal help\` \`c help\`                   #\n";
     print "    #                                                     #\n";
-    print "    # USAGE:  chaudhary.sh <filename>                     #\n";
-    print "    #         chaudhary.sh <filename> <test option>       #\n"; 
-    print "    # e.g      'chaudhary.sh hello.cpp'                   #\n";
-    print "    #          'chaudhary.sh HelloWorld.java'             #\n";
+    print "    # USAGE:  universal.sh <filename>                     #\n";
+    print "    #         universal.sh <filename> <test option>       #\n"; 
+    print "    # e.g      'universal.sh hello.cpp'                   #\n";
+    print "    #          'universal.sh HelloWorld.java'             #\n";
     print "    # Automated Testing options: t, t1, t2, t3            #\n";
-    print "    # For Full Help:  'chaudhary.sh help'                 #\n";
+    print "    # For Full Help:  'universal.sh help'                 #\n";
     print "    #                                                     #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
-    print "    # Update Version: \`chaudhary.sh download\`             #\n";
+    print "    # Update Version: \`universal.sh download\`             #\n";
     print "    #              Or see README.md to get download link  #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";

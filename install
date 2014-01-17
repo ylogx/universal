@@ -22,8 +22,8 @@
 #This script installs universal compilation tool for different programming languages
 #clear
 installPath="/usr/local/bin"
-filename="chaudhary.sh"
-file="/usr/local/bin/chaudhary.sh"
+filename="universal.sh"
+file="/usr/local/bin/universal.sh"
 current_directory=`pwd`
 echo    #newline
 helpInstall(){ 
@@ -41,7 +41,7 @@ helpInstall(){
     echo "  #                                                                 #"
     echo "  # Note   : If install file does not have execution permission you #"
     echo "  #          should execute this command first                      #"  
-    echo "  #   \`sudo chmod 777 install chaudhary.sh\`                         #"
+    echo "  #   \`sudo chmod 777 install universal.sh\`                         #"
     echo "  #                                                                 #"
     echo "  # To Uninstall previous installations type:                       #"
     echo "  #   \`./install uninstall\`                                         #"
@@ -85,11 +85,11 @@ echo "  # Author    :  Shubham Chaudhary                           #"
 echo "  ############################################################"
 if [ ! -f "$file" ] ; then
     echo " * * * Copying Files * * *"
-    sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
+    sudo cp "$current_directory/universal.sh" "$installPath/$filename"
     #echo "   * * * Done * * * "
 elif [ "$file" -ot "$current_directory/$filename" ]; then
     echo "Older Version found and will be updated now"
-    sudo cp "$current_directory/chaudhary.sh" "$installPath/$filename"
+    sudo cp "$current_directory/universal.sh" "$installPath/$filename"
 #else  
 #    helpInstall
 fi
@@ -101,7 +101,7 @@ if [ "$shortcut" == "y" ]; then
 #        touch ~/.bash_aliases
 #    fi
 #    echo "Appending in ~/.bash_aliases"
-#    echo "alias c='/usr/local/bin/chaudhary.sh'" >> ~/.bash_aliases
+#    echo "alias c='/usr/local/bin/universal.sh'" >> ~/.bash_aliases
     echo "Creating symbolic links"
     sudo cp -s "$file" "/usr/bin/$filename"
     sudo cp -s "$file" "/usr/local/bin/c"
@@ -111,5 +111,5 @@ del="y"
 echo "Delete files? <y/n>"
 read del
 if [ "$del" == "y" ]; then
-    rm -f universal.pl chaudhary.sh install README.md
+    rm -f universal.pl universal.sh install README.md
 fi
