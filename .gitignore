@@ -8,6 +8,8 @@ Doxyfile
 *.orig
 *.c
 *.cpp
+*.py
+*.java
 
 # CMake
 CMakeLists.txt.user

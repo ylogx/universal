@@ -125,19 +125,21 @@ then
                                                echo "Copy/Paste ===> sudo apt-get install wget unzip"; echo "Aborting :("; echo; exit 1; }
     command -v unzip >/dev/null 2>&1 || { echo >&2 "Hey I require zip tools but they are not installed.";
                                                echo "Copy/Paste ===> sudo apt-get install unzip"; echo "Aborting :("; echo; exit 1; }
+    cd /tmp;
     wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip || echo "Download Failed, Check your internet connection and try again";
-    unzip master.zip ;		# create a folder universal- master in the current folder 
+    unzip master.zip ;      # create a folder universal-master in the /tmp folder 
     cd universal-master/
     ./install
     cd ../
     rm -rf ./universal-master master.zip
+    cd - ;
 elif test "$1" == "problem"
 then
     echo "Thanks in advance for taking the time out"
     echo "Click on the green New Issue button on right side"
     echo "Opening the browser: "
-    xdg-open "https://github.com/shubhamchaudhary/juk/issues"
-    #xdg-open "https://github.com/shubhamchaudhary/juk/issues/new"
+    xdg-open "https://github.com/shubhamchaudhary/universal/issues"
+    #xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"
     exit 0
 fi
 ##### Variables ####
