@@ -69,7 +69,7 @@ sub helpFun {
     print "    # e.g      'universal hello.cpp'                      #\n";
     print "    #          'universal HelloWorld.java'                #\n";
     print "    # Automated Testing options: t, t1, t2, t3            #\n";
-    print "    # For Full Help:  'universal -h'                    #\n";
+    print "    # For this full help:  'universal -h'                 #\n";
     print "    #                                                     #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
