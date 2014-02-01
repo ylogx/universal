@@ -23,24 +23,35 @@
 use strict;
 use warnings;
 
+sub doSystemCommand {
+    my $systemCommand = $_[0];
+    my $message = $_[1];
+
+    #print LOG "$0: Executing [$systemCommand] \n";
+    my $returnCode = system( $systemCommand );
+
+    if ( $returnCode != 0 ) {
+        #print "Error Code: $returnCode\n";
+        print defined $message ? $message : "Error Code: $returnCode\nFailed executing [ $systemCommand ]\n";
+    }
+    return $returnCode;
+}
 ##this script compiles .c & .cpp files
 sub usage {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
     print "    #        - - - Universal Compiler Usage - - -     (c) #\n"; 
-    print "    #                                                     #\n";
     print "    # USAGE:  universal.sh <filename> <test option>       #\n"; 
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
-    print "    #                                                     #\n";
     print "    # For Full Help:  \`universal.sh help\`                 #\n";
-    print "    #                                                     #\n";
+#    print "    #                                                     #\n";
+#    print "    #######################################################\n";
+#    print "    # Program: Universal Compiler - Programming made easy #\n";
+#    print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
-    print "    # Program: Universal Compiler - Programming made easy #\n";
-    print "    # Author : Shubham Chaudhary                          #\n";
-    print "    #######################################################\n";
-    #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
-    print "\n";  #newline
+#    print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+#    print "\n";  #newline
 }
 sub helpFun {
     print "\n"; #newline
@@ -112,26 +123,6 @@ sub memoryTest {
 }
 #memoryTest('alpha',1);
 # 
-# ############# Check Command Line Arguments ###############
-# #clear
-print "\n";   #newline
-#if (not defined $ARGV[0] ) {   #TODO -- thing
-    if ( $ARGV[0] eq "help" ) {
-        helpFun();
-        exit 0;
-    } elsif ($ARGV[0] eq "download") {
-        my $return = `wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip`; # || print "Download Failed, Check your connection and try again"
-        print "Extract master.zip files and follow further instructions available in README.md\n";
-        exit 0;
-    } elsif ($ARGV[0] eq "problem") {
-        print "Thanks in advance for taking the time out\n";
-        print "Click on the green New Issue button on right side\n";
-        print "Opening the browser: \n";
-        my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues"`;;
-        #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
-        exit 0;
-    }
-#}
 
 ##### Variables ####
 #nameLen=${#1}
@@ -140,70 +131,129 @@ print "\n";   #newline
 # ######################## MAIN #################################
 # 
 sub main {
+
+    # ############# Check options supplied as Command Line Arguments ###############
+    # #clear
+    #if (not defined $ARGV[0] ) {   #TODO -- thing
+    if ( $ARGV[0] eq "help" ) {
+        print "\n";   #newline
+        helpFun();
+        exit(0);
+    } elsif ($ARGV[0] eq "download") {
+        my $command = "wget -c --report-speed=bits https://github.com/shubhamchaudhary/universal/archive/master.zip";
+        my $errorMessage = "Download Failed, Check your connection and try again\n";
+        my $theReturn = doSystemCommand($command,$errorMessage);
+        $theReturn or print "Extract master.zip files and follow further instructions available in README.md\n";
+        exit($theReturn);
+    } elsif ($ARGV[0] eq "problem") {
+        print "Thanks in advance for taking the time out\n";
+        print "Click on the green New Issue button on right side\n";
+        print "Opening the browser: \n";
+        my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"");
+        #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
+        exit($return);
+    }
+    #}
+
+    ### So it's not a command line option, now check file and filetypes.
+    if ( not -r $ARGV[0] ) {
+        print "Oh man, I think I'm getting old\n";
+        print "I can't read $ARGV[0]\n";
+
+    }elsif ( not -e $ARGV[0] ) {
+        print "Come on! Are you kidding me? \n";
+        print "\"One does not simply compile $ARGV[0]\".\n";
+        print "It doesn't exist\n";
+        print "Copy/Paste this to edit ==> vi $ARGV[0]\n";
+        exit(-1);
+    }elsif ( -z $ARGV[0] ) {
+        print "Hey, Look I'm doing your dirty work for you, but come on\n";
+        print "What is the point of compiling when the size of file is zero\n";
+        print "Copy/Paste this to edit ==> vi $ARGV[0]\n";
+    }elsif ( -d $ARGV[0] ) {
+        print "Hey, how do you expect me to compile $ARGV[0] directory\n";
+        print "You may use a Makefile to compile entire directory\n";
+        #Want to learn how?
+    }elsif ( -B $ARGV[0] ) {
+        print "Dear, $ARGV[0] is a binary file";
+        #my $size = -s $ARGV[0]; #my $time = -M $ARGV[0]; #print " which is $size bits long and is $time days old";
+        if (-x $ARGV[0] ){
+            print "\n"; print "Now since this file is an executable file, I can run it for you\n";
+            print "But I care about you and your system. Executable files may contain virus/side-effects, so I need to make sure\n";
+            print "Are you sure you want me to execute `./$ARGV[0]`? <Ctrl+c to cancel>: "; #XXX: dangerous to use Ctrl-c
+            #TODO: Read input
+            if(doSystemCommand("sleep 2", "\n\nI didn't do it !\n") == 0){
+                print "\n\nOutput of `./$ARGV[0]` starts : \n";
+                print "---------------------------------------> \n";
+                my $out = doSystemCommand("./$ARGV[0]", " ");
+                print "\n---------------------------------------> \n";
+                print "End of Output\n";
+                return $out;
+            }
+        } else {
+            print "\n"; print "and one more thing, this binary file is not executable. \n";
+            print "If you want to execute it, set the exectable bit using ==> chmod +x $ARGV[0]\n";
+        }
+        exit (-1);
+    }
+
+
     ################# Testing different files ######################
-    my $dotpos = rindex($ARGV[0], '.');
     my @filesplits = split('\.', $ARGV[0]);
     my $extension = $filesplits[-1];
+    #my $dotPos = rindex($ARGV[0], '.');
+
     ##########     C      ##################
     #if test "${1:nameLen-2}" == '.c' ;  then
     if ( $extension eq 'c' ) {
-    #if [["${1:nameLen-2}"=="*.c"]] ; then
-    #    command -v gcc >/dev/null 2>&1 || { print >&2 "Hey I require gcc but it's not installed.";
-    #                                             print "Copy/Paste ===> sudo apt-get install gcc"; print "Aborting :("; print; exit 1; }
-
-    #TODO 
-        my $out = undef;
-        if (not $out = `command -v gcc >/dev/null 2>&1`)    #because in bash 0 is success
-        {
+        my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
+        if ($out) {
             print "Hey I require gcc but it's not installed.\n";
             print "Copy/Paste ===> sudo apt-get install gcc\n"; 
-            #die("Aborting :(\n"); 
+            die("Aborting :(\n"); 
         }
-        #filename=${1:0:nameLen-2}     #striping last 2 char i.e. '.c'
-        my $filename= $filesplits[0]; #$ARGV[0](0,-2);      #TODO
+        #$ARGV[0](0,-2); 
+        my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
         print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
         print "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
-        my $result = `gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]`;
-        print "gcc exited with $result\n"; #TODO
-        memoryTest($filename,$result);
-        if(not $result){ 
+        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]");
+        print "gcc exited with $result\n";
+
+        memoryTest($filename,$result);  #XXX
+        if($result == 0){
             print "For Copy/Paste ===> ./$filename.out\n";
         }
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
         #print ".c file found";
         $compiled = 1;      #$result;
     }
-    
+
     ################### C++ #######################
-    
-#    #elsif test "${1:nameLen-4}" == '.cpp' ; then #first arg: crop till nameLen-4
-#    #elsif [["${1:nameLen-4}"=="*.cpp"]] ; then
-#    elsif ( $extension == 'cpp' ) {
-#        #command -v g++ >/dev/null 2>&1 || { print >&2 "Hey I require g++ but it's not installed."; print; exit 1; }
-#        if (not $out = `command -v g++ >/dev/null 2>&1`)    #because in bash 0 is success
-#        {
-#            print "Hey I require g++ but it's not installed.\n";
-#            print "Copy/Paste ===> sudo apt-get install g++\n"; 
-#            die("Aborting :(\n"); 
-#        }
-#        #filename=${1:0:nameLen-4}     #striping last 2 char i.e. '.c' i.e keep from 0 till nameLen -4
-#        $filename= $ARGV[1](0,-4);
-#        print " - - - - - - G++: Compiling $filename .cpp file - - - - - -"
-#        print "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1" 
-#        print "Error(if any):"   #newline
-#        my $result = `g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $1`;
-#        #memoryTest $1 $2 $3
-#        print "g++ exited with $result";
-#        memoryTest($filename,$result);
-#        if(not $result) {
-#            print "For Copy/Paste ===> ./$filename.out"
-#        }
-#        #print ".cpp file found"
-#    }
-#    
+
+    elsif ( $extension eq 'cpp' ) {
+        my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
+        if ($out) {  #because in bash 0 is success
+            print "Hey I require g++ but it's not installed.\n";
+            print "Copy/Paste ===> sudo apt-get install g++\n"; 
+            die("Aborting :(\n"); 
+        }
+        #$filename= $ARGV[1](0,-4);
+        my $filename= $filesplits[0];
+        print " - - - - - - G++: Compiling $filename .cpp file - - - - - -\n";
+        print "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";
+        print "Error(if any):";  #newline
+        my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n");
+        print "g++ exited with $result\n";
+        memoryTest($filename,$result);
+        if($result == 0) {
+            print "For Copy/Paste ===> ./$filename.out\n";
+        }
+        $compiled = 1;      #$result;
+    }
+
 #    ################ PYTHON #################################
-#    
+#
 #    #elsif test "${1:nameLen-3}" == '.py' ; then
 #    elsif ( $extension == 'py' ) {
 #        #command -v  >/dev/null 2>&1 || { print >&2 "Hey I require python but it's not installed."; exit 1; }
@@ -227,9 +277,9 @@ sub main {
 #        #}
 #        #command python $1 || compiled=false
 #    }
-#    
+#
 #    ############### JAVA #########################
-#    
+#
 #    #elsif test "${1:nameLen-5}" == '.java'
 #    elsif ( $extension == 'java' ) {
 #        #command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1 || { print >&2 "Hey I require both java and javac but it's not installed.";
@@ -257,8 +307,9 @@ sub main {
 #        }
 #    }
     ############## Unknow file format ################
-    else {  # $dotpos == -1
+    else {
         print "NOTICE: Unknown File format \"$ARGV[0]\"\n";
+        doSystemCommand("file $ARGV[0]");
         usage();
         $compiled= 0; #false;
     }
@@ -271,9 +322,4 @@ sub main {
         #my $compiled=false;
     }
 } #end of main function
-# #if test $compiled == true ; then
-# #else    #Show Usage & Help
-#     #usage
-# #fi
-# main $1 $2 $3
 exit(main(@ARGV));
