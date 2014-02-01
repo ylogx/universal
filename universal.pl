@@ -144,13 +144,6 @@ sub main {
         my $theReturn = doSystemCommand($command,$errorMessage);
         $theReturn or print "Extract master.zip files and follow further instructions available in README.md\n";
         exit($theReturn);
-    } elsif ($ARGV[0] eq "--problem" || $ARGV[0] eq "problem" || $ARGV[0] eq "-p" ) {
-        print "Thanks in advance for taking the time out\n";
-        print "Click on the green New Issue button on right side\n";
-        print "Opening the browser: \n";
-        my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"", " ");
-        #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
-        exit($return);
     } elsif ($ARGV[0] eq "--update" || $ARGV[0] eq "-u" || $ARGV[0] eq "update" ){
         #if -n command -v wget >/dev/null 2>&1    #because in bash 0 is success
         #then
@@ -174,14 +167,52 @@ sub main {
         }
         #cd /tmp;
         chdir "/tmp";
+
+        print "It'll be best if you perform this in an empty folder as your current directory\n";
+        #my $data = get("https://github.com/shubhamchaudhary/universal/archive/master.zip");
+        #print "Retrived ".length($data)." bytes\n";
+
+        #use Cwd;
+        #my $return_dir = getcwd();
+        chdir "/tmp";
+        print "Downloading in temoprary directory . . .\n";
         #wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip || echo "Download Failed, Check your internet connection and try again";
+        my $return = doSystemCommand("wget -c https://github.com/shubhamchaudhary/universal/archive/master.zip", "Download Failed, Check your internet connection and try again");
+        #$return or print "Download file from: https://github.com/shubhamchaudhary/universal/archive/master.zip\nExtract master.zip files and run ./install\nFor detailed instructions see README.md\n";
+        #$result or exit($result);
+
+        print "Unzipping\n";
         #unzip master.zip ;      # create a folder universal-master in the /tmp folder 
+        $return = doSystemCommand("unzip master.zip", "Unzipping failed\n") ;      # create a folder universal-master in the /tmp folder 
+        if($return && -e "/tmp/universal-master" ) {
+            print "Manually run: \n";
+            print "cd /tmp/universal-master; && ./install;\n";
+            exit($result);
+        }
+
         #cd universal-master/
+        chdir("universal-master/");
+
         #./install
+        print "Installing\n";
+        $return = doSystemCommand("./install");
+
         #cd ../
         #rm -rf ./universal-master master.zip
-        #cd - ;
+        print "Deleting\n";
+        chdir "/tmp";
+        $return = doSystemCommand("rm -ivrf ./universal-master master.zip");
 
+        #cd -;
+        #chdir($return_dir);
+        exit($return);
+    } elsif ($ARGV[0] eq "--problem" || $ARGV[0] eq "problem" || $ARGV[0] eq "-p" ) {
+        print "Thanks in advance for taking the time out\n";
+        print "Click on the green New Issue button on right side\n";
+        print "Opening the browser: \n";
+        my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"", " ");
+        #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
+        exit($return);
     }
 
     ### So it's not a command line option, now check file and filetypes.
