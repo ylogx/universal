@@ -349,10 +349,10 @@ sub main {
         }
         my $filename= $filesplits[0];  #$ARGV[1](0,-5);
         print " + + + + + + JAVA: Compiling $filename .java file + + + + + \n";
-        print "Performing `javac $ARGV[0]`";
+        print "Performing `javac $ARGV[0]`\n";
         my $result = doSystemCommand("javac $ARGV[0]"," ");
         if ( $result == 0 ) {
-            print "\n + + + + + + `java $filename` OUTPUT follows: ";
+            print "\n + + + + + + `java $filename` OUTPUT follows: \n";
             $result = doSystemCommand("java $filename"," ");
         }
         $compiled = !$result;
