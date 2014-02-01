@@ -1,6 +1,6 @@
 #  install
 #
-#  Copyright (c) 2012-2013 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
+#  Copyright (c) 2012-2014 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-#  
-#  
+#
+#
 
 #This script installs universal compilation tool for different programming languages
 
@@ -44,7 +44,7 @@ helpInstall(){
     echo "  #          permissions. Provide password when asked or run as su. #"
     echo "  #                                                                 #"
     echo "  # Note   : If install file does not have execution permission you #"
-    echo "  #          should execute this command first                      #"  
+    echo "  #          should execute this command first                      #"
     echo "  #   \`sudo chmod 777 install universal.pl\`                         #"
     echo "  #                                                                 #"
     echo "  # To Uninstall previous installations type:                       #"

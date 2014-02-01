@@ -1,6 +1,6 @@
 #  universal.sh
 #
-#  Copyright (c) 2011-2013 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
+#  Copyright (c) 2011-2014 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-#  
-#  
+#
+#
 
 ##this script compiles .c & .cpp files
 function usage {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        - - - Universal Compiler Usage - - -     (c) #" 
+    echo "    #        - - - Universal Compiler Usage - - -     (c) #"
     echo "    #                                                     #"
-    echo "    # USAGE:  universal.sh <filename> <test option>       #" 
+    echo "    # USAGE:  universal.sh <filename> <test option>       #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
     echo "    #                                                     #"
     echo "    # For Full Help:  \`universal.sh help\`                 #"
@@ -42,14 +42,14 @@ function helpFun {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        + + + Universal Compiler Help + + +      (c) #" 
+    echo "    #        + + + Universal Compiler Help + + +      (c) #"
     echo "    #                                                     #"
     echo "    # Aliases: 'universal' and 'universal.sh' and 'c'     #"
     echo "    # That means you may also use:                        #"
     echo "    #         \`universal help\` \`c help\`                   #"
     echo "    #                                                     #"
     echo "    # USAGE:  universal.sh <filename>                     #"
-    echo "    #         universal.sh <filename> <test option>       #" 
+    echo "    #         universal.sh <filename> <test option>       #"
     echo "    # e.g      'universal.sh hello.cpp'                   #"
     echo "    #          'universal.sh HelloWorld.java'             #"
     echo "    # Automated Testing options: t, t1, t2, t3            #"

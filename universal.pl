@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #  universal.pl
 #
-#  Copyright (c) 2011-2013 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
+#  Copyright (c) 2011-2014 Shubham Chaudhary <shubham.chaudhary@kdemail.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
-#  
-#  
+#
+#
 
 use strict;
 use warnings;
@@ -41,10 +41,10 @@ sub usage {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        - - - Universal Compiler Usage - - -     (c) #\n"; 
-    print "    # USAGE:  universal <filename> <test option>          #\n"; 
+    print "    #        - - - Universal Compiler Usage - - -     (c) #\n";
+    print "    # USAGE:  universal <filename>                        #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
-    print "    # For Full Help:  \`universal help\`                    #\n";
+    print "    # For Full Help:  \`universal --help\` or \`u -h\`        #\n";
 #    print "    #                                                     #\n";
 #    print "    #######################################################\n";
 #    print "    # Program: Universal Compiler - Programming made easy #\n";
@@ -58,22 +58,22 @@ sub helpFun {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        + + + Universal Compiler Help + + +      (c) #\n"; 
+    print "    #        + + + Universal Compiler Help + + +      (c) #\n";
     print "    #                                                     #\n";
     print "    # Aliases: 'universal' and 'u' and 'c'                #\n";
     print "    # That means you may also use:                        #\n";
-    print "    #         \`universal help\` \`u help\`                   #\n";
+    print "    #          \`u --help\` \`universal --help\`              #\n";
     print "    #                                                     #\n";
     print "    # USAGE:  universal <filename>                        #\n";
-    print "    #         universal <filename> <test option>          #\n"; 
+    print "    #         universal <filename> <test option>          #\n";
     print "    # e.g      'universal hello.cpp'                      #\n";
     print "    #          'universal HelloWorld.java'                #\n";
     print "    # Automated Testing options: t, t1, t2, t3            #\n";
-    print "    # For Full Help:  'universal help'                    #\n";
-    print "    #                                                        #\n";
+    print "    # For Full Help:  'universal -h'                    #\n";
+    print "    #                                                     #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
-    print "    # Update Version: \`universal download\`                #\n";
+    print "    # Update Version: \`universal -u\`                      #\n";
     print "    #              Or see README.md to get download link  #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";
