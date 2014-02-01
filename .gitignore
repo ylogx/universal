@@ -10,6 +10,8 @@ Doxyfile
 *.cpp
 *.py
 *.java
+*.test
+*.out
 
 # CMake
 CMakeLists.txt.user

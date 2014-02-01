@@ -22,8 +22,8 @@
 #This script installs universal compilation tool for different programming languages
 #clear
 installPath="/usr/local/bin"
-filename="universal.sh"
-file="/usr/local/bin/universal.sh"
+filename="universal.pl"
+file="/usr/local/bin/universal.pl"
 current_directory=`pwd`
 echo    #newline
 helpInstall(){ 
@@ -41,7 +41,7 @@ helpInstall(){
     echo "  #                                                                 #"
     echo "  # Note   : If install file does not have execution permission you #"
     echo "  #          should execute this command first                      #"  
-    echo "  #   \`sudo chmod 777 install universal.sh\`                         #"
+    echo "  #   \`sudo chmod 777 install universal.pl\`                         #"
     echo "  #                                                                 #"
     echo "  # To Uninstall previous installations type:                       #"
     echo "  #   \`./install uninstall\`                                         #"
@@ -65,7 +65,7 @@ then
     read sure
     if test sure == 'Y'
     then
-        sudo rm "/usr/bin/$filename" "/usr/local/bin/c" "$installPath/universal"
+        sudo rm "/usr/bin/$filename" "/usr/local/bin/u" "/usr/local/bin/c" "$installPath/universal"
         exit 0
     fi
 fi
@@ -85,11 +85,11 @@ echo "  # Author    :  Shubham Chaudhary                           #"
 echo "  ############################################################"
 if [ ! -f "$file" ] ; then
     echo " * * * Copying Files * * *"
-    sudo cp "$current_directory/universal.sh" "$installPath/$filename"
+    sudo cp "$current_directory/universal.pl" "$installPath/$filename"
     #echo "   * * * Done * * * "
 elif [ "$file" -ot "$current_directory/$filename" ]; then
     echo "Older Version found and will be updated now"
-    sudo cp "$current_directory/universal.sh" "$installPath/$filename"
+    sudo cp "$current_directory/universal.pl" "$installPath/$filename"
 #else  
 #    helpInstall
 fi
@@ -103,13 +103,15 @@ if [ "$shortcut" == "y" ]; then
 #    echo "Appending in ~/.bash_aliases"
 #    echo "alias c='/usr/local/bin/universal.sh'" >> ~/.bash_aliases
     echo "Creating symbolic links"
-    sudo cp -s "$file" "/usr/bin/$filename"
-    sudo cp -s "$file" "/usr/local/bin/c"
-    sudo cp -s "$file" "$installPath/universal"
+    #sudo cp -s "$file" "/usr/bin/$filename"
+    sudo cp -sf "$file" "/usr/local/bin/u"
+    sudo cp -sf "$file" "$installPath/universal"
+    sudo cp -sf "$file" "/usr/local/bin/c"
 fi
+
 del="y"
 echo "Delete files? <y/n>"
 read del
 if [ "$del" == "y" ]; then
-    rm -f universal.pl universal.sh install README.md
+    rm -ivf universal.pl universal.sh install README.md
 fi
