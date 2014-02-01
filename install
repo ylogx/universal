@@ -20,14 +20,18 @@
 #  
 
 #This script installs universal compilation tool for different programming languages
+
 #clear
-installPath="/usr/local/bin"
-filename="universal.pl"
-file="/usr/local/bin/universal.pl"
-current_directory=`pwd`
+INSTALL_DIR="/usr/local/bin"
+FILENAME="universal.pl"
+#FILE="/usr/local/bin/universal.pl"
+FILE="$INSTALL_DIR/$FILENAME"
+CURRENT_DIR=`pwd`
+
 echo    #newline
+
+#Show Usage & Help
 helpInstall(){ 
-    #Show Usage & Help
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "  ###################################################################"
     echo "  #      + + + Universal Compiler Installation Help + + +       (c) #"
@@ -44,7 +48,7 @@ helpInstall(){
     echo "  #   \`sudo chmod 777 install universal.pl\`                         #"
     echo "  #                                                                 #"
     echo "  # To Uninstall previous installations type:                       #"
-    echo "  #   \`./install uninstall\`                                         #"
+    echo "  #   \`./install --uninstall\`                                       #"
     echo "  #                                                                 #"
     echo "  ###################################################################"
     echo "  # Program: Universal Compiler - Programming made easy             #"
@@ -53,25 +57,28 @@ helpInstall(){
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo    #newline
 }
-if test "$1" == "help"
+
+if test "$1" == "--help"
 then
     helpInstall
     exit 0
 fi
-if test "$1" == "uninstall"
+
+if test "$1" == "--uninstall"
 then
     echo "About to uninstall Universal Compiler Tool"
-    echo "Are you sure ? <Y/N>"
+    echo "Are you sure ? <Y/n>"
     read sure
     if test sure == 'Y'
     then
-        sudo rm "/usr/bin/$filename" "/usr/local/bin/u" "/usr/local/bin/c" "$installPath/universal"
+        sudo rm "$INSTALL_DIR/$FILENAME" "/usr/bin/u" "$INSTALL_DIR/c" "/usr/bin/universal"
         exit 0
     fi
 fi
+
 echo "You can get help or uninstall using : "
-echo "./install help"
-echo "./install uninstall"
+echo "./install --help"
+echo "./install --uninstall"
 echo    #newline
 
 #echo "To continue installation hit Enter"
@@ -81,18 +88,28 @@ echo    #newline
 echo " * * * Installing Universal Compilation Tool * * *"
 echo "  ############################################################"
 echo "  # Tool Name :  Universal Compiler - Programming made easy  #"
-echo "  # Author    :  Shubham Chaudhary                           #"
+#echo "  # Author    :  Shubham Chaudhary                           #"
 echo "  ############################################################"
-if [ ! -f "$file" ] ; then
+if [ ! -f "$INSTALL_DIR/$FILENAME" ] ; then
     echo " * * * Copying Files * * *"
-    sudo cp "$current_directory/universal.pl" "$installPath/$filename"
+    sudo cp "$CURRENT_DIR/$FILENAME" "$INSTALL_DIR/$FILENAME"
     #echo "   * * * Done * * * "
-elif [ "$file" -ot "$current_directory/$filename" ]; then
+elif [ "$INSTALL_DIR/$FILENAME" -ot "$CURRENT_DIR/$FILENAME" ]; then
     echo "Older Version found and will be updated now"
-    sudo cp "$current_directory/universal.pl" "$installPath/$filename"
+    sudo cp "$CURRENT_DIR/$FILENAME" "$INSTALL_DIR/$FILENAME";
 #else  
 #    helpInstall
 fi
+
+if [ -f "/usr/local/bin/chaudhary.sh" ]; then
+    echo -n "Removing older version: ";
+    sudo rm -vf "/usr/local/bin/chaudhary.sh";
+fi
+if [ -f "/usr/local/bin/universal.sh" ]; then
+    echo -n "Removing older version: ";
+    sudo rm -vf "/usr/local/bin/universal.sh";
+fi
+
 #echo "Create Shortcuts? <y/n>"
 #read shortcut
 #shortcut="y"
@@ -103,15 +120,21 @@ fi
 #    echo "Appending in ~/.bash_aliases"
 #    echo "alias c='/usr/local/bin/universal.sh'" >> ~/.bash_aliases
     echo "Creating symbolic links"
-    #sudo cp -s "$file" "/usr/bin/$filename"
-    sudo cp -sf "$file" "/usr/local/bin/u"
-    sudo cp -sf "$file" "$installPath/universal"
-    sudo cp -sf "$file" "/usr/local/bin/c"
+    #sudo cp -s "$FILE" "/usr/bin/$FILENAME"
+    sudo cp -sf "$FILE" "/usr/bin/u"
+    sudo cp -sf "$FILE" "/usr/bin/universal"
+    #sudo cp -sf "$FILE" "$INSTALL_DIR/universal"
+    sudo cp -sf "$FILE" "$INSTALL_DIR/c"
 #fi
 
 del="y"
-echo "Delete files? <y/n>"
+echo -n "Delete files? <y/n>"
 read del
 if [ "$del" == "y" ]; then
     rm -ivf universal.pl universal.sh install README.md
 fi
+
+echo ; #newline
+echo "Use update option --update or -u to get latest version";
+echo "Copy/Paste ==> u -u"
+echo "or Copy/Paste ==> universal -u"
