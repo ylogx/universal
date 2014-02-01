@@ -95,8 +95,8 @@ elif [ "$file" -ot "$current_directory/$filename" ]; then
 fi
 #echo "Create Shortcuts? <y/n>"
 #read shortcut
-shortcut="y"
-if [ "$shortcut" == "y" ]; then
+#shortcut="y"
+#if [ "$shortcut" == "y" ]; then
 #    if [ ! -f ~/.bash_aliases ]; then
 #        touch ~/.bash_aliases
 #    fi
@@ -107,7 +107,7 @@ if [ "$shortcut" == "y" ]; then
     sudo cp -sf "$file" "/usr/local/bin/u"
     sudo cp -sf "$file" "$installPath/universal"
     sudo cp -sf "$file" "/usr/local/bin/c"
-fi
+#fi
 
 del="y"
 echo "Delete files? <y/n>"
