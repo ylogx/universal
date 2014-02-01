@@ -36,7 +36,7 @@ sub doSystemCommand {
     }
     return $returnCode;
 }
-##this script compiles .c & .cpp files
+
 sub usage {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
@@ -53,6 +53,7 @@ sub usage {
 #    print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
 #    print "\n";  #newline
 }
+
 sub helpFun {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
@@ -82,12 +83,11 @@ sub helpFun {
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "\n";   #newline
 }
-#print "Called print: \n";
-#usage();
-#print "Called helpFun: \n";
-#helpFun();
-############ Do automated testing by taking inputs from $filename.test file for C & C++ ##################
+
+##### Variables ####
 our $compiled = 0;
+
+############ Do automated testing by taking inputs from $filename.test file for C & C++ ##################
 sub memoryTest {
     my $filename = $_[0];
     my $code;
@@ -121,39 +121,68 @@ sub memoryTest {
         print "\n";    #newline
     }
 }
-#memoryTest('alpha',1);
-# 
 
-##### Variables ####
-#nameLen=${#1}
-#compiled=true
-# 
+##### Variables ##### define above memoryTest ^
+
 # ######################## MAIN #################################
-# 
+
 sub main {
 
     # ############# Check options supplied as Command Line Arguments ###############
-    # #clear
-    #if (not defined $ARGV[0] ) {   #TODO -- thing
-    if ( $ARGV[0] eq "help" ) {
+    if ( !defined @ARGV ) {     #No command line argument
+        usage();
+        exit (-1);
+    }
+    #doSystemCommand("clear", " ");
+    if ( $ARGV[0] eq "--help" || $ARGV[0] eq "-h" || $ARGV[0] eq "help" ) {
         print "\n";   #newline
         helpFun();
-        exit(0);
-    } elsif ($ARGV[0] eq "download") {
+        exit (0);
+    } elsif ($ARGV[0] eq "--download" || $ARGV[0] eq "download" || $ARGV[0] eq "-d" ) {
         my $command = "wget -c --report-speed=bits https://github.com/shubhamchaudhary/universal/archive/master.zip";
         my $errorMessage = "Download Failed, Check your connection and try again\n";
         my $theReturn = doSystemCommand($command,$errorMessage);
         $theReturn or print "Extract master.zip files and follow further instructions available in README.md\n";
         exit($theReturn);
-    } elsif ($ARGV[0] eq "problem") {
+    } elsif ($ARGV[0] eq "--problem" || $ARGV[0] eq "problem" || $ARGV[0] eq "-p" ) {
         print "Thanks in advance for taking the time out\n";
         print "Click on the green New Issue button on right side\n";
         print "Opening the browser: \n";
         my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"", " ");
         #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
         exit($return);
+    } elsif ($ARGV[0] eq "--update" || $ARGV[0] eq "-u" || $ARGV[0] eq "update" ){
+        #if -n command -v wget >/dev/null 2>&1    #because in bash 0 is success
+        #then
+        #    echo "wget not found. Use \nsudo apt-get install wget"
+        #    exit 1;
+        #fi
+        print "It'll be best if you perform this in an empty folder as your current directory";
+        my $result = doSystemCommand("command -v wget >/dev/null 2>&1");
+        if ($result) {
+            print "Hey I need wget and zip tools but it's not installed.";
+            print "Copy/Paste ===> sudo apt-get install wget unzip";
+            print "Aborting :(";
+            exit $result;
+        }
+        $result = doSystemCommand("command -v unzip >/dev/null 2>&1");
+        if ($result) {
+            print "Hey I require zip tools but they are not installed.";
+            print "Copy/Paste ===> sudo apt-get install unzip"; 
+            print "Aborting :(";
+            exit 1;
+        }
+        #cd /tmp;
+        chdir "/tmp";
+        #wget -c ./ https://github.com/shubhamchaudhary/universal/archive/master.zip || echo "Download Failed, Check your internet connection and try again";
+        #unzip master.zip ;      # create a folder universal-master in the /tmp folder 
+        #cd universal-master/
+        #./install
+        #cd ../
+        #rm -rf ./universal-master master.zip
+        #cd - ;
+
     }
-    #}
 
     ### So it's not a command line option, now check file and filetypes.
     if ( not -r $ARGV[0] ) {
@@ -217,9 +246,9 @@ sub main {
         #$ARGV[0](0,-2); 
         my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
         print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
-        print "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";    #-g to make gdb compaitable
+        print "gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n";    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
-        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]", " ");
+        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0] -lm -lrt", " ");
         print "gcc exited with $result\n";
 
         memoryTest($filename,$result);  #XXX
@@ -244,7 +273,7 @@ sub main {
         #$filename= $ARGV[1](0,-4);
         my $filename= $filesplits[0];
         print " - - - - - - G++: Compiling $filename .cpp file - - - - - -\n";
-        print "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";
+        print "g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $ARGV[0]\n";
         print "Error(if any):\n";
         my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n", " ");
         print "g++ exited with $result\n";
