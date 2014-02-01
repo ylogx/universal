@@ -42,9 +42,9 @@ sub usage {
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
     print "    #        - - - Universal Compiler Usage - - -     (c) #\n"; 
-    print "    # USAGE:  universal.sh <filename> <test option>       #\n"; 
+    print "    # USAGE:  universal <filename> <test option>          #\n"; 
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
-    print "    # For Full Help:  \`universal.sh help\`                 #\n";
+    print "    # For Full Help:  \`universal help\`                    #\n";
 #    print "    #                                                     #\n";
 #    print "    #######################################################\n";
 #    print "    # Program: Universal Compiler - Programming made easy #\n";
@@ -59,20 +59,20 @@ sub helpFun {
     print "    #######################################################\n";
     print "    #        + + + Universal Compiler Help + + +      (c) #\n"; 
     print "    #                                                     #\n";
-    print "    # Aliases: 'universal' and 'universal.sh' and 'c'     #\n";
+    print "    # Aliases: 'universal' and 'u' and 'c'                #\n";
     print "    # That means you may also use:                        #\n";
-    print "    #         \`universal help\` \`c help\`                   #\n";
+    print "    #         \`universal help\` \`u help\`                   #\n";
     print "    #                                                     #\n";
-    print "    # USAGE:  universal.sh <filename>                     #\n";
-    print "    #         universal.sh <filename> <test option>       #\n"; 
-    print "    # e.g      'universal.sh hello.cpp'                   #\n";
-    print "    #          'universal.sh HelloWorld.java'             #\n";
+    print "    # USAGE:  universal <filename>                        #\n";
+    print "    #         universal <filename> <test option>          #\n"; 
+    print "    # e.g      'universal hello.cpp'                      #\n";
+    print "    #          'universal HelloWorld.java'                #\n";
     print "    # Automated Testing options: t, t1, t2, t3            #\n";
-    print "    # For Full Help:  'universal.sh help'                 #\n";
-    print "    #                                                     #\n";
+    print "    # For Full Help:  'universal help'                    #\n";
+    print "    #                                                        #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
-    print "    # Update Version: \`universal.sh download\`             #\n";
+    print "    # Update Version: \`universal download\`                #\n";
     print "    #              Or see README.md to get download link  #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";
@@ -149,7 +149,7 @@ sub main {
         print "Thanks in advance for taking the time out\n";
         print "Click on the green New Issue button on right side\n";
         print "Opening the browser: \n";
-        my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"");
+        my $return = doSystemCommand("xdg-open \"https://github.com/shubhamchaudhary/universal/issues\"", " ");
         #my $return = `xdg-open "https://github.com/shubhamchaudhary/universal/issues/new"`;
         exit($return);
     }
@@ -182,6 +182,7 @@ sub main {
             print "But I care about you and your system. Executable files may contain virus/side-effects, so I need to make sure\n";
             print "Are you sure you want me to execute `./$ARGV[0]`? <Ctrl+c to cancel>: "; #XXX: dangerous to use Ctrl-c
             #TODO: Read input
+            #loop
             if(doSystemCommand("sleep 2", "\n\nI didn't do it !\n") == 0){
                 print "\n\nOutput of `./$ARGV[0]` starts : \n";
                 print "---------------------------------------> \n";
@@ -210,14 +211,15 @@ sub main {
         if ($out) {
             print "Hey I require gcc but it's not installed.\n";
             print "Copy/Paste ===> sudo apt-get install gcc\n"; 
-            die("Aborting :(\n"); 
+            print "Aborting :(\n";
+            exit 3;
         }
         #$ARGV[0](0,-2); 
         my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
         print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
         print "gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
-        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]");
+        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]", " ");
         print "gcc exited with $result\n";
 
         memoryTest($filename,$result);  #XXX
@@ -226,7 +228,7 @@ sub main {
         }
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
         #print ".c file found";
-        $compiled = 1;      #$result;
+        $compiled = !$result;      #1 $result;
     }
 
     ################### C++ #######################
@@ -236,80 +238,69 @@ sub main {
         if ($out) {  #because in bash 0 is success
             print "Hey I require g++ but it's not installed.\n";
             print "Copy/Paste ===> sudo apt-get install g++\n"; 
-            die("Aborting :(\n"); 
+            print "Aborting :(\n";
+            exit 3;
         }
         #$filename= $ARGV[1](0,-4);
         my $filename= $filesplits[0];
         print " - - - - - - G++: Compiling $filename .cpp file - - - - - -\n";
         print "g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n";
-        print "Error(if any):";  #newline
-        my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n");
+        print "Error(if any):\n";
+        my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n", " ");
         print "g++ exited with $result\n";
         memoryTest($filename,$result);
         if($result == 0) {
             print "For Copy/Paste ===> ./$filename.out\n";
         }
-        $compiled = 1;      #$result;
+        $compiled = !$result;      #1 $result;
     }
 
-#    ################ PYTHON #################################
-#
-#    #elsif test "${1:nameLen-3}" == '.py' ; then
-#    elsif ( $extension == 'py' ) {
-#        #command -v  >/dev/null 2>&1 || { print >&2 "Hey I require python but it's not installed."; exit 1; }
-#        if (not $out = `command -v python >/dev/null 2>&1`)    #because in bash 0 is success
-#        {
-#            print "Hey I require Python but it's not installed.\n";
-#            print "Copy/Paste ===> sudo apt-get install Python\n"; 
-#            die("Aborting :(\n"); 
-#        }
-#        #filename=${1:0:nameLen-3}
-#        $filename= $ARGV[1](0,-3);
-#        print " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^"
-#        print "python $1"
-#        print    #newline
-#        my $result = `python $1`;
-#        #memoryTest $1 $2 $3
-#        print "python exited with $result";
-#        #memoryTest($filename,$result);
-#        #if(not $result) {
-#        #    print "For Copy/Paste ===> ./$filename.out"
-#        #}
-#        #command python $1 || compiled=false
-#    }
-#
-#    ############### JAVA #########################
-#
-#    #elsif test "${1:nameLen-5}" == '.java'
-#    elsif ( $extension == 'java' ) {
-#        #command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1 || { print >&2 "Hey I require both java and javac but it's not installed.";
-#        #print "Copy/Paste ===> sudo apt-get install java javac"; print "Aborting :("; print; exit 1; }
-#        if (not $out = `command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1`)    #because in bash 0 is success
-#        {
-#            print "Hey I require java and javac but it's not installed.\n";
-#            print "Copy/Paste ===> sudo apt-get install java javac\n"; 
-#            die("Aborting :(\n"); 
-#        }
-#        #filename=${1:0:nameLen-5}   #stripping '.java'
-#        $filename= $ARGV[1](0,-5);
-#        print " + + + + + + JAVA: Compiling $filename .java file + + + + + "
-#        print    #newline
-#        print "Performing 'javac $ARGV[1]'"
-#        $compiled = `javac $ARGV[1]`;
-#        #if [ $? -ne 0 ] ; then
-#        #if (!( $compiled eq 0 )) {
-#        if ( $compiled == false ) {
-#            compiled=false
-#        } else {
-#            print    #newline
-#            print " + + + + + + \`java $filename\` OUTPUT follows: "
-#            $compiled = `java $filename`;
-#        }
-#    }
-    ############## Unknow file format ################
+    ################ PYTHON #################################
+
+    #elsif test "${1:nameLen-3}" == '.py' ; then
+    elsif ( $extension eq 'py' ) {
+        my $out = doSystemCommand("command -v python >/dev/null 2>&1", " ");
+        if ( $out ) {   #because in bash 0 is success
+            print "Hey I require Python but it's not installed.\n";
+            print "Copy/Paste ===> sudo apt-get install Python\n"; 
+            print "Aborting :(\n";
+            exit 3;
+        }
+        my $filename = $filesplits[0]; #$filename = $ARGV[1](0,-3);
+        print " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^\n";
+        print "`python $ARGV[0]` output:\n";
+        my $result = doSystemCommand("python $ARGV[0]", " ");
+        #print "python exited with $result\n";
+        #memoryTest($filename,$result);
+        #doSystemCommand("command python $ARGV[0]", " ") || $compiled=0;
+        $compiled = !$result;# ? 0 : 1;
+    }
+
+    ############### JAVA #########################
+
+    elsif ( $extension eq 'java' ) {
+        my $out = doSystemCommand("command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1", " ");    #because in bash 0 is success
+        if ( $out ) {
+            print "Hey I require java and javac but it's not installed.\n";
+            print "Copy/Paste ===> sudo apt-get install openjdk-7-jdk\n"; 
+            #print "Optional: sudo apt-get install openjdk-7-jdk openjdk-7-doc openjdk-7-source\n";
+            print "Aborting :(\n";
+            exit 3;
+        }
+        my $filename= $filesplits[0];  #$ARGV[1](0,-5);
+        print " + + + + + + JAVA: Compiling $filename .java file + + + + + \n";
+        print "Performing `javac $ARGV[0]`";
+        my $result = doSystemCommand("javac $ARGV[0]"," ");
+        if ( $result == 0 ) {
+            print "\n + + + + + + `java $filename` OUTPUT follows: ";
+            $result = doSystemCommand("java $filename"," ");
+        }
+        $compiled = !$result;
+    }
+   ############## Unknow file format ################
     else {
         print "NOTICE: Unknown File format \"$ARGV[0]\"\n";
-        doSystemCommand("file $ARGV[0]");
+        doSystemCommand("file $ARGV[0]", " ");
         usage();
         $compiled= 0; #false;
     }
