@@ -23,6 +23,10 @@
 use strict;
 use warnings;
 
+use POSIX;
+use Term::ANSIColor;
+use Term::ANSIColor qw(:constants);
+
 sub doSystemCommand {
     my $systemCommand = $_[0];
     my $message = $_[1];
@@ -41,10 +45,10 @@ sub usage {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        - - - Universal Compiler Usage - - -     (c) #\n";
-    print "    # USAGE:  universal <filename>                        #\n";
+    print "    #        - - - ",YELLOW,"Universal Compiler Usage",RESET," - - -     (c) #\n";
+    print "    # USAGE:  ",GREEN,"universal <filename>",RESET,"                        #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
-    print "    # For Full Help:  \`universal --help\` or \`u -h\`        #\n";
+    print "    # For Full Help:  \`",CYAN,"universal --help",RESET,"\` or \`",CYAN,"u -h",RESET,"\`        #\n";
 #    print "    #                                                     #\n";
 #    print "    #######################################################\n";
 #    print "    # Program: Universal Compiler - Programming made easy #\n";
@@ -58,11 +62,11 @@ sub helpFun {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        + + + Universal Compiler Help + + +      (c) #\n";
+    print "    #        + + + ",BRIGHT_YELLOW,"Universal Compiler Help",RESET," + + +      (c) #\n";
     print "    #                                                     #\n";
-    print "    # Aliases: 'universal' and 'u' and 'c'                #\n";
+    print "    # Aliases: '",GREEN,"universal",RESET,"' and '",GREEN,"u",RESET,"' and '",GREEN,"c",RESET,"'                #\n";
     print "    # That means you may also use:                        #\n";
-    print "    #          \`u --help\` \`universal --help\`              #\n";
+    print "    #       \`u --help\`   or   \`universal --help\`          #\n";
     print "    #                                                     #\n";
     print "    # USAGE:  universal <filename>                        #\n";
     print "    #         universal <filename> <test option>          #\n";
@@ -73,7 +77,7 @@ sub helpFun {
     print "    #                                                     #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    #                                                     #\n";
-    print "    # Update Version: \`universal -u\`                      #\n";
+    print "    # ",BOLD RED,"Update Version",RESET,": \`",MAGENTA,"universal -u",RESET,"\` i.e. \`",MAGENTA,"u -u",RESET,"\`          #\n";
     print "    #              Or see README.md to get download link  #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";
@@ -89,37 +93,38 @@ our $compiled = 0;
 
 ############ Do automated testing by taking inputs from $filename.test file for C & C++ ##################
 sub memoryTest {
-    my $filename = $_[0];
-    my $code;
+    our @filesplits;
+    my $filename = "";#$filesplits[0];
+    my $result;
     my $testname = $filename.'.test';
     my $outname = $filename.'.out';
-    #$compiled = $_[1];     #WTF
+    #print "DEBUG: Compiled == ".$compiled;
     if ( $compiled == 1) {
-        print "\n";
+        #print "DEBUG: testname == ".$testname;
         if ( -e $testname ) {
             print " * * * Valgrind Test: $filename.test found * * *" ;
-            if ($ARGV[2] eq 't') {
-                $code = `time cat $testname | valgrind ./$outname`;
-            } elsif  ( $ARGV[2] eq 't1' ) {
-                $code = `time cat $testname | valgrind --leak-check=full ./$outname`;
-            } elsif  ( $ARGV[2] eq 't2' ) {
-                $code = `time cat $testname | valgrind --leak-check=full -v ./$outname`;
-            } elsif  ( $ARGV[2] eq 't3' ) {
-                $code = `time cat $testname | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$outname`;
+            if ($ARGV[1] eq 't') {
+                #$result doSystemCommand("time cat $testname | valgrind ./$outname");
+                $result = doSystemCommand("time valgrind ./$outname < $testname");
+            } elsif  ( $ARGV[1] eq 't1' ) {
+                $result = doSystemCommand("time valgrind --leak-check=full ./$outname < $testname");
+            } elsif  ( $ARGV[1] eq 't2' ) {
+                $result = doSystemCommand("time valgrind --leak-check=full -v ./$outname < $testname");
+            } elsif  ( $ARGV[1] eq 't3' ) {
+                $result = doSystemCommand("time valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$outname < $testname");
             } else {    #No test arguments
-                #print    #newline
                 print "= = = For Copy/Paste = = = \n";
                 print "time cat $testname | valgrind ./$outname\n";                                                                 #[ t  ]";
+                print "time valgrind ./$outname < $testname" ;
                 #print "time cat $filename.test | valgrind --leak-check=full ./$filename.out                                               #[ t1 ]";
                 #print "time cat $filename.test | valgrind --leak-check=full -v ./$filename.out                                            #[ t2 ]";
                 #print "time cat $filename.test | valgrind --leak-check=full --show-reachable=yes --track-origins=yes -v ./$filename.out   #[ t3 ]";
-                $code="Not performed";
+                $result="Not performed";
             }
             print "\n"; #newline
-            print "The test exited with exit code: $code\n";
+            print "The test exited with exit code: $result\n";
         }
-        print "\n";    #newline
-    }
+    } #endif compiled
 }
 
 ##### Variables ##### define above memoryTest ^
@@ -154,16 +159,16 @@ sub main {
         my $result = doSystemCommand("command -v wget >/dev/null 2>&1");
         if ($result) {
             print "Hey I need wget and zip tools but it's not installed.";
-            print "Copy/Paste ===> sudo apt-get install wget unzip";
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install wget unzip",RESET;
             print "Aborting :(";
             exit $result;
         }
         $result = doSystemCommand("command -v unzip >/dev/null 2>&1");
         if ($result) {
             print "Hey I require zip tools but they are not installed.";
-            print "Copy/Paste ===> sudo apt-get install unzip"; 
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install unzip",RESET;
             print "Aborting :(";
-            exit 1;
+            exit $result;
         }
         #cd /tmp;
         chdir "/tmp";
@@ -216,44 +221,50 @@ sub main {
     }
 
     ### So it's not a command line option, now check file and filetypes.
-    if ( not -r $ARGV[0] ) {
+    if ( not -e $ARGV[0] ) {
+        print "Come on! Are you kidding me? \n";
+        print BLUE,"\"One does not simply compile $ARGV[0]\".\n",RESET;
+        print "It doesn't exist\n";
+        print "Copy/Paste this to edit ==> ",GREEN,"vi $ARGV[0]\n",RESET;
+        exit(-1);
+    }elsif ( not -r $ARGV[0] ) {
         print "Oh man, I think I'm getting old\n";
         print "I can't read $ARGV[0]\n";
-
-    }elsif ( not -e $ARGV[0] ) {
-        print "Come on! Are you kidding me? \n";
-        print "\"One does not simply compile $ARGV[0]\".\n";
-        print "It doesn't exist\n";
-        print "Copy/Paste this to edit ==> vi $ARGV[0]\n";
         exit(-1);
     }elsif ( -z $ARGV[0] ) {
         print "Hey, Look I'm doing your dirty work for you, but come on\n";
         print "What is the point of compiling when the size of file is zero\n";
-        print "Copy/Paste this to edit ==> vi $ARGV[0]\n";
+        print "Copy/Paste this to edit ==> ",GREEN,"vi $ARGV[0]",RESET,"\n";
     }elsif ( -d $ARGV[0] ) {
         print "Hey, how do you expect me to compile $ARGV[0] directory\n";
         print "You may use a Makefile to compile entire directory\n";
+        exit(-1);
         #Want to learn how?
     }elsif ( -B $ARGV[0] ) {
         print "Dear, $ARGV[0] is a binary file";
         #my $size = -s $ARGV[0]; #my $time = -M $ARGV[0]; #print " which is $size bits long and is $time days old";
         if (-x $ARGV[0] ){
+            print color("yellow");
             print "\n"; print "Now since this file is an executable file, I can run it for you\n";
-            print "But I care about you and your system. Executable files may contain virus/side-effects, so I need to make sure\n";
-            print "Are you sure you want me to execute `./$ARGV[0]`? <Ctrl+c to cancel>: "; #XXX: dangerous to use Ctrl-c
+            print "But I care about you and your system. Executable files may contain virus/side-effects, so I need to make sure\n"; print color("reset");
+            print "Are you sure you want me to execute `./$ARGV[0]`? ",color("bold red"),"<Ctrl+c to cancel>",color("reset"),": "; #XXX: dangerous to use Ctrl-c
             #TODO: Read input
             #loop
-            if(doSystemCommand("sleep 2", "\n\nI didn't do it !\n") == 0){
-                print "\n\nOutput of `./$ARGV[0]` starts : \n";
-                print "---------------------------------------> \n";
+            #if(doSystemCommand("sleep 2", "\n\nI didn't do it !\n") == 0){
+            #if(POSIX::sleep(2) == 0){
+            if(doSystemCommand("sleep 2", " ") == 0){
+                print CYAN, "\n\nOutput of `./$ARGV[0]` starts : \n";
+                print "---------------------------------------> \n",RESET;
                 my $out = doSystemCommand("./$ARGV[0]", " ");
-                print "\n---------------------------------------> \n";
-                print "End of Output\n";
+                print CYAN,"\n---------------------------------------> \n";
+                print "End of Output\n",RESET;
                 return $out;
+            } else {
+                print MAGENTA,"\n\nI didn't do it !\n",RESET;
             }
         } else {
             print "\n"; print "and one more thing, this binary file is not executable. \n";
-            print "If you want to execute it, set the exectable bit using ==> chmod +x $ARGV[0]\n";
+            print "If you want to execute it, set the exectable bit using ==> ",GREEN,"chmod +x $ARGV[0]\n",RESET;
         }
         exit (-1);
     }
@@ -270,25 +281,25 @@ sub main {
         my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
         if ($out) {
             print "Hey I require gcc but it's not installed.\n";
-            print "Copy/Paste ===> sudo apt-get install gcc\n"; 
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install gcc\n",RESET; 
             print "Aborting :(\n";
             exit 3;
         }
         #$ARGV[0](0,-2); 
         my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
-        print " = = = = = = GCC: Compiling $filename .c file = = = = = =\n";
-        print "gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n";    #-g to make gdb compaitable
+        print " = = = = = = ",YELLOW,"GCC: Compiling $filename .c file",RESET," = = = = = =\n";
+        print colored("gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n","blue");    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
         my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0] -lm -lrt", " ");
-        print "gcc exited with $result\n";
+        #print "gcc exited with $result\n";
 
-        memoryTest($filename,$result);  #XXX
         if($result == 0){
-            print "For Copy/Paste ===> ./$filename.out\n";
+            print "For Copy/Paste ===> ",GREEN,"./$filename.out\n",RESET;
         }
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
         #print ".c file found";
         $compiled = !$result;      #1 $result;
+        memoryTest(@ARGV,@filesplits);  #XXX
     }
 
     ################### C++ #######################
@@ -297,22 +308,22 @@ sub main {
         my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
         if ($out) {  #because in bash 0 is success
             print "Hey I require g++ but it's not installed.\n";
-            print "Copy/Paste ===> sudo apt-get install g++\n"; 
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install g++\n",RESET; 
             print "Aborting :(\n";
             exit 3;
         }
         #$filename= $ARGV[1](0,-4);
         my $filename= $filesplits[0];
-        print " - - - - - - G++: Compiling $filename .cpp file - - - - - -\n";
-        print "g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $ARGV[0]\n";
+        print " - - - - - - ",YELLOW,"G++: Compiling $filename .cpp file",RESET," - - - - - -\n";
+        print GREEN,"g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $ARGV[0]\n",RESET;
         print "Error(if any):\n";
         my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n", " ");
-        print "g++ exited with $result\n";
-        memoryTest($filename,$result);
+        #print "g++ exited with $result\n";
         if($result == 0) {
             print "For Copy/Paste ===> ./$filename.out\n";
         }
         $compiled = !$result;      #1 $result;
+        memoryTest($filename,$result);
     }
 
     ################ PYTHON #################################
@@ -322,13 +333,13 @@ sub main {
         my $out = doSystemCommand("command -v python >/dev/null 2>&1", " ");
         if ( $out ) {   #because in bash 0 is success
             print "Hey I require Python but it's not installed.\n";
-            print "Copy/Paste ===> sudo apt-get install Python\n"; 
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install Python\n",RESET; 
             print "Aborting :(\n";
             exit 3;
         }
         my $filename = $filesplits[0]; #$filename = $ARGV[1](0,-3);
-        print " ^ ^ ^ ^ ^ ^ ^ PYTHON: Running $filename .py file ^ ^ ^ ^ ^ ^ ^\n";
-        print "`python $ARGV[0]` output:\n";
+        print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PYTHON: Running $filename .py file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
+        print "`",GREEN,"python $ARGV[0]",RESET,"` output:\n";
         my $result = doSystemCommand("python $ARGV[0]", " ");
         #print "python exited with $result\n";
         #memoryTest($filename,$result);
@@ -342,17 +353,17 @@ sub main {
         my $out = doSystemCommand("command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1", " ");    #because in bash 0 is success
         if ( $out ) {
             print "Hey I require java and javac but it's not installed.\n";
-            print "Copy/Paste ===> sudo apt-get install openjdk-7-jdk\n"; 
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install openjdk-7-jdk\n",RESET; 
             #print "Optional: sudo apt-get install openjdk-7-jdk openjdk-7-doc openjdk-7-source\n";
             print "Aborting :(\n";
             exit 3;
         }
         my $filename= $filesplits[0];  #$ARGV[1](0,-5);
-        print " + + + + + + JAVA: Compiling $filename .java file + + + + + \n";
-        print "Performing `javac $ARGV[0]`\n";
+        print " * * * * * * ",YELLOW,"JAVA: Compiling $filename .java file",RESET," * * * * * \n";
+        print "Performing `",GREEN,"javac $ARGV[0]",RESET,"`\n";
         my $result = doSystemCommand("javac $ARGV[0]"," ");
         if ( $result == 0 ) {
-            print "\n + + + + + + `java $filename` OUTPUT follows: \n";
+            print "\n * * * * * * `",GREEN,"java $filename",RESET,"` OUTPUT follows: \n";
             $result = doSystemCommand("java $filename"," ");
         }
         $compiled = !$result;
@@ -369,7 +380,7 @@ sub main {
     if ( $compiled == 0 ) {
         print "\n";   #newline
         print "Ouch, The process of compilation failed.\n";
-        print "For Copy/Paste ===> vi $ARGV[0]\n";
+        print "For Copy/Paste ===> ",GREEN,"vi $ARGV[0]\n",RESET;
         #my $compiled=false;
     }
 } #end of main function
