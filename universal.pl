@@ -23,9 +23,9 @@
 use strict;
 use warnings;
 
-use POSIX;
-use Term::ANSIColor;
-use Term::ANSIColor qw(:constants);
+use POSIX;              # for System Calls
+use Term::ANSIColor;    # for colored output
+use Term::ANSIColor qw(:constants);     # for color macros like BOLD RED BRIGHT_CYAN
 
 sub doSystemCommand {
     my $systemCommand = $_[0];
@@ -75,7 +75,8 @@ sub helpFun {
     print "    # Automated Testing options: t, t1, t2, t3            #\n";
     print "    # For this full help:  'universal -h'                 #\n";
     print "    #                                                     #\n";
-    print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
+    #print "    # Supports with '.c' '.cpp' '.py' '.java' '.pl' '.sh' #\n";
+    print "    # File Extensions: ",BOLD BLUE,"*.c .cpp .py .java .pl .sh",RESET,"         #\n";
     print "    #                                                     #\n";
     print "    # ",BOLD RED,"Update Version",RESET,": \`",MAGENTA,"universal -u",RESET,"\` i.e. \`",MAGENTA,"u -u",RESET,"\`          #\n";
     print "    #              Or see README.md to get download link  #\n";
@@ -129,11 +130,11 @@ sub memoryTest {
 
 ##### Variables ##### define above memoryTest ^
 
-# ######################## MAIN #################################
+######################### MAIN #################################
 
 sub main {
 
-    # ############# Check options supplied as Command Line Arguments ###############
+    ############## Check options supplied as Command Line Arguments ###############
     if ( !defined @ARGV ) {     #No command line argument
         usage();
         exit (-1);
@@ -150,11 +151,6 @@ sub main {
         $theReturn or print "Extract master.zip files and follow further instructions available in README.md\n";
         exit($theReturn);
     } elsif ($ARGV[0] eq "--update" || $ARGV[0] eq "-u" || $ARGV[0] eq "update" ){
-        #if -n command -v wget >/dev/null 2>&1    #because in bash 0 is success
-        #then
-        #    echo "wget not found. Use \nsudo apt-get install wget"
-        #    exit 1;
-        #fi
         print "It'll be best if you perform this in an empty folder as your current directory";
         my $result = doSystemCommand("command -v wget >/dev/null 2>&1");
         if ($result) {
@@ -194,20 +190,16 @@ sub main {
             print "cd /tmp/universal-master; && ./install;\n";
             exit($result);
         }
-
         #cd universal-master/
         chdir("universal-master/");
-
         #./install
         print "Installing\n";
         $return = doSystemCommand("./install");
-
         #cd ../
         #rm -rf ./universal-master master.zip
         print "Deleting\n";
         chdir "/tmp";
         $return = doSystemCommand("rm -ivrf ./universal-master master.zip");
-
         #cd -;
         #chdir($return_dir);
         exit($return);
@@ -248,8 +240,7 @@ sub main {
             print "\n"; print "Now since this file is an executable file, I can run it for you\n";
             print "But I care about you and your system. Executable files may contain virus/side-effects, so I need to make sure\n"; print color("reset");
             print "Are you sure you want me to execute `./$ARGV[0]`? ",color("bold red"),"<Ctrl+c to cancel>",color("reset"),": "; #XXX: dangerous to use Ctrl-c
-            #TODO: Read input
-            #loop
+            #TODO: Read input #loop
             #if(doSystemCommand("sleep 2", "\n\nI didn't do it !\n") == 0){
             #if(POSIX::sleep(2) == 0){
             if(doSystemCommand("sleep 2", " ") == 0){
@@ -276,7 +267,6 @@ sub main {
     #my $dotPos = rindex($ARGV[0], '.');
 
     ##########     C      ##################
-    #if test "${1:nameLen-2}" == '.c' ;  then
     if ( $extension eq 'c' ) {
         my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
         if ($out) {
@@ -285,7 +275,6 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        #$ARGV[0](0,-2); 
         my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
         print " = = = = = = ",YELLOW,"GCC: Compiling $filename .c file",RESET," = = = = = =\n";
         print colored("gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n","blue");    #-g to make gdb compaitable
@@ -297,13 +286,11 @@ sub main {
             print "For Copy/Paste ===> ",GREEN,"./$filename.out\n",RESET;
         }
         #gcc -Werror -pedantic-errors -std=c99 -O2 -fomit-frame-pointer -o prog prog.c #C99 strict (gcc-4.3.2)
-        #print ".c file found";
-        $compiled = !$result;      #1 $result;
-        memoryTest(@ARGV,@filesplits);  #XXX
+        $compiled = !$result;
+        memoryTest(@ARGV,@filesplits);
     }
 
     ################### C++ #######################
-
     elsif ( $extension eq 'cpp' ) {
         my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
         if ($out) {  #because in bash 0 is success
@@ -312,7 +299,6 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        #$filename= $ARGV[1](0,-4);
         my $filename= $filesplits[0];
         print " - - - - - - ",YELLOW,"G++: Compiling $filename .cpp file",RESET," - - - - - -\n";
         print GREEN,"g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $ARGV[0]\n",RESET;
@@ -326,29 +312,7 @@ sub main {
         memoryTest($filename,$result);
     }
 
-    ################ PYTHON #################################
-
-    #elsif test "${1:nameLen-3}" == '.py' ; then
-    elsif ( $extension eq 'py' ) {
-        my $out = doSystemCommand("command -v python >/dev/null 2>&1", " ");
-        if ( $out ) {   #because in bash 0 is success
-            print "Hey I require Python but it's not installed.\n";
-            print "Copy/Paste ===> ",GREEN,"sudo apt-get install Python\n",RESET; 
-            print "Aborting :(\n";
-            exit 3;
-        }
-        my $filename = $filesplits[0]; #$filename = $ARGV[1](0,-3);
-        print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PYTHON: Running $filename .py file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
-        print "`",GREEN,"python $ARGV[0]",RESET,"` output:\n";
-        my $result = doSystemCommand("python $ARGV[0]", " ");
-        #print "python exited with $result\n";
-        #memoryTest($filename,$result);
-        #doSystemCommand("command python $ARGV[0]", " ") || $compiled=0;
-        $compiled = !$result;# ? 0 : 1;
-    }
-
     ############### JAVA #########################
-
     elsif ( $extension eq 'java' ) {
         my $out = doSystemCommand("command -v java >/dev/null 2>&1 && command -v javac >/dev/null 2>&1", " ");    #because in bash 0 is success
         if ( $out ) {
@@ -368,6 +332,57 @@ sub main {
         }
         $compiled = !$result;
     }
+
+    ################ PYTHON #################################
+    elsif ( $extension eq 'py' ) {
+        my $out = doSystemCommand("command -v python >/dev/null 2>&1", " ");
+        if ( $out ) {   #because in bash 0 is success
+            print "Hey I require Python but it's not installed.\n";
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install python\n",RESET; 
+            print "Aborting :(\n";
+            exit 3;
+        }
+        my $filename = $filesplits[0];
+        print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PYTHON: Running $filename .py file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
+        print "`",GREEN,"python $ARGV[0]",RESET,"` output:\n";
+        my $result = doSystemCommand("python $ARGV[0]", " ");
+        #print "python exited with $result\n";
+        $compiled = !$result;
+    }
+
+    ################ PERL #################################
+    elsif ( $extension eq 'pl' ) {
+        my $out = doSystemCommand("command -v perl >/dev/null 2>&1", " ");
+        if ( $out ) {   #because in bash 0 is success
+            print "Hey I require Perl but it's not installed.\n";
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install perl\n",RESET; 
+            print "Aborting :(\n";
+            exit 3;
+        }
+        my $filename = $filesplits[0];
+        print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PERL: Running $filename .pl file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
+        print "`",GREEN,"perl $ARGV[0]",RESET,"` output:\n";
+        my $result = doSystemCommand("perl $ARGV[0]", " ");
+        $compiled = !$result;
+    }
+
+    ################ SHELL #################################
+    elsif ( $extension eq 'sh' ) {
+        my $out = doSystemCommand("command -v bash >/dev/null 2>&1", " ");
+        if ( $out ) {   #because in bash 0 is success
+            print "Hey I require Bash shell but it's not installed.\n";
+            print "Copy/Paste ===> ",GREEN,"sudo apt-get install bash\n",RESET; 
+            print "Aborting :(\n";
+            exit 3;
+        }
+        my $filename = $filesplits[0];
+        print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"BASH: Running $filename .sh file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
+        print "`",GREEN,"bash $ARGV[0]",RESET,"` output:\n";
+        my $result = doSystemCommand("bash $ARGV[0]", " ");
+        $compiled = !$result;
+    }
+
+
    ############## Unknow file format ################
     else {
         print "NOTICE: Unknown File format \"$ARGV[0]\"\n";
@@ -375,8 +390,7 @@ sub main {
         usage();
         $compiled= 0; #false;
     }
-    ############# end of filetype if #####################
-    #if [ $? -ne 0 ]    #previous command gcc g++ javac python
+    ############# End of filetype if #####################
     if ( $compiled == 0 ) {
         print "\n";   #newline
         print "Ouch, The process of compilation failed.\n";
