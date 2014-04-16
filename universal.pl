@@ -275,7 +275,8 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        my $filename= $filesplits[0];      #striping last 2 char i.e. '.c'
+
+        my $filename= join(".", @filesplits[0 .. $#filesplits-1]); #$ARGV[0]; #$filesplits[0];      #striping last 2 char i.e. '.c' only
         print " = = = = = = ",YELLOW,"GCC: Compiling $filename .c file",RESET," = = = = = =\n";
         print colored("gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n","blue");    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
@@ -322,8 +323,8 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        my $filename= $filesplits[0];  #$ARGV[1](0,-5);
-        print " * * * * * * ",YELLOW,"JAVA: Compiling $filename .java file",RESET," * * * * * \n";
+        my $filename= join(".", @filesplits[0 .. $#filesplits-1]); #$ARGV[1](0,-5); #striping last char only
+        #        print " * * * * * * ",YELLOW,"JAVA: Compiling $filename .java file",RESET," * * * * * \n";
         print "Performing `",GREEN,"javac $ARGV[0]",RESET,"`\n";
         my $result = doSystemCommand("javac $ARGV[0]"," ");
         if ( $result == 0 ) {
@@ -342,7 +343,7 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        my $filename = $filesplits[0];
+        my $filename = join(".", @filesplits[0 .. $#filesplits-1]); #$filesplits[0];
         print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PYTHON: Running $filename .py file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
         print "`",GREEN,"python $ARGV[0]",RESET,"` output:\n";
         my $result = doSystemCommand("python $ARGV[0]", " ");
@@ -359,7 +360,7 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        my $filename = $filesplits[0];
+        my $filename = join(".", @filesplits[0 .. $#filesplits-1]);     #$filesplits[0];
         print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"PERL: Running $filename .pl file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
         print "`",GREEN,"perl $ARGV[0]",RESET,"` output:\n";
         my $result = doSystemCommand("perl $ARGV[0]", " ");
@@ -375,7 +376,7 @@ sub main {
             print "Aborting :(\n";
             exit 3;
         }
-        my $filename = $filesplits[0];
+        my $filename = join(".", @filesplits[0 .. $#filesplits-1]);     #$filesplits[0];
         print " ^ ^ ^ ^ ^ ^ ^ ",YELLOW,"BASH: Running $filename .sh file",RESET," ^ ^ ^ ^ ^ ^ ^\n";
         print "`",GREEN,"bash $ARGV[0]",RESET,"` output:\n";
         my $result = doSystemCommand("bash $ARGV[0]", " ");
