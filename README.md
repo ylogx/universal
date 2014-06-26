@@ -51,5 +51,5 @@ Find us:
   * [Ohloh](https://www.ohloh.net/p/UniversalCompiler)
   
   
-Copyright (c) 2011-2014 Shubham Chaudhary <shubham.chaudhary@kdemail.net>  
+Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>  
 
