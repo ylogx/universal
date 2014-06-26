@@ -135,7 +135,7 @@ sub memoryTest {
 sub main {
 
     ############## Check options supplied as Command Line Arguments ###############
-    if ( !defined @ARGV ) {     #No command line argument
+    if ( !@ARGV ) {     #No command line argument
         usage();
         exit (-1);
     }
