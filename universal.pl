@@ -293,7 +293,7 @@ sub main {
 
     ################### C++ #######################
     elsif ( $extension eq 'cpp' ) {
-        my $out = doSystemCommand("command -v gcc >/dev/null 2>&1"," ");    #because in bash 0 is success
+        my $out = doSystemCommand("command -v g++ >/dev/null 2>&1"," ");    #because in bash 0 is success
         if ($out) {  #because in bash 0 is success
             print "Hey I require g++ but it's not installed.\n";
             print "Copy/Paste ===> ",GREEN,"sudo apt-get install g++\n",RESET; 

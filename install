@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-#   install - This script installs universal compilation tool for different programming languages
+#   install - This script installs universal compilation tool for
+#   different programming languages
 #   Copyright (c) 2012-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
 #   This file is a part of Universal.
@@ -21,6 +22,7 @@
 
 
 #clear
+INSTALL_DIR="~/.local/bin"
 INSTALL_DIR="/usr/local/bin"
 FILENAME="universal.pl"
 #FILE="/usr/local/bin/universal.pl"
