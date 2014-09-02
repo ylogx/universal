@@ -4,7 +4,7 @@
 #   source files using same command
 #   Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
-#   This file is a part of Universal.
+#   This file is a part of Universal Competitive Programming Suite.
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
