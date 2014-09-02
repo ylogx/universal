@@ -23,11 +23,19 @@
 
 #clear
 INSTALL_DIR="~/.local/bin"
-INSTALL_DIR="/usr/local/bin"
-FILENAME="universal.pl"
-#FILE="/usr/local/bin/universal.pl"
-FILE="$INSTALL_DIR/$FILENAME"
+INSTALL_DIR="/usr/bin"
+
+FILENAME_UNI="universal"
+FILENAME_FOLLOW="follow"
+FULL_FILENAME_UNI="universal.sh"
+FULL_FILENAME_FOLLOW="follow.sh"
+
+FILE_UNI="$INSTALL_DIR/${FILENAME_UNI}"
+FILE_FOLLOW="$INSTALL_DIR/${FILENAME_FOLLOW}"
+
 CURRENT_DIR=`pwd`
+CUR_FILE_UNI="$CURRENT_DIR/${FILENAME_UNI}.pl"
+CUR_FILE_FOLLOW="$CURRENT_DIR/${FILENAME_FOLLOW}.sh"
 
 echo    #newline
 
@@ -72,7 +80,12 @@ then
     read sure
     if test sure == 'Y'
     then
-        sudo rm "$INSTALL_DIR/$FILENAME" "/usr/bin/u" "$INSTALL_DIR/c" "/usr/bin/universal"
+        sudo rm "$FILE_UNI" "$FILE_FOLLOW"
+        sudo rm "$INSTALL_DIR/u" "$INSTALL_DIR/c" "$INSTALL_DIR/f"
+        sudo rm "/usr/local/bin/$FILENAME_UNI"
+        sudo rm "/usr/local/bin/$FULL_FILENAME_UNI"
+        sudo rm "/usr/local/bin/$FILENAME_FOLLOW"
+        sudo rm "/usr/local/bin/$FULL_FILENAME_FOLLOW"
         exit 0
     fi
 fi
@@ -86,22 +99,6 @@ echo    #newline
 #read
 
 echo    #newline
-echo " * * * Installing Universal Compilation Tool * * *"
-echo "  ############################################################"
-echo "  # Tool Name :  Universal Compiler - Programming made easy  #"
-#echo "  # Author    :  Shubham Chaudhary                           #"
-echo "  ############################################################"
-if [ ! -f "$INSTALL_DIR/$FILENAME" ] ; then
-    echo " * * * Copying Files * * *"
-    sudo cp "$CURRENT_DIR/$FILENAME" "$INSTALL_DIR/$FILENAME"
-    #echo "   * * * Done * * * "
-elif [ "$INSTALL_DIR/$FILENAME" -ot "$CURRENT_DIR/$FILENAME" ]; then
-    echo "Older Version found and will be updated now"
-    sudo cp "$CURRENT_DIR/$FILENAME" "$INSTALL_DIR/$FILENAME";
-#else  
-#    helpInstall
-fi
-
 if [ -f "/usr/local/bin/chaudhary.sh" ]; then
     echo -n "Removing older version: ";
     sudo rm -vf "/usr/local/bin/chaudhary.sh";
@@ -110,6 +107,26 @@ if [ -f "/usr/local/bin/universal.sh" ]; then
     echo -n "Removing older version: ";
     sudo rm -vf "/usr/local/bin/universal.sh";
 fi
+
+echo " * * * Installing Universal Compilation Tool * * *"
+echo "  ############################################################"
+echo "  # Tool Name :  Universal Compiler - Programming made easy  #"
+echo "  ############################################################"
+## Install Universal
+if [ ! -f "$FILE_UNI" ] ; then
+    echo " * * * Copying Files * * *"
+elif [ "$FILE_UNI" -ot "$CUR_FILE_UNI" ]; then
+    echo "Older Version of universal found and will be updated now"
+fi
+sudo cp -pv "$CUR_FILE_UNI" "$FILE_UNI";
+
+# Same for Follow
+if [ ! -f "$FILE_UNI" ] ; then
+    echo " * * * Copying Files * * *"
+elif [ "$FILE_UNI" -ot "$CUR_FILE_UNI" ]; then
+    echo "Older Version of follow found and will be updated now"
+fi
+sudo cp -pv "$CUR_FILE_FOLLOW" "$FILE_FOLLOW";
 
 #echo "Create Shortcuts? <y/n>"
 #read shortcut
@@ -120,21 +137,18 @@ fi
 #    fi
 #    echo "Appending in ~/.bash_aliases"
 #    echo "alias c='/usr/local/bin/universal.sh'" >> ~/.bash_aliases
-    echo "Creating symbolic links"
-    #sudo cp -s "$FILE" "/usr/bin/$FILENAME"
-    sudo cp -sf "$FILE" "/usr/bin/u"
-    sudo cp -sf "$FILE" "/usr/bin/universal"
-    #sudo cp -sf "$FILE" "$INSTALL_DIR/universal"
-    sudo cp -sf "$FILE" "$INSTALL_DIR/c"
+    echo "Creating shortcuts links"
+    sudo cp -sf "$FILE_UNI" "/usr/bin/u"
+    echo "Use u as shortcut for universal"
+    sudo cp -sf "$FILE_FOLLOW" "$INSTALL_DIR/f"
+    echo "Use f as shortcut for follow"
 #fi
-
-del="y"
-echo -n "Delete files? <y/n>"
-read del
-if [ "$del" == "y" ]; then
-    rm -ivf universal.pl universal.sh install README.md
-fi
-
+# del="y"
+# echo -n "Delete files? <y/n>"
+# read del
+# if [ "$del" == "y" ]; then
+#     rm -ivf universal.pl universal.sh install README.md
+# fi
 echo ; #newline
 echo "Use update option --update or -u to get latest version";
 echo "Copy/Paste ==> u -u"
