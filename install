@@ -101,6 +101,10 @@ then
     exit -1
 fi
 
+# Check if inotify-tools is installed
+if ! hash inotifywait 2> /dev/null; then
+    sudo apt-get install inotify-tools
+fi
 echo " * * * Installing Universal Competitive Programming Suite * * *"
 
 ## Install Universal
