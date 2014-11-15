@@ -278,9 +278,9 @@ sub main {
 
         my $filename= join(".", @filesplits[0 .. $#filesplits-1]); #$ARGV[0]; #$filesplits[0];      #striping last 2 char i.e. '.c' only
         print " = = = = = = ",YELLOW,"GCC: Compiling $filename .c file",RESET," = = = = = =\n";
-        print colored("gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o -o $filename.out $ARGV[0] -lm -lrt\n","blue");    #-g to make gdb compaitable
+        print colored("gcc -g -Og -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -Wno-unused-variable -Wno-unused-parameter -o $filename.out $ARGV[0] -lm -lrt\n","blue");    #-g to make gdb compaitable
         print "Error(if any):\n";   #newline
-        my $result = doSystemCommand("gcc -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0] -lm -lrt", " ");
+        my $result = doSystemCommand("gcc -g -Og -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -Wno-unused-variable -Wno-unused-parameter -o $filename.out $ARGV[0] -lm -lrt", " ");
         #print "gcc exited with $result\n";
 
         if($result == 0){
@@ -302,9 +302,9 @@ sub main {
         }
         my $filename= $filesplits[0];
         print " - - - - - - ",YELLOW,"G++: Compiling $filename .cpp file",RESET," - - - - - -\n";
-        print GREEN,"g++ -g -O2 -std=gnu++0x -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o $filename.out $ARGV[0]\n",RESET;
+        print GREEN,"g++ -g -Og -Wall -Wextra -std=c++11 -Isrc -rdynamic -fomit-frame-pointer -Wno-unused-variable -Wno-unused-parameter -o $filename.out $ARGV[0]\n",RESET;
         print "Error(if any):\n";
-        my $result = doSystemCommand("g++ -g -O2 -Wall -Wextra -Isrc -rdynamic -O2 -fomit-frame-pointer -o $filename.out $ARGV[0]\n", " ");
+        my $result = doSystemCommand("g++ -g -Og -Wall -Wextra -std=c++11 -Isrc -rdynamic -fomit-frame-pointer -Wno-unused-variable -Wno-unused-parameter -o $filename.out $ARGV[0]\n", " ");
         #print "g++ exited with $result\n";
         if($result == 0) {
             print "For Copy/Paste ===> ./$filename.out\n";
