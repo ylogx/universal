@@ -53,3 +53,7 @@ Find us:
   
 Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>  
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
