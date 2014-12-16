@@ -29,17 +29,17 @@ import re
 import subprocess
 import sys
 
-from pyinotify import WatchManager, IN_DELETE, IN_CREATE, IN_CLOSE_WRITE, ProcessEvent, Notifier
 class PatternAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, fnmatch.translate(values))
+
 class Options:
     __slots__=["directory", "regex", "script"]
 
 class Reload (Exception):
     pass
 
-class Process(ProcessEvent):
+class Process(pyinotify.ProcessEvent):
     def __init__(self,  options):
         self.regex = re.compile(options.regex)
         self.script = options.script
@@ -56,7 +56,7 @@ class Process(ProcessEvent):
         target = os.path.join(event.path, event.name)
         if self.regex.match(target):
             args = self.script.replace('$f', target).split()
-            os.system("clear")
+            #os.system("clear")
             sys.stdout.write("executing script: " + " ".join(args) + "\n")
             subprocess.call(args)
             sys.stdout.write("------------------------\n")
@@ -75,10 +75,10 @@ def main():
     args = parser.parse_args(namespace=options)
 
     while True:
-        wm = WatchManager()
+        wm = pyinotify.WatchManager()
         process = Process(options)
-        notifier = Notifier(wm, process)
-        mask = IN_DELETE | IN_CREATE | IN_CLOSE_WRITE
+        notifier = pyinotify.Notifier(wm, process)
+        mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE | pyinotify.IN_CLOSE_WRITE
         wdd = wm.add_watch(options.directory, mask, rec=True)
         try:
             while True:
