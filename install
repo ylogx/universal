@@ -4,7 +4,7 @@
 #   different programming languages
 #   Copyright (c) 2012-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
-#   This file is a part of Universal.
+#   This file is a part of Universal Competitive Programming Suite.
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -41,11 +41,11 @@ CUR_FILE_FOLLOW="$CURRENT_DIR/${FILENAME_FOLLOW}.sh"
 helpInstall(){ 
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "  ###################################################################"
-    echo "  #      + + + Universal Compiler Installation Help + + +       (c) #"
+    echo "  #           + + + Universal Installation Help + + +  (c)          #"
     echo "  #                                                                 #"
     echo "  # USAGE:  Just type this command to execute installation process: #" 
     echo "  #   \`./install\`                                                   #"
-    echo "  #         This'll install Universal Compiler in it's proper place #"
+    echo "  #         This'll install Universal in it's proper place          #"
     echo "  #                                                                 #"
     echo "  # Warning: Please don't forget that installation requires 'sudo'  #"
     echo "  #          permissions. Provide password when asked or run as su. #"
@@ -58,7 +58,7 @@ helpInstall(){
     echo "  #   \`./install --uninstall\`                                       #"
     echo "  #                                                                 #"
     echo "  ###################################################################"
-    echo "  # Program: Universal Compiler - Programming made easy             #"
+    echo "  # Program: Universal Competitive Programming Suite                #"
     echo "  # Author : Shubham Chaudhary                                      #"
     echo "  ###################################################################"
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
@@ -73,7 +73,7 @@ fi
 
 if test "$1" == "--uninstall"
 then
-    echo "About to uninstall Universal Compiler Tool"
+    echo "About to uninstall Universal Competitive Programming Suite"
     echo "Are you sure ? <Y/n>"
     read sure
     if test $sure == 'Y' #[ "$sure" = "Y" ]
