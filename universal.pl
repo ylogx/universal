@@ -45,13 +45,13 @@ sub usage {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        - - - ",YELLOW,"Universal Compiler Usage",RESET," - - -     (c) #\n";
+    print "    #             - - - ",YELLOW,"Universal Usage",RESET," - - -     (c)     #\n";
     print "    # USAGE:  ",GREEN,"universal <filename>",RESET,"                        #\n";
     print "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #\n";
     print "    # For Full Help:  \`",CYAN,"universal --help",RESET,"\` or \`",CYAN,"u -h",RESET,"\`        #\n";
 #    print "    #                                                     #\n";
 #    print "    #######################################################\n";
-#    print "    # Program: Universal Compiler - Programming made easy #\n";
+#    print "    # Program: Universal Competitive Programming Suite    #\n";
 #    print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
 #    print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
@@ -62,7 +62,7 @@ sub helpFun {
     print "\n"; #newline
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "    #######################################################\n";
-    print "    #        + + + ",BRIGHT_YELLOW,"Universal Compiler Help",RESET," + + +      (c) #\n";
+    print "    #           + + + ",BRIGHT_YELLOW,"Universal Help",RESET," + + +  (c)           #\n";
     print "    #                                                     #\n";
     print "    # Aliases: '",GREEN,"universal",RESET,"' and '",GREEN,"u",RESET,"' and '",GREEN,"c",RESET,"'                #\n";
     print "    # That means you may also use:                        #\n";
@@ -82,7 +82,7 @@ sub helpFun {
     print "    #              Or see README.md to get download link  #\n";
     print "    #                                                     #\n";
     print "    #######################################################\n";
-    print "    # Program: Universal Compiler - Reducing headaches    #\n";
+    print "    # Program: Universal Competitive Programming Suite    #\n";
     print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
