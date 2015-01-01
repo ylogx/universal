@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+#
+#   install - This script installs universal compilation tool for
+#   different programming languages
+#   Copyright (c) 2012-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
+#
+#   This file is a part of Universal.
+#
+#   Universal is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   Universal is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with Universal.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+
+#clear
+INSTALL_DIR="~/.local/bin"
+INSTALL_DIR="/usr/bin"
+
+FILENAME_UNI="universal"
+FILENAME_FOLLOW="follow"
+FULL_FILENAME_UNI="universal.sh"
+FULL_FILENAME_FOLLOW="follow.sh"
+
+FILE_UNI="$INSTALL_DIR/${FILENAME_UNI}"
+FILE_FOLLOW="$INSTALL_DIR/${FILENAME_FOLLOW}"
+
+CURRENT_DIR=`pwd`
+CUR_FILE_UNI="$CURRENT_DIR/${FILENAME_UNI}.pl"
+CUR_FILE_FOLLOW="$CURRENT_DIR/${FILENAME_FOLLOW}.sh"
+
+#Show Usage & Help
+helpInstall(){ 
+    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    echo "  ###################################################################"
+    echo "  #      + + + Universal Compiler Installation Help + + +       (c) #"
+    echo "  #                                                                 #"
+    echo "  # USAGE:  Just type this command to execute installation process: #" 
+    echo "  #   \`./install\`                                                   #"
+    echo "  #         This'll install Universal Compiler in it's proper place #"
+    echo "  #                                                                 #"
+    echo "  # Warning: Please don't forget that installation requires 'sudo'  #"
+    echo "  #          permissions. Provide password when asked or run as su. #"
+    echo "  #                                                                 #"
+    echo "  # Note   : If install file does not have execution permission you #"
+    echo "  #          should execute this command first                      #"
+    echo "  #   \`sudo chmod 777 install universal.pl\`                         #"
+    echo "  #                                                                 #"
+    echo "  # To Uninstall previous installations type:                       #"
+    echo "  #   \`./install --uninstall\`                                       #"
+    echo "  #                                                                 #"
+    echo "  ###################################################################"
+    echo "  # Program: Universal Compiler - Programming made easy             #"
+    echo "  # Author : Shubham Chaudhary                                      #"
+    echo "  ###################################################################"
+    #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    echo    #newline
+}
+
+if test "$1" == "--help"
+then
+    helpInstall
+    exit 0
+fi
+
+if test "$1" == "--uninstall"
+then
+    echo "About to uninstall Universal Compiler Tool"
+    echo "Are you sure ? <Y/n>"
+    read sure
+    if test $sure == 'Y' #[ "$sure" = "Y" ]
+    then
+        sudo rm -v "$FILE_UNI" 2> /dev/null
+        sudo rm -v "$FILE_FOLLOW" 2> /dev/null
+        echo "Checking for shortcuts" 2> /dev/null
+        sudo rm -v "$INSTALL_DIR/u" 2> /dev/null
+        sudo rm -v "$INSTALL_DIR/f" 2> /dev/null
+        # Older versions
+        echo "Checking for older versions"
+        sudo rm -vf "/usr/local/bin/chaudhary.sh" 2> /dev/null
+        sudo rm -vf "/usr/local/bin/universal.sh" 2> /dev/null
+        sudo rm -vf "/usr/local/bin/universal.pl" 2> /dev/null
+        sudo rm -vf "/usr/local/bin/c" 2> /dev/null
+        echo "Checking for redundant files" 2> /dev/null
+        sudo rm -v "/usr/local/bin/universal.pl" 2> /dev/null
+        sudo rm -v "/usr/local/bin/$FILENAME_UNI" 2> /dev/null
+        sudo rm -v "/usr/local/bin/$FULL_FILENAME_UNI" 2> /dev/null
+        sudo rm -v "/usr/local/bin/$FILENAME_FOLLOW" 2> /dev/null
+        sudo rm -v "/usr/local/bin/$FULL_FILENAME_FOLLOW" 2> /dev/null
+        exit 0
+    fi
+    echo "Uninstall Aborted by user"
+    exit -1
+fi
+
+# Check if inotify-tools is installed
+if ! hash inotifywait 2> /dev/null; then
+    sudo apt-get install inotify-tools
+fi
+echo " * * * Installing Universal Competitive Programming Suite * * *"
+
+## Install Universal
+echo "Installing..."
+if [ -f "$FILE_UNI" ] ; then
+    if [ "$FILE_UNI" -ot "$CUR_FILE_UNI" ]; then
+        echo "Older Version of universal found and will be updated now"
+    fi
+fi
+sudo cp -p "$CUR_FILE_UNI" "$FILE_UNI";
+echo "    Successfully installed universal"
+
+# Same for Follow
+if [ -f "$FILE_FOLLOW" ] ; then
+    if [ "$FILE_FOLLOW" -ot "$CUR_FILE_FOLLOW" ]; then
+        echo "Older Version of follow found and will be updated now"
+    fi
+fi
+sudo cp -p "$CUR_FILE_FOLLOW" "$FILE_FOLLOW";
+echo "    Successfully installed follow"
+
+echo "Creating shortcuts links"
+sudo cp -sf "$FILE_UNI" "/usr/bin/u"
+echo "    Use u as shortcut for universal"
+sudo cp -sf "$FILE_FOLLOW" "$INSTALL_DIR/f"
+echo "    Use f as shortcut for follow"
+
+echo "You can get help or uninstall using --help and --uninstall flag on this file"
+echo ;
+echo "Use update option --update or -u to get latest version";
+echo "Copy/Paste ==> universal -u"
