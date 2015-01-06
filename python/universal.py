@@ -134,7 +134,8 @@ def build_and_run_file(filename):
         if int(perform_system_command(command)) != 0:
             print("Error while compiling retry")
             return
-        command_run = "./" + name + ".out"
+        print("")
+        command_run = directory + "/"+ name + ".out"
         perform_system_command(command_run)
 
     elif (extension == 'cpp'):
@@ -148,7 +149,8 @@ def build_and_run_file(filename):
         if int(perform_system_command(command)) != 0:
             print("Error while compiling retry\n")
             return
-        command_run = "./" + name + ".out"
+        print("")
+        command_run = directory + "/" +name + ".out"
         perform_system_command(command_run)
     elif (extension == 'py'):
         print(" = = = = = = ",YELLOW,"PYTHON: Executing " + filename +" file",\
