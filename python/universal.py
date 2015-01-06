@@ -26,6 +26,7 @@ import subprocess
 import shutil
 from ansi import Fore, Back, Style;
 from optparse import OptionParser
+
 BLACK = '\033[30m'
 RED = '\033[31m'
 GREEN = '\033[32m'
@@ -73,6 +74,7 @@ def helpFun():
 def perform_system_command(command):
     print("Doing: ",command);
     out = os.system(command);
+    return out
 
 def get_file_tuple(filename):
     directory = os.path.dirname(os.path.abspath(filename))
@@ -96,8 +98,30 @@ EXECUTABLE_PYTHON   = 'python'
 EXECUTABLE_JAVAC    = 'javac'
 EXECUTABLE_JAVA     = 'java'
 
+def valgrind_test(filename):
+    print("Valgrind test results")
+    ##TODO##
 
-def build_file(filename):
+def memory_test(filename, args):
+    ''' make sure filename.test exits and call
+    for valgrind(choose to perform memory test)'''
+
+    (directory, name, extension) = get_file_tuple(filename)
+
+    # if not c or cpp files, no mem test to run
+    if extension != 'c' and extension != 'cpp':
+        return
+    test_file = name + ".test"
+    print("Test file: " + test_file)
+    # print(len(args), args)
+    if not os.path.isfile(test_file):
+        print("Test file not found")
+        return
+    valgrind_test(test_file)
+
+def build_and_run_file(filename):
+    ''' Builds and runs the filename specified
+        according to the extension'''
     (directory, name,extension) = get_file_tuple(filename)
     if (extension == 'c'):
         print(" = = = = = = ",YELLOW,"GCC: Compiling "+filename+" file",\
@@ -107,7 +131,12 @@ def build_file(filename):
                     GCC_FLAGS + \
                     " -o " + output_filename + \
                     ' ' + filename
-        return perform_system_command(command)
+        if int(perform_system_command(command)) != 0:
+            print("Error while compiling retry")
+            return
+        command_run = "./" + name + ".out"
+        perform_system_command(command_run)
+
     elif (extension == 'cpp'):
         print(" = = = = = = ",YELLOW,"GPP: Compiling "+filename+" file",\
                 RESET," = = = = = =\n");
@@ -116,9 +145,13 @@ def build_file(filename):
                     GPP_FLAGS + \
                     ' -o ' + output_filename + \
                     ' ' + filename
-        return perform_system_command(command)
+        if int(perform_system_command(command)) != 0:
+            print("Error while compiling retry\n")
+            return
+        command_run = "./" + name + ".out"
+        perform_system_command(command_run)
     elif (extension == 'py'):
-        print(" = = = = = = ",YELLOW,"GCC: Compiling $filename .c file",\
+        print(" = = = = = = ",YELLOW,"PYTHON: Executing " + filename +" file",\
                 RESET," = = = = = =\n");
         command = EXECUTABLE_PYTHON + " " + filename
         return perform_system_command(command)
@@ -127,20 +160,27 @@ def build_file(filename):
         perform_system_command(command)
         command_secondary = EXECUTABLE_JAVA + ' '+ name
         perform_system_command(command_secondary)
+    else:
+        print("Language yet not supported")
 
-def compile_files(args):
+
+def compile_files(args, mem_test=False):
     for filename in args:
         if not os.path.isfile(filename):
             print('The file doesn\'t exits')
             return
-        build_file(filename)
 
-def check_exec_installed(args):
+        build_and_run_file(filename)
+        if mem_test:
+            memory_test(filename, args)
+        print("")
+
+def check_exec_installed(exec_list):
     ''' Check the required programs are
     installed'''
 
     all_installed = True
-    for exe in args:
+    for exe in exec_list:
         if shutil.which(exe) == None:
             print("Executable: " + exe + " is not installed")
             all_installed = False
@@ -150,16 +190,7 @@ def update():
     if not check_exec_installed(["wget", "unzip"]):
         print("please install the missing executables and retry")
         exit(1)
-##    try:
-##        subprocess.call(["wget", "-c", \
-##            "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
-##    except OSError as e:
-##        if e.errno == os.errno.ENOENT:
-##            print("Wget is not intalled. Please install 'wget' before updating")
-##            print("Aborting...")
-##            exit(1);
-##        else:
-##            print("Some error occured...please try again.")
+
     subprocess.call(["wget", "-c", \
             "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
     # able to successfully retrieve the file
@@ -178,6 +209,8 @@ def problem():
     perform_system_command("xdg-open \
             'https://github.com/shubhamchaudhary/universal/issues'")
 
+
+
 def main():
     # Parse command line arguments
     usage = "%prog [ -h | --help | -u | --update | -p | --problem ]";
@@ -188,12 +221,14 @@ def main():
                         help="Report a problem")
     parser.add_option("-h", "--help", action='store_true', dest="help",
                         help="Report a problem")
+    parser.add_option("-m", "--memory", action='store_true', dest="memory",
+                        help="Run memory tests")
     (options, args) = parser.parse_args()
     # print(options)
     argc = len(args);
 
     if argc > 0:
-        compile_files(args);
+        compile_files(args, options.memory);
     if options.update:
         return update();
     if options.problem:
