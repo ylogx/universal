@@ -92,6 +92,7 @@ GPP_FLAGS = " -g -O2" \
             " -Wall -Wextra" \
             " -std=c++11" \
             " -Isrc -rdynamic -fomit-frame-pointer"
+
 EXECUTABLE_GCC      = 'gcc'
 EXECUTABLE_GPP      = 'g++'
 EXECUTABLE_PYTHON   = 'python'
@@ -99,12 +100,19 @@ EXECUTABLE_JAVAC    = 'javac'
 EXECUTABLE_JAVA     = 'java'
 
 def valgrind_test(filename):
+    ''' Runs memory test using valgrind
+        on the file.
+        PARAM filename: filename to run test for 
+    '''
+     
     print("Valgrind test results")
     ##TODO##
 
-def memory_test(filename, args):
+def memory_test(filename):
     ''' make sure filename.test exits and call
-    for valgrind(choose to perform memory test)'''
+        for valgrind(choose to perform memory test)
+        PARAM filename: name  of file to run test on
+    '''
 
     (directory, name, extension) = get_file_tuple(filename)
 
@@ -121,7 +129,9 @@ def memory_test(filename, args):
 
 def build_and_run_file(filename):
     ''' Builds and runs the filename specified
-        according to the extension'''
+        according to the extension
+        PARAM filename: name of file to build and run
+    '''
     (directory, name,extension) = get_file_tuple(filename)
     if (extension == 'c'):
         print(" = = = = = = ",YELLOW,"GCC: Compiling "+filename+" file",\
@@ -167,6 +177,13 @@ def build_and_run_file(filename):
 
 
 def compile_files(args, mem_test=False):
+    ''' Copiles the files and runs memory tests
+        if needed.
+        PARAM args: list of files passed as CMD args
+                    to be compiled.
+        PARAM mem_test: Weither to perform memory test ?
+    '''
+
     for filename in args:
         if not os.path.isfile(filename):
             print('The file doesn\'t exits')
@@ -179,7 +196,10 @@ def compile_files(args, mem_test=False):
 
 def check_exec_installed(exec_list):
     ''' Check the required programs are
-    installed'''
+        installed.
+        PARAM exec_list: list of programs to check
+        RETURN: True if all installed else False
+    '''
 
     all_installed = True
     for exe in exec_list:
@@ -189,28 +209,34 @@ def check_exec_installed(exec_list):
     return all_installed
 
 def update():
+    ''' Updates the tool 
+    '''
     if not check_exec_installed(["wget", "unzip"]):
         print("please install the missing executables and retry")
         exit(1)
-
+    
+    # retrieve new file
     subprocess.call(["wget", "-c", \
             "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
+    
     # able to successfully retrieve the file
     perform_system_command("unzip master.zip")
+    
     os.chdir("universal-master/") # preferred way to change directory
-#    perform_system_command("pwd")
     perform_system_command("sh install")
     os.chdir("../")
     perform_system_command("rm -rf ./universal-master master.zip")
 #    os.chdir("-")
 
 def problem():
+    ''' Opens a Issue page @github
+        to raise a issue.
+    '''
     print("Thanks in advance for taking out time")
     print("Click on the green New Issue button on the right side")
     print("Opening browser")
     perform_system_command("xdg-open \
             'https://github.com/shubhamchaudhary/universal/issues'")
-
 
 
 def main():
