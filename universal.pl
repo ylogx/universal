@@ -2,9 +2,9 @@
 #
 #   universal.pl - A tool to quickly compile and run different
 #   source files using same command
-#   Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
-#
 #   This file is a part of Universal Competitive Programming Suite.
+#
+#   Copyright (c) 2011-2015 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -52,7 +52,6 @@ sub usage {
 #    print "    #                                                     #\n";
 #    print "    #######################################################\n";
 #    print "    # Program: Universal Competitive Programming Suite    #\n";
-#    print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
 #    print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
 #    print "\n";  #newline
@@ -83,7 +82,6 @@ sub helpFun {
     print "    #                                                     #\n";
     print "    #######################################################\n";
     print "    # Program: Universal Competitive Programming Suite    #\n";
-    print "    # Author : Shubham Chaudhary                          #\n";
     print "    #######################################################\n";
     #print "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print "\n";   #newline
