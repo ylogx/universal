@@ -2,9 +2,10 @@
 #
 #   universal.py - A tool to quickly compile and run different
 #   source files using same command
-#   Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
+#   This file is a part of Universal Competitive Programming Suite.
 #
-#   This file is a part of Universal.
+#   Copyright (c) 2011-2015 Shubham Chaudhary <me@shubhamchaudhary.in>
+#   Copyright (c) 2015 Harsimran <harsimran_hs4@yahoo.co.in>
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -65,8 +66,7 @@ def helpFun():
     print( "    #              Or see README.md to get download link  #")
     print( "    #                                                     #")
     print( "    #######################################################")
-    print( "    # Program: Universal Compiler - Reducing headaches    #")
-    print( "    # Author : Shubham Chaudhary                          #")
+    print( "    # Program: Universal Competitive Programming Suite    #")
     print( "    #######################################################")
     #print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     print( "")   #newline

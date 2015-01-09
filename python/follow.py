@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 #
 #   follow.py - watch for change and run when written to
-#   Copyright (c) 2014 Shubham Chaudhary <me@shubhamchaudhary.in>
-#
 #   This file is a part of Universal Competitive Programming Suite.
+#
+#   Copyright (c) 2014-2015 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
