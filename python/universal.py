@@ -74,7 +74,7 @@ def helpFun():
 def perform_system_command(command):
     print("Doing: ",command);
     out = os.system(command);
-    return out
+    return int(out)
 
 def get_file_tuple(filename):
     directory = os.path.dirname(os.path.abspath(filename))
@@ -141,7 +141,7 @@ def build_and_run_file(filename):
                     GCC_FLAGS + \
                     " -o " + output_filename + \
                     ' ' + filename
-        if int(perform_system_command(command)) != 0:
+        if perform_system_command(command) != 0:
             print("Error while compiling retry")
             return
         print("")
@@ -157,7 +157,7 @@ def build_and_run_file(filename):
                     GPP_FLAGS + \
                     ' -o ' + output_filename + \
                     ' ' + filename
-        if int(perform_system_command(command)) != 0:
+        if perform_system_command(command) != 0:
             print("Error while compiling retry\n")
             return
         print("")
