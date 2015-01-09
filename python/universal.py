@@ -145,7 +145,8 @@ def build_and_run_file(filename):
             print("Error while compiling retry")
             return
         print("")
-        command_run = directory + "/"+ name + ".out"
+        command_run = directory + "/"+ name + ".out" + " < " + directory + \
+            "/" + name + ".input"
         perform_system_command(command_run)
 
     elif (extension == 'cpp'):
@@ -160,17 +161,20 @@ def build_and_run_file(filename):
             print("Error while compiling retry\n")
             return
         print("")
-        command_run = directory + "/" +name + ".out"
+        command_run = directory + "/" +name + ".out" + " < " + directory + \
+            "/" + name + ".input"
         perform_system_command(command_run)
     elif (extension == 'py'):
         print(" = = = = = = ",YELLOW,"PYTHON: Executing " + filename +" file",\
                 RESET," = = = = = =\n");
-        command = EXECUTABLE_PYTHON + " " + filename
+        command = EXECUTABLE_PYTHON + " " + filename  + " < " + directory + \
+            "/" + name + ".input"
         return perform_system_command(command)
     elif (extension == 'java'):
         command = EXECUTABLE_JAVAC + ' ' + filename
         perform_system_command(command)
-        command_secondary = EXECUTABLE_JAVA + ' '+ name
+        command_secondary = EXECUTABLE_JAVA + ' ' + name  + " < " \
+        + directory + "/" + name + ".input"
         perform_system_command(command_secondary)
     else:
         print("Language yet not supported")
