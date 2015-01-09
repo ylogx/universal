@@ -2,9 +2,9 @@
 #
 #   universal.sh - A tool to quickly compile and run different
 #   source files using same command
-#   Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>
-#
 #   This file is a part of Universal Competitive Programming Suite.
+#
+#   Copyright (c) 2011-2015 Shubham Chaudhary <me@shubhamchaudhary.in>
 #
 #   Universal is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ function usage {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        - - - Universal Compiler Usage - - -     (c) #"
+    echo "    #           - - - Universal Usage - - -           (c) #"
     echo "    #                                                     #"
     echo "    # USAGE:  universal.sh <filename> <test option>       #"
     echo "    # Compaitable with '.c' '.cpp' '.py' '.java' files    #"
@@ -33,8 +33,7 @@ function usage {
     echo "    # For Full Help:  \`universal.sh help\`                 #"
     echo "    #                                                     #"
     echo "    #######################################################"
-    echo "    # Program: Universal Compiler - Programming made easy #"
-    echo "    # Author : Shubham Chaudhary                          #"
+    echo "    # Program: Universal Competitive Programming Suite    #"
     echo "    #######################################################"
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo    #newline
@@ -43,7 +42,7 @@ function helpFun {
     echo #newline
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo "    #######################################################"
-    echo "    #        + + + Universal Compiler Help + + +      (c) #"
+    echo "    #            + + + Universal Help + + +           (c) #"
     echo "    #                                                     #"
     echo "    # Aliases: 'universal' and 'universal.sh' and 'c'     #"
     echo "    # That means you may also use:                        #"
@@ -62,8 +61,7 @@ function helpFun {
     echo "    #              Or see README.md to get download link  #"
     echo "    #                                                     #"
     echo "    #######################################################"
-    echo "    # Program: Universal Compiler - Reducing headaches    #"
-    echo "    # Author : Shubham Chaudhary                          #"
+    echo "    # Program: Universal Competitive Programming Suite    #"
     echo "    #######################################################"
     #echo "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
     echo    #newline
