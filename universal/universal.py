@@ -26,7 +26,7 @@ import sys
 import subprocess
 import shutil
 from universal.ansi import Fore, Back, Style;
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 BLACK = '\033[30m'
 RED = '\033[31m'
@@ -245,28 +245,21 @@ def problem():
 
 def main():
     # Parse command line arguments
-    usage = "%prog [ -h | --help | -u | --update | -p | --problem ]";
-    parser = OptionParser(usage=usage, add_help_option=False)
-    parser.add_option("-u", "--update", action='store_true', dest="update",
+    parser = ArgumentParser()
+    parser.add_argument("-u", "--update", action='store_true', dest="update",
                         help="Update the software from online repo")
-    parser.add_option("-p", "--problem", action='store_true', dest="problem",
+    parser.add_argument("-p", "--problem", action='store_true', dest="problem",
                         help="Report a problem")
-    parser.add_option("-h", "--help", action='store_true', dest="help",
-                        help="Report a problem")
-    parser.add_option("-m", "--memory", action='store_true', dest="memory",
+    parser.add_argument("-m", "--memory", action='store_true', dest="memory",
                         help="Run memory tests")
-    (options, args) = parser.parse_args()
-    # print(options)
-    argc = len(args);
+    args, otherthings = parser.parse_known_args()
 
-    if argc > 0:
-        compile_files(args, options.memory);
-    if options.update:
+    if len(otherthings) > 0:
+        compile_files(otherthings, args.memory);
+    if args.update:
         return update();
-    if options.problem:
+    if args.problem:
         return problem()
-    if options.help:
-        return helpFun()
 
 if __name__ == '__main__':
     sys.exit(main());
