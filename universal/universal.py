@@ -25,7 +25,7 @@ import os
 import sys
 import subprocess
 import shutil
-from ansi import Fore, Back, Style;
+from universal.ansi import Fore, Back, Style;
 from optparse import OptionParser
 
 BLACK = '\033[30m'
@@ -246,7 +246,7 @@ def problem():
 def main():
     # Parse command line arguments
     usage = "%prog [ -h | --help | -u | --update | -p | --problem ]";
-    parser = OptionParser(usage=usage, version="%prog "+__version__ , add_help_option=False)
+    parser = OptionParser(usage=usage, add_help_option=False)
     parser.add_option("-u", "--update", action='store_true', dest="update",
                         help="Update the software from online repo")
     parser.add_option("-p", "--problem", action='store_true', dest="problem",
