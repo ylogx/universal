@@ -256,10 +256,13 @@ def main():
 
     if len(otherthings) > 0:
         compile_files(otherthings, args.memory);
-    if args.update:
+    elif args.update:
         return update();
-    if args.problem:
+    elif args.problem:
         return problem()
+    else:
+        parser.print_usage()
+        print('No filename passed')
 
 if __name__ == '__main__':
     sys.exit(main());

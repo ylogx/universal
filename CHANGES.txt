@@ -1,2 +1,4 @@
+v1.9.9, 12-01-2015 -- Upgraded commandline options
+
 v1.9.8, 12-01-2015 -- PyPi release
 
