@@ -4,7 +4,7 @@ setup(
         name='Universal',
         description='Universal Competitive Programming Suite helps you work faster'
                     ' in programming competitions',
-        version='1.9.2',
+        version='1.9.8',
         packages=['universal'],
         license='GPLv3+',
         author='Shubham Chaudhary',

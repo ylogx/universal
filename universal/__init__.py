@@ -9,4 +9,4 @@ Universal Competitive Programming Suite
 #__author__      =   'Shubham Chaudhary'
 #__license__     =   'GPLv3+'
 #__copyright__   =   'Copyright 2014-2015 Shubham Chaudhary'
-#__version__     =   '1.9.1
+#__version__     =   '1.9.8'

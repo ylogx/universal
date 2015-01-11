@@ -102,9 +102,9 @@ EXECUTABLE_JAVA     = 'java'
 def valgrind_test(filename):
     ''' Runs memory test using valgrind
         on the file.
-        PARAM filename: filename to run test for 
+        PARAM filename: filename to run test for
     '''
-     
+
     print("Valgrind test results")
     ##TODO##
 
@@ -213,19 +213,19 @@ def check_exec_installed(exec_list):
     return all_installed
 
 def update():
-    ''' Updates the tool 
+    ''' Updates the tool
     '''
     if not check_exec_installed(["wget", "unzip"]):
         print("please install the missing executables and retry")
         exit(1)
-    
+
     # retrieve new file
     subprocess.call(["wget", "-c", \
             "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
-    
+
     # able to successfully retrieve the file
     perform_system_command("unzip master.zip")
-    
+
     os.chdir("universal-master/") # preferred way to change directory
     perform_system_command("sh install")
     os.chdir("../")
@@ -268,7 +268,5 @@ def main():
     if options.help:
         return helpFun()
 
-
-__version__ = '1.9.2'
 if __name__ == '__main__':
     sys.exit(main());
