@@ -10,6 +10,6 @@ setup(
         author='Shubham Chaudhary',
         author_email='me@shubhamchaudhary.in',
         url='https://github.com/shubhamchaudhary/universal',
-        long_description=open('README.md').read(),
+        long_description=open('README.txt').read(),
 )
 
