@@ -145,8 +145,11 @@ def build_and_run_file(filename):
             print("Error while compiling retry")
             return
         print("")
-        command_run = directory + "/"+ name + ".out" + " < " + directory + \
-            "/" + name + ".input"
+        output_file = directory + "/"+ name + ".out"
+        command_run = output_file
+        test_file = directory + "/" + name + ".input"
+        if os.path.exists(test_file):
+            command_run += " < " + test_file
         perform_system_command(command_run)
 
     elif (extension == 'cpp'):
@@ -161,21 +164,28 @@ def build_and_run_file(filename):
             print("Error while compiling retry\n")
             return
         print("")
-        command_run = directory + "/" +name + ".out" + " < " + directory + \
-            "/" + name + ".input"
+        output_file = directory + "/"+ name + ".out"
+        command_run = output_file
+        test_file = directory + "/" + name + ".input"
+        if os.path.exists(test_file):
+            command_run += " < " + test_file
         perform_system_command(command_run)
     elif (extension == 'py'):
         print(" = = = = = = ",YELLOW,"PYTHON: Executing " + filename +" file",\
                 RESET," = = = = = =\n");
-        command = EXECUTABLE_PYTHON + " " + filename  + " < " + directory + \
-            "/" + name + ".input"
-        return perform_system_command(command)
+        command_run = EXECUTABLE_PYTHON + " " + filename
+        test_file = directory + "/" + name + ".input"
+        if os.path.exists(test_file):
+            command_run += " < " + test_file
+        perform_system_command(command_run)
     elif (extension == 'java'):
         command = EXECUTABLE_JAVAC + ' ' + filename
         perform_system_command(command)
-        command_secondary = EXECUTABLE_JAVA + ' ' + name  + " < " \
-        + directory + "/" + name + ".input"
-        perform_system_command(command_secondary)
+        command_run = EXECUTABLE_JAVA + ' ' + name
+        test_file = directory + "/" + name + ".input"
+        if os.path.exists(test_file):
+            command_run += " < " + test_file
+        perform_system_command(command_run)
     else:
         print("Language yet not supported")
 
