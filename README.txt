@@ -1,4 +1,4 @@
-Universal Competitive Programming Suite
+Universal Competitive Programming Suite [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ===========================================================================
 A tool to quickly compile and run different source files using same command  
   
@@ -28,10 +28,11 @@ Best part you don't need to remember anything, not even the name of compiler. Fo
 You can use the __same__ command/syntax `u filename.extension` to build & run __any__ source code. Yes _any_ type of source file. Universal will either run it or tell you how to install its compiler.  Universal supports a large variety of languages including c, c++, java, python and many more.  
   
   
-To install download the files by [clicking here](https://github.com/shubhamchaudhary/universal/archive/master.zip) and unzip & run the _install_ file:  
-`./install`  
-You need to run it in the source directory, the one where you unzipped. Please provide password when required. You can always type `./install --help` to get installation help directly    
-  
+To install type
+
+```
+pip3 install universal
+```
   
 After completing installation you can type command name `universal --help` or `universal -h` or the easiest and fastest version of command `u -h` and just hit enter to get usage instruction and help.  
   
@@ -47,13 +48,11 @@ To get latest version of Universal type `u -u` or [Click here](https://github.co
 It is recommended that you update the software after every few weeks.  
   
 Find us:
+  * [PyPi](https://pypi.python.org/pypi/Universal)  
   * [LaunchPad - UniversalCompiler](https://launchpad.net/universalcompiler)  
   * [Ohloh](https://www.ohloh.net/p/UniversalCompiler)
   
   
-Copyright (c) 2011-2014 Shubham Chaudhary <me@shubhamchaudhary.in>  
 
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
