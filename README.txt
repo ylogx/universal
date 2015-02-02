@@ -28,6 +28,7 @@ Best part you don't need to remember anything, not even the name of compiler. Fo
 You can use the __same__ command/syntax `u filename.extension` to build & run __any__ source code. Yes _any_ type of source file. Universal will either run it or tell you how to install its compiler.  Universal supports a large variety of languages including c, c++, java, python and many more.  
   
   
+__Installation:__  
 To install type
 
 ```
