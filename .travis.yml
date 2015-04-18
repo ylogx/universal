@@ -1,0 +1,24 @@
+language: python
+python:
+  - 2.6
+  - 2.7
+  - pypy
+  - 3.2
+  - 3.3
+  - 3.4
+  - nightly
+  - pypy3
+matrix:
+  allow_failures:
+    - python: 2.6
+    - python: 2.7
+    - python: pypy
+before_install:
+  - pip install -r requirements.txt
+install:
+  - python setup.py sdist
+# - pip install dist/universal*.tar.gz
+script:
+  - cd tests && make
+after_script:
+  - pip install universal
