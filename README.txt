@@ -1,5 +1,5 @@
-Universal Competitive Programming Suite [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-===========================================================================
+Universal Competitive Programming Suite [![Build Status](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+=======================================
 A tool to quickly compile and run different source files using same command  
   
 Universal allows you to __quickly__ compile, build and run files. Universal make it very easy to compile _any_ source code and create & execute corresponding files.  
