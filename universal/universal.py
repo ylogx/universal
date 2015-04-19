@@ -38,43 +38,46 @@ CYAN = '\033[36m'
 WHITE = '\033[37m'
 RESET = '\033[39m'
 
+
 def helpFun():
-    print( "") #newline
-    #print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
-    print( "    #######################################################")
-    print( "    #        + + + ",Fore.YELLOW,"Universal Compiler Help",\
-            Fore.RESET," + + +      (c) #",sep='')
-    print( "    #                                                     #")
-    print( "    # Aliases: '",GREEN,"universal",RESET,"' and '",GREEN,"u",\
-            RESET,"' and '",GREEN,"c",RESET,"'                #",sep='')
-    print( "    # That means you may also use:                        #")
-    print( "    #       `u --help`   or   `universal --help`          #")
-    print( "    #                                                     #")
-    print( "    # USAGE:  universal <filename>                        #")
-    print( "    #         universal <filename> <test option>          #")
-    print( "    # e.g      'universal hello.cpp'                      #")
-    print( "    #          'universal HelloWorld.java'                #")
-    print( "    # Automated Testing options: t, t1, t2, t3            #")
-    print( "    # For this full help:  'universal -h'                 #")
-    print( "    #                                                     #")
-    #print( "    # Supports with '.c' '.cpp' '.py' '.java' '.pl' '.sh' #")
-    print( "    # File Extensions: ",BLUE,"*.c .cpp .py .java .pl .sh",\
-            RESET,"         #",sep='')
-    print( "    #                                                     #")
-    print( "    # ",RED,"Update Version",RESET,": `",MAGENTA,"universal -u",\
-            RESET,"` i.e. `",MAGENTA,"u -u",RESET,"`          #",sep='')
-    print( "    #              Or see README.md to get download link  #")
-    print( "    #                                                     #")
-    print( "    #######################################################")
-    print( "    # Program: Universal Competitive Programming Suite    #")
-    print( "    #######################################################")
-    #print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
-    print( "")   #newline
+    print("")  # newline
+    # print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    print("    #######################################################")
+    print("    #        + + + ", Fore.YELLOW, "Universal Compiler Help", \
+          Fore.RESET, " + + +      (c) #", sep='')
+    print("    #                                                     #")
+    print("    # Aliases: '", GREEN, "universal", RESET, "' and '", GREEN, "u", \
+          RESET, "' and '", GREEN, "c", RESET, "'                #", sep='')
+    print("    # That means you may also use:                        #")
+    print("    #       `u --help`   or   `universal --help`          #")
+    print("    #                                                     #")
+    print("    # USAGE:  universal <filename>                        #")
+    print("    #         universal <filename> <test option>          #")
+    print("    # e.g      'universal hello.cpp'                      #")
+    print("    #          'universal HelloWorld.java'                #")
+    print("    # Automated Testing options: t, t1, t2, t3            #")
+    print("    # For this full help:  'universal -h'                 #")
+    print("    #                                                     #")
+    # print( "    # Supports with '.c' '.cpp' '.py' '.java' '.pl' '.sh' #")
+    print("    # File Extensions: ", BLUE, "*.c .cpp .py .java .pl .sh", \
+          RESET, "         #", sep='')
+    print("    #                                                     #")
+    print("    # ", RED, "Update Version", RESET, ": `", MAGENTA, "universal -u", \
+          RESET, "` i.e. `", MAGENTA, "u -u", RESET, "`          #", sep='')
+    print("    #              Or see README.md to get download link  #")
+    print("    #                                                     #")
+    print("    #######################################################")
+    print("    # Program: Universal Competitive Programming Suite    #")
+    print("    #######################################################")
+    # print( "# # # # # # # # # # # # # # # # # # # # # # # # # # # #"
+    print("")  # newline
+
 
 def perform_system_command(command):
-    print("Doing: ",command);
+    print("Doing: ", command);
     out = os.system(command);
     return int(out)
+
 
 def get_file_tuple(filename):
     directory = os.path.dirname(os.path.abspath(filename))
@@ -82,7 +85,8 @@ def get_file_tuple(filename):
     filename_tuple = basename.split('.')
     extension = filename_tuple[-1]
     name = '.'.join(filename_tuple[:-1])
-    return (directory, name,extension)
+    return (directory, name, extension)
+
 
 GCC_FLAGS = " -g -O2" \
             " -Wall -Wextra" \
@@ -99,6 +103,7 @@ EXECUTABLE_PYTHON   = 'python'
 EXECUTABLE_JAVAC    = 'javac'
 EXECUTABLE_JAVA     = 'java'
 
+
 def valgrind_test(filename):
     ''' Runs memory test using valgrind
         on the file.
@@ -107,6 +112,7 @@ def valgrind_test(filename):
 
     print("Valgrind test results")
     ##TODO##
+
 
 def memory_test(filename):
     ''' make sure filename.test exits and call
@@ -127,25 +133,26 @@ def memory_test(filename):
         return
     valgrind_test(test_file)
 
+
 def build_and_run_file(filename):
     ''' Builds and runs the filename specified
         according to the extension
         PARAM filename: name of file to build and run
     '''
-    (directory, name,extension) = get_file_tuple(filename)
+    (directory, name, extension) = get_file_tuple(filename)
     if (extension == 'c'):
-        print(" = = = = = = ",YELLOW,"GCC: Compiling "+filename+" file",\
-                RESET," = = = = = =\n");
+        print(" = = = = = = ", YELLOW, "GCC: Compiling " + filename + " file", \
+              RESET, " = = = = = =\n");
         output_filename = directory + '/' + name + '.out'
         command = EXECUTABLE_GCC + " " + \
-                    GCC_FLAGS + \
-                    " -o " + output_filename + \
-                    ' ' + filename
+                  GCC_FLAGS + \
+                  " -o " + output_filename + \
+                  ' ' + filename
         if perform_system_command(command) != 0:
             print("Error while compiling retry")
             return
         print("")
-        output_file = directory + "/"+ name + ".out"
+        output_file = directory + "/" + name + ".out"
         command_run = output_file
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
@@ -153,26 +160,26 @@ def build_and_run_file(filename):
         perform_system_command(command_run)
 
     elif (extension == 'cpp'):
-        print(" = = = = = = ",YELLOW,"GPP: Compiling "+filename+" file",\
-                RESET," = = = = = =\n");
+        print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
+              RESET, " = = = = = =\n");
         output_filename = directory + '/' + name + '.out'
         command = EXECUTABLE_GPP + ' ' + \
-                    GPP_FLAGS + \
-                    ' -o ' + output_filename + \
-                    ' ' + filename
+                  GPP_FLAGS + \
+                  ' -o ' + output_filename + \
+                  ' ' + filename
         if perform_system_command(command) != 0:
             print("Error while compiling retry\n")
             return
         print("")
-        output_file = directory + "/"+ name + ".out"
+        output_file = directory + "/" + name + ".out"
         command_run = output_file
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
         perform_system_command(command_run)
     elif (extension == 'py'):
-        print(" = = = = = = ",YELLOW,"PYTHON: Executing " + filename +" file",\
-                RESET," = = = = = =\n");
+        print(" = = = = = = ", YELLOW, "PYTHON: Executing " + filename + " file", \
+              RESET, " = = = = = =\n");
         command_run = EXECUTABLE_PYTHON + " " + filename
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
@@ -208,6 +215,7 @@ def compile_files(args, mem_test=False):
             memory_test(filename, args)
         print("")
 
+
 def check_exec_installed(exec_list):
     ''' Check the required programs are
         installed.
@@ -222,6 +230,7 @@ def check_exec_installed(exec_list):
             all_installed = False
     return all_installed
 
+
 def update():
     ''' Updates the tool
     '''
@@ -231,16 +240,17 @@ def update():
 
     # retrieve new file
     subprocess.call(["wget", "-c", \
-            "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
+                     "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
 
     # able to successfully retrieve the file
     perform_system_command("unzip master.zip")
 
-    os.chdir("universal-master/") # preferred way to change directory
+    os.chdir("universal-master/")  # preferred way to change directory
     perform_system_command("sh install")
     os.chdir("../")
     perform_system_command("rm -rf ./universal-master master.zip")
 #    os.chdir("-")
+
 
 def problem():
     ''' Opens a Issue page @github
