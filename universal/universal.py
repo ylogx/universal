@@ -21,25 +21,24 @@
 #   along with Universal.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
+
 import os
-import sys
 import subprocess
+import sys
 from argparse import ArgumentParser
-
-from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
-
-from universal.util import get_file_tuple
-from universal.util import perform_system_command
-from universal.util import check_exec_installed
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
-from universal.config import EXECUTABLE_PYTHON
-from universal.config import EXECUTABLE_JAVAC
 from universal.config import EXECUTABLE_JAVA
+from universal.config import EXECUTABLE_JAVAC
+from universal.config import EXECUTABLE_PYTHON
 from universal.config import GCC_FLAGS
 from universal.config import GPP_FLAGS
-
+from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
+from universal.util import check_exec_installed
+from universal.util import get_file_tuple
+from universal.util import perform_system_command
 
 def valgrind_test(filename):
     ''' Runs memory test using valgrind

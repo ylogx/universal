@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from universal.ansi import Fore, Back, Style
 
 BLACK = '\033[30m'
