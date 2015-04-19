@@ -25,7 +25,7 @@ import os
 import sys
 import subprocess
 import shutil
-from universal.ansi import Fore, Back, Style;
+from universal.ansi import Fore, Back, Style
 from argparse import ArgumentParser
 
 BLACK = '\033[30m'
@@ -74,8 +74,8 @@ def helpFun():
 
 
 def perform_system_command(command):
-    print("Doing: ", command);
-    out = os.system(command);
+    print("Doing: ", command)
+    out = os.system(command)
     return int(out)
 
 
@@ -142,7 +142,7 @@ def build_and_run_file(filename):
     (directory, name, extension) = get_file_tuple(filename)
     if (extension == 'c'):
         print(" = = = = = = ", YELLOW, "GCC: Compiling " + filename + " file", \
-              RESET, " = = = = = =\n");
+              RESET, " = = = = = =\n")
         output_filename = directory + '/' + name + '.out'
         command = EXECUTABLE_GCC + " " + \
                   GCC_FLAGS + \
@@ -161,7 +161,7 @@ def build_and_run_file(filename):
 
     elif (extension == 'cpp'):
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
-              RESET, " = = = = = =\n");
+              RESET, " = = = = = =\n")
         output_filename = directory + '/' + name + '.out'
         command = EXECUTABLE_GPP + ' ' + \
                   GPP_FLAGS + \
@@ -179,7 +179,7 @@ def build_and_run_file(filename):
         perform_system_command(command_run)
     elif (extension == 'py'):
         print(" = = = = = = ", YELLOW, "PYTHON: Executing " + filename + " file", \
-              RESET, " = = = = = =\n");
+              RESET, " = = = = = =\n")
         command_run = EXECUTABLE_PYTHON + " " + filename
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
@@ -275,9 +275,9 @@ def main():
     args, otherthings = parser.parse_known_args()
 
     if len(otherthings) > 0:
-        compile_files(otherthings, args.memory);
+        compile_files(otherthings, args.memory)
     elif args.update:
-        return update();
+        return update()
     elif args.problem:
         return problem()
     else:
@@ -285,4 +285,4 @@ def main():
         print('No filename passed')
 
 if __name__ == '__main__':
-    sys.exit(main());
+    sys.exit(main())
