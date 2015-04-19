@@ -31,16 +31,19 @@ class test_util_functions(unittest.TestCase):
     def test_gcc_system_command_sent_for_c_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_c)
         sys_cmd_mock.assert_called_once_with(AnyStringWith('gcc'))
+        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     @patch('universal.compiler.perform_system_command')
     def test_gpp_system_command_sent_for_cpp_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_cpp)
         sys_cmd_mock.assert_called_once_with(AnyStringWith('g++'))
+        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     @patch('universal.compiler.perform_system_command')
     def test_python_system_command_sent_for_py_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_py)
         sys_cmd_mock.assert_called_once_with(AnyStringWith('python'))
+        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     @patch('universal.compiler.perform_system_command')
     def test_both_java_system_commands_sent_for_java_file(self, sys_cmd_mock):
@@ -50,6 +53,7 @@ class test_util_functions(unittest.TestCase):
             call(AnyStringWith('java'))
         ]
         sys_cmd_mock.assert_has_calls(call_order, any_order=False)
+        self.assertEqual(sys_cmd_mock.call_count, 2)
 
 class AnyStringWith(str):
     def __eq__(self, other):
