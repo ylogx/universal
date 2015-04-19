@@ -225,7 +225,7 @@ def check_exec_installed(exec_list):
 
     all_installed = True
     for exe in exec_list:
-        if shutil.which(exe) == None:
+        if shutil.which(exe) is None:
             print("Executable: " + exe + " is not installed")
             all_installed = False
     return all_installed
