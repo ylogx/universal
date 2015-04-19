@@ -36,34 +36,22 @@ from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAG
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
 
-def valgrind_test(filename):
-    ''' Runs memory test using valgrind
-        on the file.
-        PARAM filename: filename to run test for
+
+def compile_files(args, mem_test=False):
+    ''' Copiles the files and runs memory tests
+        if needed.
+        PARAM args: list of files passed as CMD args
+                    to be compiled.
+        PARAM mem_test: Weither to perform memory test ?
     '''
-
-    print("Valgrind test results")
-    ##TODO##
-
-
-def memory_test(filename):
-    ''' make sure filename.test exits and call
-        for valgrind(choose to perform memory test)
-        PARAM filename: name  of file to run test on
-    '''
-
-    (directory, name, extension) = get_file_tuple(filename)
-
-    # if not c or cpp files, no mem test to run
-    if extension != 'c' and extension != 'cpp':
-        return
-    test_file = name + ".test"
-    print("Test file: " + test_file)
-    # print(len(args), args)
-    if not os.path.isfile(test_file):
-        print("Test file not found")
-        return
-    valgrind_test(test_file)
+    for filename in args:
+        if not os.path.isfile(filename):
+            print('The file doesn\'t exits')
+            return
+        build_and_run_file(filename)
+        if mem_test:
+            memory_test(filename, args)
+        print("")
 
 
 def build_and_run_file(filename):
@@ -90,7 +78,6 @@ def build_and_run_file(filename):
         if os.path.exists(test_file):
             command_run += " < " + test_file
         perform_system_command(command_run)
-
     elif extension == 'cpp':
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
@@ -129,20 +116,28 @@ def build_and_run_file(filename):
         print("Language yet not supported")
 
 
-def compile_files(args, mem_test=False):
-    ''' Copiles the files and runs memory tests
-        if needed.
-        PARAM args: list of files passed as CMD args
-                    to be compiled.
-        PARAM mem_test: Weither to perform memory test ?
+def memory_test(filename):
+    ''' make sure filename.test exits and call
+        for valgrind(choose to perform memory test)
+        PARAM filename: name  of file to run test on
     '''
+    (directory, name, extension) = get_file_tuple(filename)
+    # if not c or cpp files, no mem test to run
+    if extension != 'c' and extension != 'cpp':
+        return
+    test_file = name + ".test"
+    print("Test file: " + test_file)
+    # print(len(args), args)
+    if not os.path.isfile(test_file):
+        print("Test file not found")
+        return
+    valgrind_test(test_file)
 
-    for filename in args:
-        if not os.path.isfile(filename):
-            print('The file doesn\'t exits')
-            return
 
-        build_and_run_file(filename)
-        if mem_test:
-            memory_test(filename, args)
-        print("")
+def valgrind_test(filename):
+    ''' Runs memory test using valgrind
+        on the file.
+        PARAM filename: filename to run test for
+    '''
+    print("Valgrind test results")
+    ##TODO##
