@@ -44,21 +44,13 @@ def get_file_tuple(filename):
     name = '.'.join(filename_tuple[:-1])
     return directory, name, extension
 
-
-GCC_FLAGS = " -g -O2" \
-            " -Wall -Wextra" \
-            " -Isrc -rdynamic -fomit-frame-pointer" \
-            " -lm -lrt"
-GPP_FLAGS = " -g -O2" \
-            " -Wall -Wextra" \
-            " -std=c++11" \
-            " -Isrc -rdynamic -fomit-frame-pointer"
-
-EXECUTABLE_GCC      = 'gcc'
-EXECUTABLE_GPP      = 'g++'
-EXECUTABLE_PYTHON   = 'python'
-EXECUTABLE_JAVAC    = 'javac'
-EXECUTABLE_JAVA     = 'java'
+from universal.config import EXECUTABLE_GCC
+from universal.config import EXECUTABLE_GPP
+from universal.config import EXECUTABLE_PYTHON
+from universal.config import EXECUTABLE_JAVAC
+from universal.config import EXECUTABLE_JAVA
+from universal.config import GCC_FLAGS
+from universal.config import GPP_FLAGS
 
 
 def valgrind_test(filename):
