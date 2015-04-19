@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 import shutil
+import subprocess
 
 def perform_system_command(command):
     print("Doing: ", command)
@@ -31,3 +32,34 @@ def check_exec_installed(exec_list):
             all_installed = False
     return all_installed
 
+
+def update():
+    ''' Updates the tool
+    '''
+    if not check_exec_installed(["wget", "unzip"]):
+        print("please install the missing executables and retry")
+        exit(1)
+
+    # retrieve new file
+    subprocess.call(["wget", "-c", \
+                     "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
+
+    # able to successfully retrieve the file
+    perform_system_command("unzip master.zip")
+
+    os.chdir("universal-master/")  # preferred way to change directory
+    perform_system_command("sh install")
+    os.chdir("../")
+    perform_system_command("rm -rf ./universal-master master.zip")
+#    os.chdir("-")
+
+
+def problem():
+    ''' Opens a Issue page @github
+        to raise a issue.
+    '''
+    print("Thanks in advance for taking out time")
+    print("Click on the green New Issue button on the right side")
+    print("Opening browser")
+    perform_system_command("xdg-open \
+            'https://github.com/shubhamchaudhary/universal/issues'")

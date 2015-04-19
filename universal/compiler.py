@@ -24,7 +24,6 @@
 from __future__ import print_function
 
 import os
-import subprocess
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
@@ -34,7 +33,6 @@ from universal.config import EXECUTABLE_PYTHON
 from universal.config import GCC_FLAGS
 from universal.config import GPP_FLAGS
 from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
-from universal.util import check_exec_installed
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
 
@@ -148,37 +146,3 @@ def compile_files(args, mem_test=False):
         if mem_test:
             memory_test(filename, args)
         print("")
-
-
-
-def update():
-    ''' Updates the tool
-    '''
-    if not check_exec_installed(["wget", "unzip"]):
-        print("please install the missing executables and retry")
-        exit(1)
-
-    # retrieve new file
-    subprocess.call(["wget", "-c", \
-                     "https://github.com/shubhamchaudhary/universal/archive/master.zip"])
-
-    # able to successfully retrieve the file
-    perform_system_command("unzip master.zip")
-
-    os.chdir("universal-master/")  # preferred way to change directory
-    perform_system_command("sh install")
-    os.chdir("../")
-    perform_system_command("rm -rf ./universal-master master.zip")
-#    os.chdir("-")
-
-
-def problem():
-    ''' Opens a Issue page @github
-        to raise a issue.
-    '''
-    print("Thanks in advance for taking out time")
-    print("Click on the green New Issue button on the right side")
-    print("Opening browser")
-    perform_system_command("xdg-open \
-            'https://github.com/shubhamchaudhary/universal/issues'")
-
