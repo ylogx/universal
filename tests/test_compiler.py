@@ -16,8 +16,15 @@ except ImportError as e:
 sys.path.append('..')      # Needed to import code
 
 from universal.compiler import build_and_run_file
+from universal.config import EXECUTABLE_GCC
+from universal.config import EXECUTABLE_GPP
+from universal.config import EXECUTABLE_PYTHON
+from universal.config import EXECUTABLE_JAVA
+from universal.config import EXECUTABLE_JAVAC
 
-class test_util_functions(unittest.TestCase):
+
+@patch('universal.compiler.perform_system_command')
+class test_compiler_functions_that_call_system_command(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
         self.filename_cpp = 'foobar.cpp'
@@ -27,35 +34,31 @@ class test_util_functions(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @patch('universal.compiler.perform_system_command')
     def test_gcc_system_command_sent_for_c_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_c)
-        sys_cmd_mock.assert_called_once_with(AnyStringWith('gcc'))
+        sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_GCC))
         self.assertEqual(sys_cmd_mock.call_count, 1)
 
-    @patch('universal.compiler.perform_system_command')
     def test_gpp_system_command_sent_for_cpp_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_cpp)
-        sys_cmd_mock.assert_called_once_with(AnyStringWith('g++'))
+        sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_GPP))
         self.assertEqual(sys_cmd_mock.call_count, 1)
 
-    @patch('universal.compiler.perform_system_command')
     def test_python_system_command_sent_for_py_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_py)
-        sys_cmd_mock.assert_called_once_with(AnyStringWith('python'))
+        sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_PYTHON))
         self.assertEqual(sys_cmd_mock.call_count, 1)
 
-    @patch('universal.compiler.perform_system_command')
     def test_both_java_system_commands_sent_for_java_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_java)
         call_order = [
-            call(AnyStringWith('javac')),
-            call(AnyStringWith('java'))
+            call(AnyStringContaining(EXECUTABLE_JAVAC)),
+            call(AnyStringContaining(EXECUTABLE_JAVA))
         ]
         sys_cmd_mock.assert_has_calls(call_order, any_order=False)
         self.assertEqual(sys_cmd_mock.call_count, 2)
 
-class AnyStringWith(str):
+class AnyStringContaining(str):
     def __eq__(self, other):
         return self in other
 
