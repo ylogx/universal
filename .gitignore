@@ -1,3 +1,4 @@
+MANIFEST
 testfiles
 u
 *~
@@ -17,6 +18,9 @@ tags
 types_c.taghl
 tags
 *.taghl
+
+# IntelliJ
+.idea/
 
 #### PYTHON Related Ignores ####
 # Byte-compiled / optimized / DLL files
