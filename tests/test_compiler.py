@@ -8,6 +8,7 @@ try:
     import unittest
     import unittest.mock
     from unittest.mock import patch
+    from unittest.mock import call
 except ImportError as e:
     import mock
     from mock import patch
@@ -44,7 +45,11 @@ class test_util_functions(unittest.TestCase):
     @patch('universal.compiler.perform_system_command')
     def test_both_java_system_commands_sent_for_java_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_java)
-        sys_cmd_mock.assert_called_with(AnyStringWith('java'))
+        call_order = [
+            call(AnyStringWith('javac')),
+            call(AnyStringWith('java'))
+        ]
+        sys_cmd_mock.assert_has_calls(call_order, any_order=False)
 
 class AnyStringWith(str):
     def __eq__(self, other):
