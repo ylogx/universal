@@ -16,6 +16,7 @@ except ImportError as e:
 sys.path.append('..')      # Needed to import code
 
 from universal.compiler import build_and_run_file
+from universal.compiler import compile_files
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
 from universal.config import EXECUTABLE_PYTHON
@@ -57,6 +58,23 @@ class test_compiler_functions_that_call_system_command(unittest.TestCase):
         ]
         sys_cmd_mock.assert_has_calls(call_order, any_order=False)
         self.assertEqual(sys_cmd_mock.call_count, 2)
+
+
+class test_compile_files_function(unittest.TestCase):
+    def setUp(self):
+        self.filename_c = 'foobar.c'
+        self.filename_cpp = 'foobar.cpp'
+        self.filename_py = 'foobar.py'
+        self.filename_java = 'foobar.java'
+        self.filename_list = [self.filename_c, self.filename_cpp, self.filename_py, self.filename_java]
+
+    @patch('universal.compiler.build_and_run_file')
+    @patch('os.path.isfile')
+    def test_build_and_run_called_for_all_args(self, mock, mock_isfile):
+        mock_isfile.return_value = True
+        compile_files(self.filename_list, mem_test=False)
+        self.assertEqual(mock.call_count, len(self.filename_list))
+
 
 class AnyStringContaining(str):
     def __eq__(self, other):
