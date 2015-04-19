@@ -24,25 +24,13 @@
 import os
 import sys
 import subprocess
-import shutil
 from argparse import ArgumentParser
 
 from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
 
-
-def perform_system_command(command):
-    print("Doing: ", command)
-    out = os.system(command)
-    return int(out)
-
-
-def get_file_tuple(filename):
-    directory = os.path.dirname(os.path.abspath(filename))
-    basename = os.path.basename(filename)
-    filename_tuple = basename.split('.')
-    extension = filename_tuple[-1]
-    name = '.'.join(filename_tuple[:-1])
-    return directory, name, extension
+from universal.util import get_file_tuple
+from universal.util import perform_system_command
+from universal.util import check_exec_installed
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
@@ -164,20 +152,6 @@ def compile_files(args, mem_test=False):
             memory_test(filename, args)
         print("")
 
-
-def check_exec_installed(exec_list):
-    ''' Check the required programs are
-        installed.
-        PARAM exec_list: list of programs to check
-        RETURN: True if all installed else False
-    '''
-
-    all_installed = True
-    for exe in exec_list:
-        if shutil.which(exe) is None:
-            print("Executable: " + exe + " is not installed")
-            all_installed = False
-    return all_installed
 
 
 def update():

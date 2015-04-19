@@ -8,7 +8,7 @@ import sys
 
 sys.path.append('..')      # Needed to import code
 
-from universal.universal import get_file_tuple
+from universal.util import get_file_tuple
 
 class test_util_functions(unittest.TestCase):
     def setUp(self):
