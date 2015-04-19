@@ -85,7 +85,7 @@ def get_file_tuple(filename):
     filename_tuple = basename.split('.')
     extension = filename_tuple[-1]
     name = '.'.join(filename_tuple[:-1])
-    return (directory, name, extension)
+    return directory, name, extension
 
 
 GCC_FLAGS = " -g -O2" \
@@ -140,7 +140,7 @@ def build_and_run_file(filename):
         PARAM filename: name of file to build and run
     '''
     (directory, name, extension) = get_file_tuple(filename)
-    if (extension == 'c'):
+    if extension == 'c':
         print(" = = = = = = ", YELLOW, "GCC: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
         output_filename = directory + '/' + name + '.out'
@@ -159,7 +159,7 @@ def build_and_run_file(filename):
             command_run += " < " + test_file
         perform_system_command(command_run)
 
-    elif (extension == 'cpp'):
+    elif extension == 'cpp':
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
         output_filename = directory + '/' + name + '.out'
@@ -177,7 +177,7 @@ def build_and_run_file(filename):
         if os.path.exists(test_file):
             command_run += " < " + test_file
         perform_system_command(command_run)
-    elif (extension == 'py'):
+    elif extension == 'py':
         print(" = = = = = = ", YELLOW, "PYTHON: Executing " + filename + " file", \
               RESET, " = = = = = =\n")
         command_run = EXECUTABLE_PYTHON + " " + filename
@@ -185,7 +185,7 @@ def build_and_run_file(filename):
         if os.path.exists(test_file):
             command_run += " < " + test_file
         perform_system_command(command_run)
-    elif (extension == 'java'):
+    elif extension == 'java':
         command = EXECUTABLE_JAVAC + ' ' + filename
         perform_system_command(command)
         command_run = EXECUTABLE_JAVA + ' ' + name
