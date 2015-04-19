@@ -25,8 +25,8 @@ import sys
 from argparse import ArgumentParser
 
 from universal.compiler import compile_files
-from universal.compiler import update
-from universal.compiler import problem
+from universal.util import update
+from universal.util import problem
 
 def main():
     # Parse command line arguments
