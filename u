@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import sys
-import universal.universal
+import universal.main
+
 try:
-    sys.exit(universal.universal.main())
+    sys.exit(universal.main.main())
 except KeyboardInterrupt:
     sys.exit(1)

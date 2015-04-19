@@ -25,8 +25,6 @@ from __future__ import print_function
 
 import os
 import subprocess
-import sys
-from argparse import ArgumentParser
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
@@ -184,27 +182,3 @@ def problem():
     perform_system_command("xdg-open \
             'https://github.com/shubhamchaudhary/universal/issues'")
 
-
-def main():
-    # Parse command line arguments
-    parser = ArgumentParser()
-    parser.add_argument("-u", "--update", action='store_true', dest="update",
-                        help="Update the software from online repo")
-    parser.add_argument("-p", "--problem", action='store_true', dest="problem",
-                        help="Report a problem")
-    parser.add_argument("-m", "--memory", action='store_true', dest="memory",
-                        help="Run memory tests")
-    args, otherthings = parser.parse_known_args()
-
-    if len(otherthings) > 0:
-        compile_files(otherthings, args.memory)
-    elif args.update:
-        return update()
-    elif args.problem:
-        return problem()
-    else:
-        parser.print_usage()
-        print('No filename passed')
-
-if __name__ == '__main__':
-    sys.exit(main())

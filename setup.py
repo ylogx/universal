@@ -2,7 +2,7 @@ from distutils.core import setup
 
 add_keywords = dict(
     entry_points = {
-        'console_scripts': ['universal = universal.universal:main'],
+        'console_scripts': ['universal = universal.main:main'],
     },
 )
 
