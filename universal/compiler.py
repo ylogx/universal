@@ -68,16 +68,17 @@ def build_and_run_file(filename):
                   GCC_FLAGS + \
                   " -o " + output_filename + \
                   ' ' + filename
-        if perform_system_command(command) != 0:
+        out = perform_system_command(command)
+        if out != 0:
             print("Error while compiling retry")
-            return
+            return out
         print("")
         output_file = directory + "/" + name + ".out"
         command_run = output_file
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
-        perform_system_command(command_run)
+        return perform_system_command(command_run)
     elif extension == 'cpp':
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
@@ -86,16 +87,17 @@ def build_and_run_file(filename):
                   GPP_FLAGS + \
                   ' -o ' + output_filename + \
                   ' ' + filename
-        if perform_system_command(command) != 0:
+        out = perform_system_command(command)
+        if out != 0:
             print("Error while compiling retry\n")
-            return
+            return out
         print("")
         output_file = directory + "/" + name + ".out"
         command_run = output_file
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
-        perform_system_command(command_run)
+        return perform_system_command(command_run)
     elif extension == 'py':
         print(" = = = = = = ", YELLOW, "PYTHON: Executing " + filename + " file", \
               RESET, " = = = = = =\n")
@@ -103,7 +105,7 @@ def build_and_run_file(filename):
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
-        perform_system_command(command_run)
+        return perform_system_command(command_run)
     elif extension == 'java':
         command = EXECUTABLE_JAVAC + ' ' + filename
         perform_system_command(command)
@@ -111,9 +113,10 @@ def build_and_run_file(filename):
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
-        perform_system_command(command_run)
+        return perform_system_command(command_run)
     else:
         print("Language yet not supported")
+        return -1
 
 
 def memory_test(filename):
