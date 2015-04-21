@@ -1,6 +1,5 @@
-TESTS_FILES = $(wildcard tests/test_*.py)
-TESTS_TEMP = $(subst /,.,$(TESTS_FILES))
-TESTS = $(subst .py,,$(TESTS_TEMP))
+TEST_FILES = $(wildcard tests/test_*.py)
+TESTS = $(subst .py,,$(subst /,.,$(TEST_FILES)))
 
 all.PHONY: test
 
