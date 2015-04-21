@@ -6,11 +6,11 @@ all.PHONY: test
 test:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running test: $(TEST); \
-		python -m $(TEST); \
+		python -m $(TEST) $(PYFLAGS); \
 		)
 
 test3:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running python3 test: $(TEST); \
-		python3 -m $(TEST); \
+		python3 -m $(TEST) $(PYFLAGS); \
 		)
