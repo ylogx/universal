@@ -10,9 +10,7 @@ try:
 except ImportError as e:
     import mock
     from mock import patch
-
-import sys
-sys.path.append('..')      # Needed to import code
+    from mock import call
 
 from universal.util import get_file_tuple
 from universal.util import perform_system_command

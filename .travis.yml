@@ -18,7 +18,6 @@ before_install:
 install:
   - python setup.py sdist
 # - pip install dist/universal*.tar.gz
-script:
-  - cd tests && make
+script: make
 after_script:
   - pip install universal

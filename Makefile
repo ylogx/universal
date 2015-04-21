@@ -1,15 +1,17 @@
-TESTS = $(wildcard test_*.py)
+TESTS_FILES = $(wildcard tests/test_*.py)
+TESTS_TEMP = $(subst /,.,$(TESTS_FILES))
+TESTS = $(subst .py,,$(TESTS_TEMP))
 
 all.PHONY: test
-#.PHONY: test test3
 
 test:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running test: $(TEST); \
-		python $(TEST); \
+		python -m $(TEST); \
 		)
+
 test3:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running python3 test: $(TEST); \
-		python3 $(TEST); \
+		python3 -m $(TEST); \
 		)

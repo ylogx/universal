@@ -12,8 +12,7 @@ try:
 except ImportError as e:
     import mock
     from mock import patch
-
-sys.path.append('..')      # Needed to import code
+    from mock import call
 
 from universal.compiler import build_and_run_file
 from universal.compiler import compile_files
