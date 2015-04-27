@@ -18,6 +18,8 @@ before_install:
 install:
   - python setup.py sdist
 # - pip install dist/universal*.tar.gz
-script: make
+before_script:
+  - pip install nose
+script: nosetests
 after_script:
   - pip install universal

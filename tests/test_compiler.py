@@ -79,5 +79,5 @@ class AnyStringContaining(str):
     def __eq__(self, other):
         return self in other
 
-
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()

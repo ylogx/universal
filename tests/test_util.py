@@ -35,4 +35,5 @@ class test_util_functions(unittest.TestCase):
         self.assertEqual(name, 'foobar')
         self.assertEqual(extension, 'cpp')
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()
