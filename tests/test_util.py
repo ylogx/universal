@@ -25,12 +25,16 @@ class test_util_functions(unittest.TestCase):
     @patch('os.system')
     def test_perform_system_call(self, mock):
         cmd = 'universal'
+
         perform_system_command(cmd)
+
         mock.assert_called_once_with(cmd)
 
     def test_get_file_tuple_splits_properly(self):
         dummy_directory = "dummy_directory"
+
         (directory, name, extension) = get_file_tuple(dummy_directory + '/' + self.filename_cpp)
+
         self.assertIn(dummy_directory, directory)
         self.assertEqual(name, 'foobar')
         self.assertEqual(extension, 'cpp')
