@@ -16,6 +16,7 @@ from universal.util import get_file_tuple
 from universal.util import perform_system_command
 from universal.util import update
 from universal.util import problem
+from universal.util import check_exec_installed
 
 class test_util_functions(unittest.TestCase):
     def setUp(self):
@@ -52,6 +53,17 @@ class test_util_functions(unittest.TestCase):
         problem()
 
         mock_sys_cmd.assert_called_once_with("xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
+
+    @patch('shutil.which')
+    def test_check_exec_installed(self, mock_which):
+        exec_list = ['a', 'b', 'c']
+        mock_which.return_value = 1
+
+        check_exec_installed(exec_list)
+
+        calls_for_which = [call(exe) for exe in exec_list]
+        mock_which.has_calls(calls_for_which)
+
 
 if __name__ == '__main__':
     unittest.main()

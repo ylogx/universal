@@ -18,12 +18,11 @@ def get_file_tuple(filename):
     return directory, name, extension
 
 def check_exec_installed(exec_list):
-    ''' Check the required programs are
+    """ Check the required programs are
         installed.
         PARAM exec_list: list of programs to check
         RETURN: True if all installed else False
-    '''
-
+    """
     all_installed = True
     for exe in exec_list:
         if shutil.which(exe) is None:
