@@ -54,15 +54,31 @@ class test_util_functions(unittest.TestCase):
 
         mock_sys_cmd.assert_called_once_with("xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
 
-    @patch('shutil.which')
-    def test_check_exec_installed(self, mock_which):
-        exec_list = ['a', 'b', 'c']
+
+
+@patch('shutil.which')
+class test_check_exec_installed(unittest.TestCase):
+    def setUp(self):
+        self.exec_list = ['a', 'b', 'c']
+        pass
+
+    def test_check_exec_installed_returns_true_if_all_installed(self, mock_which):
         mock_which.return_value = 1
 
-        check_exec_installed(exec_list)
+        output = check_exec_installed(self.exec_list)
 
-        calls_for_which = [call(exe) for exe in exec_list]
+        calls_for_which = [call(exe) for exe in self.exec_list]
         mock_which.has_calls(calls_for_which)
+        self.assertTrue(output)
+
+    def test_check_exec_installed_returns_false_if_no_exec_installed(self, mock_which):
+        mock_which.return_value = None
+
+        output = check_exec_installed(self.exec_list)
+
+        calls_for_which = [call(exe) for exe in self.exec_list]
+        mock_which.has_calls(calls_for_which)
+        self.assertFalse(output)
 
 
 if __name__ == '__main__':
