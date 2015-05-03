@@ -34,6 +34,7 @@ def check_exec_installed(exec_list):
 def update():
     """ Updates the tool
     """
+    check_exec_installed(['pip'])
     perform_system_command("pip install --upgrade universal")
 
 

@@ -42,10 +42,12 @@ class test_util_functions(unittest.TestCase):
         self.assertEqual(name, 'foobar')
         self.assertEqual(extension, 'cpp')
 
+    @patch('universal.util.check_exec_installed')
     @patch('universal.util.perform_system_command')
-    def test_update(self, mock_sys_cmd):
+    def test_update(self, mock_sys_cmd, mock_check_exec_installed):
         update()
 
+        mock_check_exec_installed.assert_called_once_with(['pip'])
         mock_sys_cmd.assert_called_once_with('pip install --upgrade universal')
 
     @patch('universal.util.perform_system_command')
