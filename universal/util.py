@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 import shutil
+import subprocess
 
 def perform_system_command(command):
     print("Doing: ", command)
@@ -25,10 +26,19 @@ def check_exec_installed(exec_list):
     """
     all_installed = True
     for exe in exec_list:
-        if shutil.which(exe) is None:
+        if not is_tool(exe):
             print("Executable: " + exe + " is not installed")
             all_installed = False
     return all_installed
+
+def is_tool(name):
+    try:
+        devnull = open(os.devnull)
+        subprocess.Popen([name], stdout=devnull, stderr=devnull).communicate()
+    except OSError as e:
+        if e.errno == os.errno.ENOENT:
+            return False
+    return True
 
 
 def update():

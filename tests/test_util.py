@@ -8,15 +8,19 @@ try:
     from unittest.mock import patch
     from unittest.mock import call
 except ImportError as e:
+    import unittest2 as unittest
     import mock
     from mock import patch
     from mock import call
+
+import os
 
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
 from universal.util import update
 from universal.util import problem
 from universal.util import check_exec_installed
+from universal.util import is_tool
 
 class test_util_functions(unittest.TestCase):
     def setUp(self):
@@ -57,31 +61,49 @@ class test_util_functions(unittest.TestCase):
         mock_sys_cmd.assert_called_once_with("xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
 
 
-
-@patch('shutil.which')
+@patch('universal.util.is_tool')
 class test_check_exec_installed(unittest.TestCase):
     def setUp(self):
         self.exec_list = ['a', 'b', 'c']
-        pass
 
-    def test_check_exec_installed_returns_true_if_all_installed(self, mock_which):
-        mock_which.return_value = 1
+    def test_check_exec_installed_returns_true_if_all_exec_installed(self, mock_is_tool):
+        mock_is_tool.return_value = True
 
         output = check_exec_installed(self.exec_list)
 
-        calls_for_which = [call(exe) for exe in self.exec_list]
-        mock_which.has_calls(calls_for_which)
+        calls_for_is_tool = [call(exe) for exe in self.exec_list]
+        mock_is_tool.has_calls(calls_for_is_tool)
         self.assertTrue(output)
 
-    def test_check_exec_installed_returns_false_if_no_exec_installed(self, mock_which):
-        mock_which.return_value = None
+    def test_check_exec_installed_returns_false_if_no_exec_installed(self, mock_is_tool):
+        mock_is_tool.return_value = False
 
         output = check_exec_installed(self.exec_list)
 
-        calls_for_which = [call(exe) for exe in self.exec_list]
-        mock_which.has_calls(calls_for_which)
+        calls_for_is_tool = [call(exe) for exe in self.exec_list]
+        mock_is_tool.has_calls(calls_for_is_tool)
         self.assertFalse(output)
 
+
+@patch('subprocess.Popen')
+class test_is_tool(unittest.TestCase):
+    def test_is_tool_returns_true_if_installed(self, mock_popen):
+        output = is_tool('a')
+
+        args, kwargs = mock_popen.call_args
+        self.assertEqual(args[0], ['a'])
+        self.assertTrue(output)
+
+    @unittest.skip
+    def test_is_tool_returns_false_if_exec_not_installed(self, mock_popen):
+        e = OSError()
+        mock_popen.side_effect = e
+
+        output = is_tool('a')
+
+        args, kwargs = mock_popen.call_args
+        self.assertEqual(args[0], ['a'])
+        self.assertFalse(output)
 
 if __name__ == '__main__':
     unittest.main()
