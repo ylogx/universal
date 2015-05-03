@@ -14,6 +14,7 @@ except ImportError as e:
     from mock import call
 
 import os
+from os import errno
 
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
@@ -94,9 +95,8 @@ class test_is_tool(unittest.TestCase):
         self.assertEqual(args[0], ['a'])
         self.assertTrue(output)
 
-    @unittest.skip
     def test_is_tool_returns_false_if_exec_not_installed(self, mock_popen):
-        e = OSError()
+        e = OSError(errno.ENOENT, 'msg')
         mock_popen.side_effect = e
 
         output = is_tool('a')
