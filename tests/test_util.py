@@ -14,6 +14,8 @@ except ImportError as e:
 
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
+from universal.util import update
+from universal.util import problem
 
 class test_util_functions(unittest.TestCase):
     def setUp(self):
@@ -38,6 +40,18 @@ class test_util_functions(unittest.TestCase):
         self.assertIn(dummy_directory, directory)
         self.assertEqual(name, 'foobar')
         self.assertEqual(extension, 'cpp')
+
+    @patch('universal.util.perform_system_command')
+    def test_update(self, mock_sys_cmd):
+        update()
+
+        mock_sys_cmd.assert_called_once_with('pip install --upgrade universal')
+
+    @patch('universal.util.perform_system_command')
+    def test_problem(self, mock_sys_cmd):
+        problem()
+
+        mock_sys_cmd.assert_called_once_with("xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
 
 if __name__ == '__main__':
     unittest.main()
