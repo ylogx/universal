@@ -38,19 +38,16 @@ class test_compiler_functions_that_call_system_command(unittest.TestCase):
         build_and_run_file(self.filename_c)
 
         sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_GCC))
-        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     def test_gpp_system_command_sent_for_cpp_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_cpp)
 
         sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_GPP))
-        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     def test_python_system_command_sent_for_py_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_py)
 
         sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_PYTHON))
-        self.assertEqual(sys_cmd_mock.call_count, 1)
 
     def test_both_java_system_commands_sent_for_java_file(self, sys_cmd_mock):
         build_and_run_file(self.filename_java)
