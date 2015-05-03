@@ -21,7 +21,7 @@ script:
   - nosetests
   - make install
 after_script:
-  - pip uninstall universal
+  - yes | pip uninstall universal
   - pip install universal
 after_success:
   - make coverage
