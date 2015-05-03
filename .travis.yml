@@ -13,13 +13,16 @@ matrix:
     - python: 2.6
     - python: 2.7
     - python: pypy
-before_install:
-  - pip install -r requirements.txt
 install:
-  - python setup.py sdist
-# - pip install dist/universal*.tar.gz
-before_script:
-  - pip install nose
-script: nosetests
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+  - pip install coveralls
+script:
+  - nosetests
+  - make install
 after_script:
+  - pip uninstall universal
   - pip install universal
+after_success:
+  - make coverage
+  - coveralls
