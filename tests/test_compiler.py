@@ -70,12 +70,23 @@ class test_compile_files_function(unittest.TestCase):
 
     @patch('universal.compiler.build_and_run_file')
     @patch('os.path.isfile')
-    def test_build_and_run_called_for_all_args(self, mock, mock_isfile):
+    def test_build_and_run_called_for_all_args(self, mock_isfile, mock_build_run):
         mock_isfile.return_value = True
 
         compile_files(self.filename_list, mem_test=False)
 
-        self.assertEqual(mock.call_count, len(self.filename_list))
+        self.assertEqual(mock_build_run.call_count, len(self.filename_list))
+        mock_build_run.assert_has_calls([call(file) for file in self.filename_list])
+
+    @patch('universal.compiler.build_and_run_file')
+    @patch('os.path.isfile')
+    def test_build_and_run_shows_error_when_no_file(self, mock_isfile, mock_build_run):
+        mock_isfile.return_value = False
+
+        compile_files(self.filename_list, mem_test=False)
+
+        self.assertFalse(mock_build_run.called)
+        self.assertEqual(mock_build_run.call_count, 0)
 
 
 class AnyStringContaining(str):
