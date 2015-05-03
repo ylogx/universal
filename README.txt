@@ -1,4 +1,4 @@
-Universal Competitive Programming Suite [![Build Status](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+Universal Competitive Programming Suite [![Build Status](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Coverage Status](https://coveralls.io/repos/shubhamchaudhary/universal/badge.svg?branch=master)](https://coveralls.io/r/shubhamchaudhary/universal?branch=master) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shubhamchaudhary/universal/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 =======================================
 A tool to quickly compile and run different source files using same command  
   
