@@ -14,8 +14,8 @@ except ImportError as e:
     from mock import patch
     from mock import call
 
-from universal.compiler import build_and_run_file
-from universal.compiler import compile_files
+from universal.builder import build_and_run_file
+from universal.builder import compile_files
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
 from universal.config import EXECUTABLE_PYTHON
@@ -23,7 +23,7 @@ from universal.config import EXECUTABLE_JAVA
 from universal.config import EXECUTABLE_JAVAC
 
 
-@patch('universal.compiler.perform_system_command')
+@patch('universal.builder.perform_system_command')
 class TestCompilerFunctionsThatCallSystemCommand(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
@@ -68,7 +68,7 @@ class TestCompileFilesFunction(unittest.TestCase):
         self.filename_java = 'foobar.java'
         self.filename_list = [self.filename_c, self.filename_cpp, self.filename_py, self.filename_java]
 
-    @patch('universal.compiler.build_and_run_file')
+    @patch('universal.builder.build_and_run_file')
     @patch('os.path.isfile')
     def test_build_and_run_called_for_all_args(self, mock_isfile, mock_build_run):
         mock_isfile.return_value = True
@@ -78,7 +78,7 @@ class TestCompileFilesFunction(unittest.TestCase):
         self.assertEqual(mock_build_run.call_count, len(self.filename_list))
         mock_build_run.assert_has_calls([call(file) for file in self.filename_list])
 
-    @patch('universal.compiler.build_and_run_file')
+    @patch('universal.builder.build_and_run_file')
     @patch('os.path.isfile')
     def test_build_and_run_shows_error_when_no_file(self, mock_isfile, mock_build_run):
         mock_isfile.return_value = False

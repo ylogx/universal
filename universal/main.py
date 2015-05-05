@@ -24,7 +24,7 @@
 import sys
 from argparse import ArgumentParser
 
-from universal.compiler import compile_files
+from universal.builder import compile_files
 from universal.util import update
 from universal.util import problem
 
