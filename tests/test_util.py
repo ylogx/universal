@@ -23,7 +23,7 @@ from universal.util import problem
 from universal.util import check_exec_installed
 from universal.util import is_tool
 
-class test_util_functions(unittest.TestCase):
+class TestUtilFunctions(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
         self.filename_cpp = 'foobar.cpp'
@@ -63,7 +63,7 @@ class test_util_functions(unittest.TestCase):
 
 
 @patch('universal.util.is_tool')
-class test_check_exec_installed(unittest.TestCase):
+class TestCheckExecInstalled(unittest.TestCase):
     def setUp(self):
         self.exec_list = ['a', 'b', 'c']
 
@@ -87,7 +87,7 @@ class test_check_exec_installed(unittest.TestCase):
 
 
 @patch('subprocess.Popen')
-class test_is_tool(unittest.TestCase):
+class TestIsTool(unittest.TestCase):
     def test_is_tool_returns_true_if_installed(self, mock_popen):
         output = is_tool('a')
 

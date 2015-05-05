@@ -24,7 +24,7 @@ from universal.config import EXECUTABLE_JAVAC
 
 
 @patch('universal.compiler.perform_system_command')
-class test_compiler_functions_that_call_system_command(unittest.TestCase):
+class TestCompilerFunctionsThatCallSystemCommand(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
         self.filename_cpp = 'foobar.cpp'
@@ -60,7 +60,7 @@ class test_compiler_functions_that_call_system_command(unittest.TestCase):
         self.assertEqual(sys_cmd_mock.call_count, 2)
 
 
-class test_compile_files_function(unittest.TestCase):
+class TestCompileFilesFunction(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
         self.filename_cpp = 'foobar.cpp'
