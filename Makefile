@@ -19,7 +19,7 @@ install:
 	pip install --upgrade dist/Universal-$(VERSION).tar.gz
 
 coverage:
-	@coverage run  --include='*universal*' `which nosetests`
+	@coverage run `which nosetests`
 	@coverage report
 
 test:
