@@ -1,5 +1,6 @@
 include u
+include *.md
 include *.txt
-recursive-include docs *.txt
+recursive-include docs *.txt *.md
 recursive-include scripts *
 
