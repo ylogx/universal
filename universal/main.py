@@ -28,8 +28,10 @@ from universal.builder import compile_files
 from universal.util import update
 from universal.util import problem
 
-def main():
-    # Parse command line arguments
+
+def parse_known_args():
+    """ Parse command line arguments
+    """
     parser = ArgumentParser()
     parser.add_argument("-u", "--update", action='store_true', dest="update",
                         help="Update the software from online repo")
@@ -38,6 +40,11 @@ def main():
     parser.add_argument("-m", "--memory", action='store_true', dest="memory",
                         help="Run memory tests")
     args, otherthings = parser.parse_known_args()
+    return args, otherthings, parser
+
+
+def main():
+    args, otherthings, parser = parse_known_args()
 
     if len(otherthings) > 0:
         compile_files(otherthings, args.memory)
