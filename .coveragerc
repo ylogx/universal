@@ -5,4 +5,5 @@ omit = /usr*,/opt*,setup.py,*egg*,*virtualenv*,.venv/*,.tox/*,test/*,tests/*,/Li
 [report]
 ignore-errors = True
 exclude_lines =
+    pragma: no cover
     if __name__ == .__main__.:
