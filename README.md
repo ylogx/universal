@@ -56,11 +56,11 @@ To get latest version of Universal type `u -u` or [Click here](https://github.co
 It is recommended that you update the software after every few weeks.  
   
 Find us:
-  * [PyPi](https://pypi.python.org/pypi/Universal)  
+  * [PyPi](https://pypi.python.org/pypi/Universal)   
+  * [Ohloh](https://www.ohloh.net/p/UniversalCompiler)  
   * [LaunchPad - UniversalCompiler](https://launchpad.net/universalcompiler)  
-  * [Ohloh](https://www.ohloh.net/p/UniversalCompiler)
-  
-  
 
+  
+[![wercker status](https://app.wercker.com/status/b72e37a06749fd7aab9512499ed15481/m "wercker status")](https://app.wercker.com/project/bykey/b72e37a06749fd7aab9512499ed15481)
 
 
