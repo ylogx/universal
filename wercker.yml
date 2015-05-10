@@ -1,4 +1,4 @@
-box: python:2-slim
+box: python
 build:
   steps:
     - pip-install
