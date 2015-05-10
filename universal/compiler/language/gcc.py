@@ -11,14 +11,13 @@ class Gcc(Language):
         return 'c'
 
     def __init__(self, filename):
+        """ :param filename: file to use
+        """
         self.filename = filename
 
     def compile(self):
+        """ :return: 0 if compilation successful
         """
-        :param filename: file to compile
-        :return: 0 if compilation successful
-        """
-        # Filename should be checked where called from
         command, directory, name = get_command_for_compilation(self.filename)
         return perform_system_command(command)
 
@@ -29,18 +28,19 @@ class Gcc(Language):
 
 def get_command_to_run(filename):
     (directory, name, extension) = get_file_tuple(filename)
-    output_file = directory + "/" + name + ".out"
+    output_file = directory + '/' + name + '.out'
     command_run = output_file
-    test_file = directory + "/" + name + ".input"
+    test_file = directory + '/' + name + '.input'
     if os.path.exists(test_file):
-        command_run += " < " + test_file
+        command_run += ' < ' + test_file
     return command_run
+
 
 def get_command_for_compilation(filename):
     (directory, name, extension) = get_file_tuple(filename)
     output_filename = directory + '/' + name + '.out'
-    command = EXECUTABLE_GCC + " " + \
+    command = EXECUTABLE_GCC + ' ' + \
               GCC_FLAGS + \
-              " -o " + output_filename + \
+              ' -o ' + output_filename + \
               ' ' + filename
     return command, directory, name
