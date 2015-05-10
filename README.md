@@ -1,10 +1,10 @@
 Universal Competitive Programming Suite
 =======================================
-[![Build Status](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Coverage Status](https://coveralls.io/repos/shubhamchaudhary/universal/badge.svg?branch=master)](https://coveralls.io/r/shubhamchaudhary/universal?branch=master) [![Build Status](https://snap-ci.com/shubhamchaudhary/universal/branch/master/build_image)](https://snap-ci.com/shubhamchaudhary/universal/branch/master) 
+[![Build Status](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Coverage Status](https://coveralls.io/repos/shubhamchaudhary/universal/badge.svg?branch=master)](https://coveralls.io/r/shubhamchaudhary/universal?branch=master) [![Build Status](https://snap-ci.com/shubhamchaudhary/universal/branch/master/build_image)](https://snap-ci.com/shubhamchaudhary/universal/branch/master)
 
-[![PyPI](https://img.shields.io/pypi/v/Universal.svg)]() [![PyPI](https://img.shields.io/pypi/dm/Universal.svg)]() [![GitHub license](https://img.shields.io/github/license/shubhamchaudhary/universal.svg)]()
+[![PyPI](https://img.shields.io/pypi/v/Universal.svg)](https://pypi.python.org/pypi/Universal) [![PyPI](https://img.shields.io/pypi/dm/Universal.svg)](https://pypi.python.org/pypi/Universal) [![PyPI](https://img.shields.io/pypi/l/Universal.svg)](https://pypi.python.org/pypi/Universal)
 
-[![GitHub issues](https://img.shields.io/github/issues/shubhamchaudhary/universal.svg?style=plastic)]() [![Stories in Ready](https://badge.waffle.io/shubhamchaudhary/universal.png?label=ready&title=Ready)](https://waffle.io/shubhamchaudhary/universal)
+[![GitHub issues](https://img.shields.io/github/issues/shubhamchaudhary/universal.svg?style=plastic)](https://github.com/shubhamchaudhary/universal/issues) [![Stories in Ready](https://badge.waffle.io/shubhamchaudhary/universal.png?label=ready&title=Ready)](https://waffle.io/shubhamchaudhary/universal)
 
 A tool to quickly compile and run different source files using same command  
   
