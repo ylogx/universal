@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class Language:
     __metaclass__ = ABCMeta
 
