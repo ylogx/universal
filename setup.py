@@ -1,4 +1,5 @@
 from distutils.core import setup
+from setuptools import find_packages
 
 add_keywords = dict(
     entry_points = {
@@ -18,7 +19,7 @@ setup(
         description='Universal Competitive Programming Suite helps you work'
                     ' faster in programming competitions',
         version='2.0.1',
-        packages=['universal'],
+        packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         license='GPLv3+',
         author='Shubham Chaudhary',
         author_email='me@shubhamchaudhary.in',
