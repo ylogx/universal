@@ -1,7 +1,8 @@
 box: wercker/python
 build:
   steps:
-    - pip-install
+    - pip-install:
+        requirements_file: "requirements-dev.txt"
     - script:
         name: Python Unit Test
         code: |
