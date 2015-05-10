@@ -65,16 +65,12 @@ def build_and_run_file(filename):
         compiler = Compiler(filename)
         out = compiler.compile()
         if out != 0:
-            print('Error while compiling retry. Code:', out)
+            print('Error while compiling. Code:', out, 'Please retry.')
             return out
         print("")
 
-        output_file = directory + "/" + name + ".out"
-        command_run = output_file
-        test_file = directory + "/" + name + ".input"
-        if os.path.exists(test_file):
-            command_run += " < " + test_file
-        return perform_system_command(command_run)
+        out = compiler.run()
+        return out
 
     elif extension == 'cpp':
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
