@@ -5,11 +5,17 @@ class Compiler():
 
     def __init__(self, filename):
         self.filename = filename
+        self.compiler = self.get_compiler()
 
     def compile(self):
+        return self.compiler.compile()
+
+    def run(self):
+        return self.compiler.run()
+
+    def get_compiler(self):
         (directory, name, extension) = get_file_tuple(self.filename)
         if extension == Gcc.extension():
-            gcc = Gcc(self.filename)
-            return_code = gcc.compile()
-        return return_code
+            compiler = Gcc(self.filename)
+        return compiler
 
