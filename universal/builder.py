@@ -24,6 +24,7 @@
 from __future__ import print_function
 
 import os
+from universal.compiler.compiler import Compiler
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP
@@ -49,8 +50,6 @@ def compile_files(args, mem_test=False):
             print('The file doesn\'t exits')
             return
         build_and_run_file(filename)
-        if mem_test:
-            memory_test(filename, args)
         print("")
 
 
@@ -63,22 +62,20 @@ def build_and_run_file(filename):
     if extension == 'c':
         print(" = = = = = = ", YELLOW, "GCC: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
-        output_filename = directory + '/' + name + '.out'
-        command = EXECUTABLE_GCC + " " + \
-                  GCC_FLAGS + \
-                  " -o " + output_filename + \
-                  ' ' + filename
-        out = perform_system_command(command)
+        compiler = Compiler(filename)
+        out = compiler.compile()
         if out != 0:
-            print("Error while compiling retry")
+            print('Error while compiling retry. Code:', out)
             return out
         print("")
+
         output_file = directory + "/" + name + ".out"
         command_run = output_file
         test_file = directory + "/" + name + ".input"
         if os.path.exists(test_file):
             command_run += " < " + test_file
         return perform_system_command(command_run)
+
     elif extension == 'cpp':
         print(" = = = = = = ", YELLOW, "GPP: Compiling " + filename + " file", \
               RESET, " = = = = = =\n")
