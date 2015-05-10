@@ -1,0 +1,8 @@
+box: python:2-slim
+build:
+  steps:
+    - pip-install
+    - script:
+        name: Python Unit Test
+        code: |
+          nosetests
