@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-from universal.compiler.language.gcc import Gcc
+from universal.compiler.language.gpp import Gpp
 
 try:
     import unittest
@@ -14,20 +14,20 @@ except ImportError as e:
     from mock import call
 
 
-class TestGcc(unittest.TestCase):
+class TestGpp(unittest.TestCase):
     def setUp(self):
-        self.filename_c = 'foobar.c'
-        self.compiler = Gcc(self.filename_c)
+        self.filename_cpp = 'foobar.cpp'
+        self.compiler = Gpp(self.filename_cpp)
 
-    @patch('universal.compiler.language.gcc.perform_system_command')
+    @patch('universal.compiler.language.gpp.perform_system_command')
     def test_compile(self, mock_sys_cmd):
         self.compiler.compile()
         mock_sys_cmd.assert_called_once_with(
-            AnyStringContaining('gcc  -g -O2 -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -lm -lrt -o'))
+            AnyStringContaining('g++  -g -O2 -Wall -Wextra -std=c++11 -Isrc -rdynamic -fomit-frame-pointer -o'))
 
 
     @patch('os.path.exists')
-    @patch('universal.compiler.language.gcc.perform_system_command')
+    @patch('universal.compiler.language.gpp.perform_system_command')
     def test_run_output_when_no_input_file_available(self, mock_sys_cmd, mock_path_exists):
         mock_path_exists.return_value = False
 
@@ -36,7 +36,7 @@ class TestGcc(unittest.TestCase):
         mock_sys_cmd.assert_called_once_with(AnyStringContaining('foobar.out'))
 
     @patch('os.path.exists')
-    @patch('universal.compiler.language.gcc.perform_system_command')
+    @patch('universal.compiler.language.gpp.perform_system_command')
     def test_run_output_when_input_file_available(self, mock_sys_cmd, mock_path_exists):
         mock_path_exists.return_value = True
 
