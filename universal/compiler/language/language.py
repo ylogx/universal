@@ -9,7 +9,7 @@ class Language:
         pass
 
     @abstractmethod
-    def compile(self, filename):
+    def compile(self):
         pass
 
     @abstractmethod
