@@ -1,3 +1,5 @@
+v2.0.0, 02-02-2015 -- Fixup some opened files
+
 v1.9.9, 12-01-2015 -- Update to the release
 * Upgraded commandline options
 * Check existence of input files
