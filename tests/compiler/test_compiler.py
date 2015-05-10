@@ -18,14 +18,14 @@ from universal.compiler.compiler import Compiler
 
 class TestCompiler(unittest.TestCase):
     def setUp(self):
-        self.compiler = Compiler()
         self.filename_c = 'foobar.c'
+        self.compiler = Compiler(self.filename_c)
 
     @patch('universal.compiler.compiler.Gcc.compile')
     def test_c_compiler_selected_for_c_file(self, mock_gcc_compile):
-        self.compiler.compile(self.filename_c)
+        self.compiler.compile()
 
-        mock_gcc_compile.assert_called_once_with(self.filename_c)
+        mock_gcc_compile.assert_called_once_with()
 
 if __name__ == '__main__':
     unittest.main()
