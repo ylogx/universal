@@ -31,8 +31,8 @@ from universal.config import EXECUTABLE_GPP
 from universal.config import EXECUTABLE_JAVA
 from universal.config import EXECUTABLE_JAVAC
 from universal.config import EXECUTABLE_PYTHON
-from universal.config import GCC_FLAGS
-from universal.config import GPP_FLAGS
+from universal.config import DEFAULT_GCC_FLAGS
+from universal.config import DEFAULT_GPP_FLAGS
 from universal.pretty_printer import RESET, BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE
 from universal.util import get_file_tuple
 from universal.util import perform_system_command
