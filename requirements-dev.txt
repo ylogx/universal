@@ -1,3 +1,5 @@
+configparser
+
 nose
 mock
 coverage
