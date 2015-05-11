@@ -22,8 +22,7 @@ class TestGcc(unittest.TestCase):
     @patch('universal.compiler.language.gcc.perform_system_command')
     def test_compile(self, mock_sys_cmd):
         self.compiler.compile()
-        mock_sys_cmd.assert_called_once_with(
-            AnyStringContaining('gcc  -g -O2 -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -lm -lrt -o'))
+        mock_sys_cmd.assert_called_once_with(AnyStringContaining('gcc'))
 
 
     @patch('os.path.exists')

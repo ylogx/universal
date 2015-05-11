@@ -22,8 +22,7 @@ class TestGpp(unittest.TestCase):
     @patch('universal.compiler.language.gpp.perform_system_command')
     def test_compile(self, mock_sys_cmd):
         self.compiler.compile()
-        mock_sys_cmd.assert_called_once_with(
-            AnyStringContaining('g++  -g -O2 -Wall -Wextra -std=c++11 -Isrc -rdynamic -fomit-frame-pointer -o'))
+        mock_sys_cmd.assert_called_once_with(AnyStringContaining('g++'))
 
 
     @patch('os.path.exists')

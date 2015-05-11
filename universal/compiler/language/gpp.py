@@ -1,7 +1,7 @@
 from __future__ import print_function
 import os
 from .language import Language
-from universal.config import EXECUTABLE_GPP, DEFAULT_GPP_FLAGS
+from universal.config import EXECUTABLE_GPP, get_gpp_flags
 from universal.util import perform_system_command, get_file_tuple
 
 
@@ -30,7 +30,7 @@ def get_command_for_compilation(filename):
     (directory, name, extension) = get_file_tuple(filename)
     output_filename = directory + '/' + name + '.out'
     command = EXECUTABLE_GPP + ' ' + \
-              DEFAULT_GPP_FLAGS + \
+              get_gpp_flags() + \
               ' -o ' + output_filename + \
               ' ' + filename
     return command

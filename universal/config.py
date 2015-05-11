@@ -1,3 +1,6 @@
+import os
+import configparser
+
 EXECUTABLE_GCC      = 'gcc'
 EXECUTABLE_GPP      = 'g++'
 EXECUTABLE_PYTHON   = 'python'
@@ -12,3 +15,34 @@ DEFAULT_GPP_FLAGS = " -g -O2" \
                     " -Wall -Wextra" \
                     " -std=c++11" \
                     " -Isrc -rdynamic -fomit-frame-pointer"
+
+FLAG_SECTION_KEY = 'flags'
+FLAG_GCC = 'gcc'
+FLAG_GPP = 'gpp'
+
+
+def get_gcc_flags():
+    return get_flag_value(FLAG_GCC, DEFAULT_GCC_FLAGS)
+
+
+def get_gpp_flags():
+    return get_flag_value(FLAG_GPP, DEFAULT_GPP_FLAGS)
+
+
+def get_flag_value(flag_key, fallback=None):
+    config = get_config_file()
+    if FLAG_SECTION_KEY in config.sections():
+        if fallback is not None:
+            return config.get(FLAG_SECTION_KEY, flag_key, fallback=fallback)
+        else:
+            return config.get(FLAG_SECTION_KEY, flag_key)
+
+
+def get_config_file():
+    config = configparser.ConfigParser()
+    config.read(get_config_filename())
+    return config
+
+
+def get_config_filename():
+    return os.path.join(os.path.expanduser('~'), '.universalrc')
