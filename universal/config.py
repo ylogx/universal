@@ -29,13 +29,12 @@ def get_gpp_flags():
     return get_flag_value(FLAG_GPP, DEFAULT_GPP_FLAGS)
 
 
-def get_flag_value(flag_key, fallback=None):
+def get_flag_value(flag_key, fallback):
     config = get_config_file()
-    if FLAG_SECTION_KEY in config.sections():
-        if fallback is not None:
-            return config.get(FLAG_SECTION_KEY, flag_key, fallback=fallback)
-        else:
-            return config.get(FLAG_SECTION_KEY, flag_key)
+    if (config is not None
+            and FLAG_SECTION_KEY in config.sections()):
+        return config.get(FLAG_SECTION_KEY, flag_key, fallback=fallback)
+    return fallback
 
 
 def get_config_file():
