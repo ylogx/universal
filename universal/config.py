@@ -1,5 +1,8 @@
 import os
-import configparser
+try:
+    import configparser
+except ImportError as e:
+    import configparser2 as configparser
 
 EXECUTABLE_GCC      = 'gcc'
 EXECUTABLE_GPP      = 'g++'

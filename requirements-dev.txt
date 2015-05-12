@@ -1,4 +1,4 @@
-configparser
+configparser2
 
 nose
 mock
