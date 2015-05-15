@@ -24,7 +24,7 @@
 from __future__ import print_function
 
 import os
-from universal.compiler.compiler import Compiler
+from universal.compiler import Compiler
 
 from universal.config import EXECUTABLE_GCC
 from universal.config import EXECUTABLE_GPP

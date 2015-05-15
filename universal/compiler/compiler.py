@@ -1,8 +1,8 @@
 from ..util import get_file_tuple
-from .language.gcc import Gcc
-from .language.gpp import Gpp
+from .language import Gcc
+from .language import Gpp
 
-class Compiler():
+class Compiler:
 
     def __init__(self, filename):
         self.filename = filename
