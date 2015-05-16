@@ -33,3 +33,7 @@ test3:
 		echo === Running python3 test: $(TEST); \
 		python3 -m $(TEST) $(PYFLAGS); \
 		)
+
+clean:
+	find . -type f -name '*.pyc' -exec rm {} +
+	find . -type d -name '__pycache__' -exec rm -r {} +
