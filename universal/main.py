@@ -21,7 +21,9 @@
 #   along with Universal.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import print_function
 import sys
+import time
 from argparse import ArgumentParser
 
 from universal.builder import compile_files
@@ -33,6 +35,8 @@ def parse_known_args():
     """ Parse command line arguments
     """
     parser = ArgumentParser()
+    parser.add_argument("-l", "--loop", type=int,
+                        help="Loop every X seconds")
     parser.add_argument("-u", "--update", action='store_true', dest="update",
                         help="Update the software from online repo")
     parser.add_argument("-p", "--problem", action='store_true', dest="problem",
@@ -43,11 +47,25 @@ def parse_known_args():
     return args, otherthings, parser
 
 
+def loop_and_compile(wait_duration_in_sec, otherthings, memory):
+    if wait_duration_in_sec < 1:
+        print('Invalid Argument: Loop wait time should be greater than 1 second')
+        return
+    print('Looping every %d seconds.'%wait_duration_in_sec)
+    print('Use Ctrl-C to stop.')
+    while True:
+        compile_files(otherthings, memory)
+        time.sleep(wait_duration_in_sec)
+
+
 def main():
     args, otherthings, parser = parse_known_args()
 
     if len(otherthings) > 0:
-        compile_files(otherthings, args.memory)
+        if args.loop is not None:
+            loop_and_compile(args.loop, otherthings, args.memory)
+        else:
+            compile_files(otherthings, args.memory)
     elif args.update:
         return update()
     elif args.problem:

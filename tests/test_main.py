@@ -31,6 +31,27 @@ class TestMain(unittest.TestCase):
         main()
         mock_compile_files.assert_called_once_with([self.filename_c], False)
 
+    @patch('universal.main.loop_and_compile')
+    def test_should_loop_and_compile_files_if_loop_short_flag_set(self, mock_loop_and_compile):
+        seconds = 123
+        mock_loop_and_compile.return_value = 0
+        sys.argv = ['dummy', self.filename_c, '-l', str(seconds)]
+
+        main()
+
+        mock_loop_and_compile.assert_called_once_with(seconds, [self.filename_c], False)
+
+    @patch('universal.main.loop_and_compile')
+    def test_should_loop_and_compile_files_if_loop_long_flag_set(self, mock_loop_and_compile):
+        seconds = 123
+        mock_loop_and_compile.return_value = 0
+        sys.argv = ['dummy', self.filename_c, '--loop', str(seconds)]
+
+        main()
+
+        mock_loop_and_compile.assert_called_once_with(seconds, [self.filename_c], False)
+
+
     @patch('universal.main.ArgumentParser.print_usage')
     def test_should_show_usage_if_no_correct_argument(self, mock_argparser):
         sys.argv = ['dummy']
@@ -60,6 +81,41 @@ class TestMain(unittest.TestCase):
         sys.argv = ['dummy', '--problem']
         main()
         mock_problem.assert_called_once_with()
+
+from universal.main import loop_and_compile
+class TestLoopAndCompile(unittest.TestCase):
+    def setUp(self):
+        self.filename_c = 'foobar.c'
+        self.otherthings = [self.filename_c]
+        self.memory = False
+
+    @patch('universal.main.compile_files')
+    def test_should_not_run_if_time_is_zero_seconds(self, mock_compile_files):
+        seconds = 0
+        loop_and_compile(seconds, self.otherthings, self.memory)
+        self.assertFalse(mock_compile_files.called)
+
+    @patch('universal.main.compile_files')
+    def test_should_not_run_if_time_is_negative(self, mock_compile_files):
+        seconds = -12
+        loop_and_compile(seconds, self.otherthings, self.memory)
+        self.assertFalse(mock_compile_files.called)
+
+    @patch('time.sleep')
+    @patch('universal.main.compile_files')
+    def test_should_run_in_loop_if_wait_time_valid(self,
+            mock_compile_files, mock_sleep):
+        seconds = 2
+        mock_compile_files.return_value = 0
+        mock_sleep.side_effect = [0, 0, IOError('Boom!')]
+
+        with self.assertRaises(IOError):
+            loop_and_compile(seconds, self.otherthings, self.memory)
+
+        mock_compile_files.assert_called_with(self.otherthings,
+                self.memory)
+        mock_sleep.assert_called_with(seconds)
+
 
 class AnyStringContaining(str):
     def __eq__(self, other):
