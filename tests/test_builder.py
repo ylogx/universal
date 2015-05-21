@@ -45,7 +45,7 @@ class TestCompilerFunctionsThatCallSystemCommand(unittest.TestCase):
         mock_compiler.run.assert_called_once_with()
 
     @patch('universal.builder.Compiler')
-    def test_gpp_system_command_sent_for_c_file(self, mock_compiler):
+    def test_gpp_system_command_sent_for_cpp_file(self, mock_compiler):
         mock_compiler.compile().return_value = 0
         mock_compiler.run().return_value = 0
 
@@ -55,11 +55,16 @@ class TestCompilerFunctionsThatCallSystemCommand(unittest.TestCase):
         mock_compiler.compile.assert_called_once_with()
         mock_compiler.run.assert_called_once_with()
 
-    @patch('universal.builder.perform_system_command')
-    def test_python_system_command_sent_for_py_file(self, sys_cmd_mock):
+    @patch('universal.builder.Compiler')
+    def test_python_system_command_sent_for_py_file(self, mock_compiler):
+        mock_compiler.compile().return_value = 0
+        mock_compiler.run().return_value = 0
+
         build_and_run_file(self.filename_py)
 
-        sys_cmd_mock.assert_called_once_with(AnyStringContaining(EXECUTABLE_PYTHON))
+        mock_compiler.assert_called_once_with(self.filename_py)
+        mock_compiler.compile.assert_called_once_with()
+        mock_compiler.run.assert_called_once_with()
 
     @patch('universal.builder.perform_system_command')
     def test_both_java_system_commands_sent_for_java_file(self, sys_cmd_mock):
