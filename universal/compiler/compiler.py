@@ -1,6 +1,7 @@
 from ..util import get_file_tuple
 from .language import Gcc
 from .language import Gpp
+from .language import Python
 
 class Compiler:
 
@@ -20,5 +21,7 @@ class Compiler:
             compiler = Gcc(self.filename)
         elif extension == Gpp.extension():
             compiler = Gpp(self.filename)
+        elif extension == Python.extension():
+            compiler = Python(self.filename)
         return compiler
 
