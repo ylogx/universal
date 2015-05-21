@@ -19,6 +19,7 @@ class TestCompiler(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
         self.filename_cpp = 'foobar.cpp'
+        self.filename_py = 'foobar.py'
 
     @patch('universal.compiler.compiler.Gcc.compile')
     def test_c_compiler_selected_for_c_file(self, mock_gcc_compile):
@@ -49,6 +50,20 @@ class TestCompiler(unittest.TestCase):
         self.compiler.run()
 
         mock_gpp_run.assert_called_once_with()
+
+    @patch('universal.compiler.compiler.Python.compile')
+    def test_python_compiler_selected_for_py_file(self, mock_py_compile):
+        self.compiler = Compiler(self.filename_py)
+        self.compiler.compile()
+
+        mock_py_compile.assert_called_once_with()
+
+    @patch('universal.compiler.compiler.Python.run')
+    def test_python_compiler_used_to_run_executable_for_py_file(self, mock_py_run):
+        self.compiler = Compiler(self.filename_py)
+        self.compiler.run()
+
+        mock_py_run.assert_called_once_with()
 
 if __name__ == '__main__':
     unittest.main()
