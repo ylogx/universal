@@ -88,11 +88,9 @@ def build_and_run_file(filename):
     elif extension == 'py':
         print(" = = = = = = ", YELLOW, "PYTHON: Executing " + filename + " file", \
               RESET, " = = = = = =\n")
-        command_run = EXECUTABLE_PYTHON + " " + filename
-        test_file = directory + "/" + name + ".input"
-        if os.path.exists(test_file):
-            command_run += " < " + test_file
-        return perform_system_command(command_run)
+        compiler = Compiler(filename)
+        out = compiler.run()
+        return out
     elif extension == 'java':
         command = EXECUTABLE_JAVAC + ' ' + filename
         perform_system_command(command)
