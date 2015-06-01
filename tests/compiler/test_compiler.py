@@ -45,7 +45,8 @@ class TestCompiler(unittest.TestCase):
         mock_gpp_compile.assert_called_once_with()
 
     @patch('universal.compiler.compiler.Gpp.run')
-    def test_cpp_compiler_used_to_run_executable_for_cpp_file(self, mock_gpp_run):
+    def test_cpp_compiler_used_to_run_executable_for_cpp_file(self,
+                                                              mock_gpp_run):
         self.compiler = Compiler(self.filename_cpp)
         self.compiler.run()
 
@@ -59,11 +60,13 @@ class TestCompiler(unittest.TestCase):
         mock_py_compile.assert_called_once_with()
 
     @patch('universal.compiler.compiler.Python.run')
-    def test_python_compiler_used_to_run_executable_for_py_file(self, mock_py_run):
+    def test_python_compiler_used_to_run_executable_for_py_file(self,
+                                                                mock_py_run):
         self.compiler = Compiler(self.filename_py)
         self.compiler.run()
 
         mock_py_run.assert_called_once_with()
+
 
 if __name__ == '__main__':
     unittest.main()

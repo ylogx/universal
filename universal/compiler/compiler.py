@@ -3,8 +3,8 @@ from .language import Gcc
 from .language import Gpp
 from .language import Python
 
-class Compiler:
 
+class Compiler:
     def __init__(self, filename):
         self.filename = filename
         self.compiler = self.get_compiler()
@@ -24,4 +24,3 @@ class Compiler:
         elif extension == Python.extension():
             compiler = Python(self.filename)
         return compiler
-

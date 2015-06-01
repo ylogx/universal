@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class Language: #pragma: no cover
+class Language:  #pragma: no cover
     __metaclass__ = ABCMeta
 
     @staticmethod
@@ -16,4 +16,3 @@ class Language: #pragma: no cover
     @abstractmethod
     def run(self):
         pass
-

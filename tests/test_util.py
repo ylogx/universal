@@ -23,6 +23,7 @@ from universal.util import problem
 from universal.util import check_exec_installed
 from universal.util import is_tool
 
+
 class TestUtilFunctions(unittest.TestCase):
     def setUp(self):
         self.filename_c = 'foobar.c'
@@ -41,7 +42,8 @@ class TestUtilFunctions(unittest.TestCase):
     def test_get_file_tuple_splits_properly(self):
         dummy_directory = "dummy_directory"
 
-        (directory, name, extension) = get_file_tuple(dummy_directory + '/' + self.filename_cpp)
+        (directory, name,
+         extension) = get_file_tuple(dummy_directory + '/' + self.filename_cpp)
 
         self.assertIn(dummy_directory, directory)
         self.assertEqual(name, 'foobar')
@@ -59,7 +61,8 @@ class TestUtilFunctions(unittest.TestCase):
     def test_problem(self, mock_sys_cmd):
         problem()
 
-        mock_sys_cmd.assert_called_once_with("xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
+        mock_sys_cmd.assert_called_once_with(
+            "xdg-open 'https://github.com/shubhamchaudhary/universal/issues'")
 
 
 @patch('universal.util.is_tool')
@@ -67,7 +70,9 @@ class TestCheckExecInstalled(unittest.TestCase):
     def setUp(self):
         self.exec_list = ['a', 'b', 'c']
 
-    def test_check_exec_installed_returns_true_if_all_exec_installed(self, mock_is_tool):
+    def test_check_exec_installed_returns_true_if_all_exec_installed(
+        self, mock_is_tool
+    ):
         mock_is_tool.return_value = True
 
         output = check_exec_installed(self.exec_list)
@@ -76,7 +81,9 @@ class TestCheckExecInstalled(unittest.TestCase):
         mock_is_tool.has_calls(calls_for_is_tool)
         self.assertTrue(output)
 
-    def test_check_exec_installed_returns_false_if_no_exec_installed(self, mock_is_tool):
+    def test_check_exec_installed_returns_false_if_no_exec_installed(
+        self, mock_is_tool
+    ):
         mock_is_tool.return_value = False
 
         output = check_exec_installed(self.exec_list)
@@ -104,6 +111,7 @@ class TestIsTool(unittest.TestCase):
         args, kwargs = mock_popen.call_args
         self.assertEqual(args[0], ['a'])
         self.assertFalse(output)
+
 
 if __name__ == '__main__':
     unittest.main()

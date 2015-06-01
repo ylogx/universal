@@ -35,13 +35,18 @@ def parse_known_args():
     """ Parse command line arguments
     """
     parser = ArgumentParser()
-    parser.add_argument("-l", "--loop", type=int,
-                        help="Loop every X seconds")
-    parser.add_argument("-u", "--update", action='store_true', dest="update",
+    parser.add_argument("-l", "--loop", type=int, help="Loop every X seconds")
+    parser.add_argument("-u", "--update",
+                        action='store_true',
+                        dest="update",
                         help="Update the software from online repo")
-    parser.add_argument("-p", "--problem", action='store_true', dest="problem",
+    parser.add_argument("-p", "--problem",
+                        action='store_true',
+                        dest="problem",
                         help="Report a problem")
-    parser.add_argument("-m", "--memory", action='store_true', dest="memory",
+    parser.add_argument("-m", "--memory",
+                        action='store_true',
+                        dest="memory",
                         help="Run memory tests")
     args, otherthings = parser.parse_known_args()
     return args, otherthings, parser
@@ -49,9 +54,10 @@ def parse_known_args():
 
 def loop_and_compile(wait_duration_in_sec, otherthings, memory):
     if wait_duration_in_sec < 1:
-        print('Invalid Argument: Loop wait time should be greater than 1 second')
+        print(
+            'Invalid Argument: Loop wait time should be greater than 1 second')
         return
-    print('Looping every %d seconds.'%wait_duration_in_sec)
+    print('Looping every %d seconds.' % wait_duration_in_sec)
     print('Use Ctrl-C to stop.')
     while True:
         compile_files(otherthings, memory)
@@ -73,6 +79,7 @@ def main():
     else:
         parser.print_usage()
         print('No filename passed')
+
 
 if __name__ == '__main__':
     sys.exit(main())

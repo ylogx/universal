@@ -19,7 +19,6 @@
 #   along with Universal.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 import argparse
 import fnmatch
 import os
@@ -29,18 +28,22 @@ import re
 import subprocess
 import sys
 
+
 class PatternAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, fnmatch.translate(values))
 
-class Options:
-    __slots__=["directory", "regex", "script"]
 
-class Reload (Exception):
+class Options:
+    __slots__ = ["directory", "regex", "script"]
+
+
+class Reload(Exception):
     pass
 
+
 class Process(pyinotify.ProcessEvent):
-    def __init__(self,  options):
+    def __init__(self, options):
         self.regex = re.compile(options.regex)
         self.script = options.script
 
@@ -61,15 +64,30 @@ class Process(pyinotify.ProcessEvent):
             subprocess.call(args)
             sys.stdout.write("------------------------\n")
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Launch a script if specified files change.')
-    parser.add_argument('directory', help='the directory which is recursively monitored')
+    parser = argparse.ArgumentParser(
+        description='Launch a script if specified files change.')
+    parser.add_argument('directory',
+                        help='the directory which is recursively monitored')
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-r', '--regex', required=False, default=".*", help='files only trigger the reaction if their name matches this regular expression')
-    group.add_argument('-p', '--pattern', required=False, dest="regex", action=PatternAction, help='files only trigger the reaction if their name matches this shell pattern')
+    group.add_argument(
+        '-r', '--regex',
+        required=False,
+        default=".*",
+        help=
+        'files only trigger the reaction if their name matches this regular expression')
+    group.add_argument(
+        '-p', '--pattern',
+        required=False,
+        dest="regex",
+        action=PatternAction,
+        help=
+        'files only trigger the reaction if their name matches this shell pattern')
 
-    parser.add_argument("script", help="the script that is executed upon reaction")
+    parser.add_argument("script",
+                        help="the script that is executed upon reaction")
 
     options = Options()
     args = parser.parse_args(namespace=options)
@@ -91,6 +109,7 @@ def main():
             notifier.stop()
             break
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())

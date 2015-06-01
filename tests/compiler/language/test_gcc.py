@@ -24,10 +24,10 @@ class TestGcc(unittest.TestCase):
         self.compiler.compile()
         mock_sys_cmd.assert_called_once_with(AnyStringContaining('gcc'))
 
-
     @patch('os.path.exists')
     @patch('universal.compiler.language.gcc.perform_system_command')
-    def test_run_output_when_no_input_file_available(self, mock_sys_cmd, mock_path_exists):
+    def test_run_output_when_no_input_file_available(self, mock_sys_cmd,
+                                                     mock_path_exists):
         mock_path_exists.return_value = False
 
         self.compiler.run()
@@ -36,12 +36,14 @@ class TestGcc(unittest.TestCase):
 
     @patch('os.path.exists')
     @patch('universal.compiler.language.gcc.perform_system_command')
-    def test_run_output_when_input_file_available(self, mock_sys_cmd, mock_path_exists):
+    def test_run_output_when_input_file_available(self, mock_sys_cmd,
+                                                  mock_path_exists):
         mock_path_exists.return_value = True
 
         self.compiler.run()
 
-        mock_sys_cmd.assert_called_once_with(AnyStringContaining('foobar.input'))
+        mock_sys_cmd.assert_called_once_with(
+            AnyStringContaining('foobar.input'))
 
 
 class AnyStringContaining(str):

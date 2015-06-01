@@ -4,6 +4,7 @@ import os
 import shutil
 import subprocess
 
+
 def perform_system_command(command):
     print("Doing: ", command)
     out = os.system(command)
@@ -18,6 +19,7 @@ def get_file_tuple(filename):
     name = '.'.join(filename_tuple[:-1])
     return directory, name, extension
 
+
 def check_exec_installed(exec_list):
     """ Check the required programs are
         installed.
@@ -30,6 +32,7 @@ def check_exec_installed(exec_list):
             print("Executable: " + exe + " is not installed")
             all_installed = False
     return all_installed
+
 
 def is_tool(name):
     try:
@@ -55,5 +58,6 @@ def problem():
     print("Thanks in advance for taking out time")
     print("Click on the green New Issue button on the right side")
     print("Opening browser")
-    perform_system_command("xdg-open "
-            "'https://github.com/shubhamchaudhary/universal/issues'")
+    perform_system_command(
+        "xdg-open "
+        "'https://github.com/shubhamchaudhary/universal/issues'")

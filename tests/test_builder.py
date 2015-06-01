@@ -84,21 +84,25 @@ class TestCompileFilesFunction(unittest.TestCase):
         self.filename_cpp = 'foobar.cpp'
         self.filename_py = 'foobar.py'
         self.filename_java = 'foobar.java'
-        self.filename_list = [self.filename_c, self.filename_cpp, self.filename_py, self.filename_java]
+        self.filename_list = [self.filename_c, self.filename_cpp,
+                              self.filename_py, self.filename_java]
 
     @patch('universal.builder.build_and_run_file')
     @patch('os.path.isfile')
-    def test_build_and_run_called_for_all_args(self, mock_isfile, mock_build_run):
+    def test_build_and_run_called_for_all_args(self, mock_isfile,
+                                               mock_build_run):
         mock_isfile.return_value = True
 
         compile_files(self.filename_list, mem_test=False)
 
         self.assertEqual(mock_build_run.call_count, len(self.filename_list))
-        mock_build_run.assert_has_calls([call(file) for file in self.filename_list])
+        mock_build_run.assert_has_calls([call(file)
+                                         for file in self.filename_list])
 
     @patch('universal.builder.build_and_run_file')
     @patch('os.path.isfile')
-    def test_build_and_run_shows_error_when_no_file(self, mock_isfile, mock_build_run):
+    def test_build_and_run_shows_error_when_no_file(self, mock_isfile,
+                                                    mock_build_run):
         mock_isfile.return_value = False
 
         compile_files(self.filename_list, mem_test=False)
@@ -110,6 +114,7 @@ class TestCompileFilesFunction(unittest.TestCase):
 class AnyStringContaining(str):
     def __eq__(self, other):
         return self in other
+
 
 if __name__ == '__main__':
     unittest.main()

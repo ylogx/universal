@@ -4,11 +4,11 @@ try:
 except ImportError as e:
     import configparser2 as configparser
 
-EXECUTABLE_GCC      = 'gcc'
-EXECUTABLE_GPP      = 'g++'
-EXECUTABLE_PYTHON   = 'python'
-EXECUTABLE_JAVAC    = 'javac'
-EXECUTABLE_JAVA     = 'java'
+EXECUTABLE_GCC = 'gcc'
+EXECUTABLE_GPP = 'g++'
+EXECUTABLE_PYTHON = 'python'
+EXECUTABLE_JAVAC = 'javac'
+EXECUTABLE_JAVA = 'java'
 
 DEFAULT_GCC_FLAGS = " -g -O2" \
                     " -Wall -Wextra" \
@@ -34,8 +34,7 @@ def get_gpp_flags():
 
 def get_flag_value(flag_key, fallback):
     config = get_config_file()
-    if (config is not None
-            and FLAG_SECTION_KEY in config.sections()):
+    if (config is not None and FLAG_SECTION_KEY in config.sections()):
         return config.get(FLAG_SECTION_KEY, flag_key, fallback=fallback)
     return fallback
 
