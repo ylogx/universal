@@ -1,37 +1,46 @@
+PACKAGE="Universal"
+PACKAGE_LOWER=$(shell echo $(PACKAGE) | sed 's/.*/\L&/')
+PIP_EXEC=pip
+PYTHON_EXEC=python3
+PYTHON2_EXEC=python2.7
+PYTHON3_EXEC=python3
+NOSETESTS_EXEC=$(shell which nosetests)
+VERSION = $(shell python -c 'import $(PACKAGE_LOWER); print($(PACKAGE_LOWER).__version__)')
 TEST_FILES = $(wildcard tests/test_*.py)
 TESTS = $(subst .py,,$(subst /,.,$(TEST_FILES)))
-VERSION = $(shell cat setup.py | grep version | sed -e "s/version=//" -e "s/'//g" -e "s/,//" -e 's/^[ \t]*//')
 
-all.PHONY: nosetests_2_3
+all.PHONY: nosetests_3 nosetests_2
 
-nosetests_2_3:
-	@echo "Running python2 tests"
-	@python2.7 `which nosetests`
-	@echo "Running python3 tests"
-	@python3 `which nosetests`
+nosetests_2:
+	@echo "Running $(PYTHON2_EXEC) tests"
+	@$(PYTHON2_EXEC) $(NOSETESTS_EXEC)
+
+nosetests_3:
+	@echo "Running $(PYTHON3_EXEC) tests"
+	@$(PYTHON3_EXEC) $(NOSETESTS_EXEC)
 
 install:
 	@echo "Creating distribution package for version $(VERSION)"
 	@echo "-----------------------------------------------"
-	python setup.py sdist
-	@echo "Installing package using pip"
+	$(PYTHON_EXEC) setup.py sdist
+	@echo "Installing package using $(PIP_EXEC)"
 	@echo "----------------------------"
-	pip install --upgrade dist/Universal-$(VERSION).tar.gz
+	$(PIP_EXEC) install --upgrade dist/$(PACKAGE)-$(VERSION).tar.gz
 
 coverage:
-	@coverage run `which nosetests`
+	@coverage run $(NOSETESTS_EXEC)
 	@coverage report
 
 test:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running test: $(TEST); \
-		python -m $(TEST) $(PYFLAGS); \
+		$(PYTHON_EXEC) -m $(TEST) $(PYFLAGS); \
 		)
 
 test3:
 	@- $(foreach TEST,$(TESTS), \
 		echo === Running python3 test: $(TEST); \
-		python3 -m $(TEST) $(PYFLAGS); \
+		$(PYTHON3_EXEC) -m $(TEST) $(PYFLAGS); \
 		)
 
 clean:
