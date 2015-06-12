@@ -17,6 +17,7 @@ def get_long_description():
     except (IOError, ImportError):
         with open('README.txt') as fhan:
             long_description = fhan.read()
+    return long_description
 
 
 add_keywords = dict(
