@@ -1,7 +1,7 @@
 PACKAGE="Universal"
 PACKAGE_LOWER=$(shell echo $(PACKAGE) | sed 's/.*/\L&/')
 PIP_EXEC=pip
-PYTHON_EXEC=python3
+PYTHON_EXEC=python
 PYTHON2_EXEC=python2.7
 PYTHON3_EXEC=python3
 NOSETESTS_EXEC=$(shell which nosetests)
