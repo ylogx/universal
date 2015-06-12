@@ -25,6 +25,20 @@ class TestMain(unittest.TestCase):
     def tearDown(self):
         sys.argv = self.argv_backup
 
+    @patch('universal.main.print_version')
+    def test_should_print_version_and_exit_with_short_flag(self, mock_print_version):
+        sys.argv = ['dummy', '-V']
+        out = main()
+        mock_print_version.assert_called_once_with()
+        self.assertEqual(out, 0)
+
+    @patch('universal.main.print_version')
+    def test_should_print_version_and_exit_with_long_flag(self, mock_print_version):
+        sys.argv = ['dummy', '--version']
+        out = main()
+        mock_print_version.assert_called_once_with()
+        self.assertEqual(out, 0)
+
     @patch('universal.main.compile_files')
     def test_should_compile_files_if_available(self, mock_compile_files):
         sys.argv = ['dummy', self.filename_c]

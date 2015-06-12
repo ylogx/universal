@@ -26,9 +26,18 @@ import sys
 import time
 from argparse import ArgumentParser
 
+from universal import __version__
 from universal.builder import compile_files
 from universal.util import update
 from universal.util import problem
+
+
+def print_version():
+    print('Universal version %s' % __version__)
+    print('Copyright (c) 2011-2015 by Shubham Chaudhary.')
+    print('License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>')
+    print('This is free software: you are free to change and redistribute it.')
+    print('There is NO WARRANTY, to the extent permitted by law.')
 
 
 def parse_known_args():
@@ -36,6 +45,10 @@ def parse_known_args():
     """
     parser = ArgumentParser()
     parser.add_argument("-l", "--loop", type=int, help="Loop every X seconds")
+    parser.add_argument('-V', '--version',
+                        action='store_true',
+                        dest='version',
+                        help='Print the version number and exit')
     parser.add_argument("-u", "--update",
                         action='store_true',
                         dest="update",
@@ -66,6 +79,10 @@ def loop_and_compile(wait_duration_in_sec, otherthings, memory):
 
 def main():
     args, otherthings, parser = parse_known_args()
+
+    if args.version:
+        print_version()
+        return 0
 
     if len(otherthings) > 0:
         if args.loop is not None:
