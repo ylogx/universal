@@ -112,6 +112,16 @@ class TestIsTool(unittest.TestCase):
         self.assertEqual(args[0], ['a'])
         self.assertFalse(output)
 
+    def test_is_tool_returns_true_if_any_other_os_error(self, mock_popen):
+        e = OSError(errno.ENFILE, 'msg')
+        mock_popen.side_effect = e
+
+        output = is_tool('a')
+
+        args, kwargs = mock_popen.call_args
+        self.assertEqual(args[0], ['a'])
+        self.assertTrue(output)
+
 
 if __name__ == '__main__':
     unittest.main()
