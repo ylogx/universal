@@ -2,8 +2,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 def get_version():
-    import universal
-    return universal.__version__
+    return '2.0.1'
 
 def get_requirements():
     with open('requirements.txt', 'rU') as fhan:
