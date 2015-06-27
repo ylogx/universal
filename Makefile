@@ -5,7 +5,7 @@ PYTHON_EXEC=python
 PYTHON2_EXEC=python2.7
 PYTHON3_EXEC=python3
 NOSETESTS_EXEC=$(shell which nosetests)
-VERSION = $(shell python -c 'import $(PACKAGE_LOWER); print($(PACKAGE_LOWER).__version__)')
+VERSION = $(shell grep "[0-9]\+\.[0-9]\+\.[0-9]\+" -o setup.py)
 TEST_FILES = $(wildcard tests/test_*.py)
 TESTS = $(subst .py,,$(subst /,.,$(TEST_FILES)))
 
