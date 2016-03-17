@@ -1,6 +1,8 @@
 Universal Competitive Programming Suite
 =======================================
 
+[![Join the chat at https://gitter.im/shubhamchaudhary/universal](https://badges.gitter.im/shubhamchaudhary/universal.svg)](https://gitter.im/shubhamchaudhary/universal?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![PyPI Version](https://img.shields.io/pypi/v/Universal.svg)](https://pypi.python.org/pypi/Universal) [![PyPI Monthly Downloads](https://img.shields.io/pypi/dm/Universal.svg)](https://pypi.python.org/pypi/Universal) [![PyPI License](https://img.shields.io/pypi/l/Universal.svg)](https://pypi.python.org/pypi/Universal) [![GitHub tag](https://img.shields.io/github/tag/shubhamchaudhary/universal.svg)](https://github.com/shubhamchaudhary/universal/releases) [![GitHub release](https://img.shields.io/github/release/shubhamchaudhary/universal.svg)](https://github.com/shubhamchaudhary/universal/releases/latest)
 
 [![Build Status Travis-CI](https://travis-ci.org/shubhamchaudhary/universal.svg)](https://travis-ci.org/shubhamchaudhary/universal) [![Coverage Status](https://coveralls.io/repos/shubhamchaudhary/universal/badge.svg?branch=master)](https://coveralls.io/r/shubhamchaudhary/universal?branch=master) [![Circle CI](https://circleci.com/gh/shubhamchaudhary/universal.svg?style=svg)](https://circleci.com/gh/shubhamchaudhary/universal) [![Build Status Snap-CI](https://snap-ci.com/shubhamchaudhary/universal/branch/master/build_image)](https://snap-ci.com/shubhamchaudhary/universal/branch/master) [![Requirements Status](https://requires.io/github/shubhamchaudhary/universal/requirements.svg?branch=master)](https://requires.io/github/shubhamchaudhary/universal/requirements/?branch=master)
