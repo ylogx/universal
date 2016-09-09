@@ -1,6 +1,7 @@
 configparser2
 
 nose
+nose2
 mock
 coverage
 unittest2

@@ -13,11 +13,11 @@ all.PHONY: nosetests_3 nosetests_2
 
 nosetests_2:
 	@echo "Running $(PYTHON2_EXEC) tests"
-	@$(PYTHON2_EXEC) $(NOSETESTS_EXEC)
+	@$(PYTHON2_EXEC) -m nose2
 
 nosetests_3:
 	@echo "Running $(PYTHON3_EXEC) tests"
-	@$(PYTHON3_EXEC) $(NOSETESTS_EXEC)
+	@$(PYTHON3_EXEC) -m nose2
 
 install:
 	@echo "Creating distribution package for version $(VERSION)"
@@ -28,7 +28,7 @@ install:
 	$(PIP_EXEC) install --upgrade dist/$(PACKAGE)-$(VERSION).tar.gz
 
 coverage:
-	@coverage run $(NOSETESTS_EXEC)
+	@$(PYTHON3_EXEC) -m coverage run -m nose2
 	@coverage report
 
 rst_test:
