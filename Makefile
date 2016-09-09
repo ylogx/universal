@@ -29,7 +29,9 @@ install:
 
 coverage:
 	@$(PYTHON3_EXEC) -m coverage run -m nose2
-	@coverage report
+	@$(PYTHON3_EXEC) -m coverage report
+	@$(PYTHON3_EXEC) -m coverage xml
+	@$(PYTHON3_EXEC) -m coverage html
 
 rst_test:
 	pandoc --from=markdown --to=rst README.md | rst2html.py >/dev/null
