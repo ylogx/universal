@@ -13,9 +13,12 @@ A tool to quickly compile and run different source files using same command
   
 Universal allows you to __quickly__ compile, build and run files. Universal make it very easy to compile _any_ source code and create & execute corresponding files.  
   
+## Usage
+
 Let us say you want to compile _batman.c_.  
   
-__Normal(SLOW) way:__  
+### Normal(SLOW) way
+
 `gcc -g -O2 -std=gnu99 -static -Wall -Wextra -Isrc -rdynamic -fomit-frame-pointer -o batman.out batman.c -lm -lrt`  
 
 That is around 114 keystrokes with these options that I use for ICPC practice. Now you need to type `./batman.out` to execute. 
@@ -32,7 +35,8 @@ After pressing enter universal will do following things for you:
   * Give you instructions to copy-paste for editing or executing.
   * You may also use `u batman.out` to execute the executable just created.  
   
-__Universal way:__  
+### Universal way
+
 `u b<tab>`  
 
 With universal installed you just need to type __3__ keystrokes to compile and execute any type of source code.  
@@ -42,7 +46,8 @@ Best part you don't need to remember anything, not even the name of compiler. Fo
 You can use the __same__ command/syntax `u filename.extension` to build & run __any__ source code. Yes _any_ type of source file. Universal will either run it or tell you how to install its compiler.  Universal supports a large variety of languages including c, c++, java, python and many more.  
   
   
-__Installation:__  
+## Installation:
+
 To install type
 
 ```
